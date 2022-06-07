@@ -1,0 +1,143 @@
+@import '../variables.module.scss';
+@import '../default.module.scss';
+
+.headerOuter {
+    background-color: $primary;
+    height: $header-height;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    overflow: visible;
+    width: 100vw !important; // @todo: overridden, causing header width problem if height > 100vh
+    // need &.outer from other file to remove !important; becoming a real issue now...
+
+    &.fullWidth .headerInner {
+        max-width: none;
+    }
+
+    .headerInner {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        overflow: visible;
+
+        h2 {
+            margin: 0;
+
+            a {
+                @extend .linkSecondary;
+                text-decoration: none;
+            }
+        }
+
+        .rightArea {
+            display: flex;
+            align-items: center;
+            overflow: visible;
+
+            > svg {
+                font-size: $font-lg-3;
+                cursor: pointer;
+                display: none;
+
+                @include mobileStyles {
+                    display: inline-block;
+                }
+            }
+
+            .rightAreaInner {
+                display: flex;
+                align-items: center;
+
+                @include mobileStyles {
+                    display: none;
+                    flex-direction: column;
+                    background: $white;
+                    position: absolute;
+                    left: 0;
+                    top: 60px;
+                    height: $viewport-height-minus-header;
+                    width: 100vw;
+
+                    &.open {
+                        display: flex;
+                    }
+                }
+
+                ul {
+                    display: flex;
+                    list-style: none;
+                    padding: 0;
+                    margin: 0;
+
+                    @include mobileStyles {
+                        width: 100%;
+                        display: table;
+                    }
+
+                    li {
+                        @include mobileStyles {
+                            // .pageContainer & > a { // @todo: cannot do this, because .pageContainer is in another file
+                            // ask on stackoverflow how to reference this, then remove !important
+                            margin-right: 0 !important;
+                            display: flex;
+
+                            &:not(:last-child) a {
+                                border-bottom: $border-std;
+                            }
+                        }
+
+                        a {
+                            @extend .linkSecondary;
+                            text-decoration: none;
+
+                            svg {
+                                display: none;
+                            }
+
+                            @include mobileStyles {
+                                flex: 0 0 100%;
+                                display: flex;
+                                padding: 1em 1.5em 1em $content-padding;
+                                align-items: center;
+
+                                svg {
+                                    margin-left: auto;
+                                    display: inline-block;
+                                    font-size: $font-lg-2;
+                                }
+                            }
+                        }
+
+                        &:not(:last-child) {
+                            margin-right: 1em;
+
+                            @include nonMobileStyles {
+                                &::after {
+                                    content: '|';
+                                    margin-left: 1em;
+                                    color: $secondary;
+                                    opacity: 0.25;
+                                }
+                            }
+                        }
+                    }
+
+                    + a {
+                        margin-left: 1em;
+                        overflow: unset;
+
+                        @include mobileStyles {
+                            // .pageContainer & > a { // @todo: cannot do this, because .pageContainer is in another file
+                            // ask on stackoverflow how to reference this, then remove !important
+                            margin: 1em 0 !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
