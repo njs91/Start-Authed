@@ -1,17 +1,17 @@
-import './css/default.module.scss';
+import React, { FC } from 'react';
 import StyleGuide from './pages/StyleGuide';
 import Homepage from './pages/Homepage';
 import NotFound from './pages/404';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import About from './pages/About';
 import Login from './pages/account/public/Login';
-import { FC } from 'react';
 import Terms from './pages/legal/Terms';
 import Privacy from './pages/legal/Privacy';
 import CreateAccount from './pages/account/public/CreateAccount';
 import EditAccount from './pages/account/private/EditAccount';
 import UserProfile from './pages/account/private/UserProfile';
 import { UserProvider } from './contexts/UserContext';
+import { PrivateRoute } from './components/login/PrivateRoute';
 
 const App: FC = () => (
     <UserProvider>
@@ -22,8 +22,22 @@ const App: FC = () => (
                 <Route path='/about' element={<About />} />
                 <Route path='/login' element={<Login />} />
                 <Route path='/create-account' element={<CreateAccount />} />
-                <Route path='/user/profile' element={<UserProfile />} />
-                <Route path='/user/edit-account' element={<EditAccount />} />
+                <Route
+                    path='/user/profile'
+                    element={
+                        <PrivateRoute>
+                            <UserProfile />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path='/user/edit-account'
+                    element={
+                        <PrivateRoute>
+                            <EditAccount />
+                        </PrivateRoute>
+                    }
+                />
                 <Route path='/terms' element={<Terms />} />
                 <Route path='/privacy' element={<Privacy />} />
                 <Route path='*' element={<NotFound />} />
