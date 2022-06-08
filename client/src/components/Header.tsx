@@ -46,7 +46,7 @@ export const links = [
         url: '/',
     },
     {
-        title: 'Login',
-        url: '/login',
+        title: 'About',
+        url: '/about',
     },
 ];

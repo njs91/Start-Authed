@@ -12,7 +12,6 @@ const Login: React.VFC = () => (
         <p className={styles.createAccount}>
             Don't have an account? <Link to='/create-account'>Create an account</Link>.
         </p>
-        <p>Note: not yet functional</p>
     </Page>
 );
 

@@ -18,6 +18,7 @@ export const InputField: FC<InputFieldProps> = ({ title, type, cls, placeholder,
     const tags: { [key: string]: string } = {
         text: 'input',
         textarea: 'textarea',
+        password: 'input',
     };
     const Tag: any = tags[type];
 

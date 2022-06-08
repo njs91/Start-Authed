@@ -8,7 +8,7 @@ import { Loading } from '../default/Loading';
 import { Error } from '../default/Error';
 
 export type LoginFormInputs = {
-    username: string;
+    email: string;
     password: string;
 };
 
@@ -17,7 +17,7 @@ export const LoginForm: VFC = () => {
         resolver: yupResolver(loginSchema),
         mode: 'onTouched',
         defaultValues: {
-            username: '',
+            email: '',
             password: '',
         },
     });
@@ -32,7 +32,7 @@ export const LoginForm: VFC = () => {
             <FormProvider {...methods}>
                 <form onSubmit={methods.handleSubmit(onSubmit)}>
                     <div className={styles.formInner}>
-                        <InputField type='text' title='username' />
+                        <InputField type='text' title='email' placeholder='joe@bloggs.com' />
                         <InputField type='text' title='password' placeholder='********' />
                     </div>
 
