@@ -1,5 +1,6 @@
 import express, { Application, NextFunction, Request, Response } from 'express';
 import authRoutes from './routes/auth';
+import { connectToDb } from './utils/db';
 
 const app: Application = express();
 
@@ -11,6 +12,8 @@ app.get('/', (req: Request, res: Response, next: NextFunction) => {
 
 app.use(authRoutes);
 
-app.listen(PORT, () =>
-  console.log(`Server running on port ${PORT}: http://localhost:${PORT}/`)
-);
+connectToDb(() => {
+  app.listen(PORT, () =>
+    console.log(`Server running on port ${PORT}: http://localhost:${PORT}/`)
+  );
+});
