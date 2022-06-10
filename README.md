@@ -61,12 +61,12 @@ Formatting is configured by prettier in package.json
 
 ### Preprocessing & Transpiling
 
-1. TypeScript is transpiled into JavaScript for files with .tsx extensions (rather than .js)
-2. Front-end uses SASS preprocessor with CSS modules (transpiles name.module.scss (& .sass) files to .css files)
+- TypeScript is transpiled into JavaScript for files with .tsx extensions (rather than .js)
+- Front-end uses SASS preprocessor with CSS modules (transpiles name.module.scss (& .sass) files to .css files)
 
 ### Miscellaneous
 
-1. Need to run `npm run build` to generate production react files
-2. Includes font awesome, default components, styles & variables: see /styles page
-3. To format with prettier, run `npm run format`
-4. To run unit tests (Jest), cd to client and run `npm test`
+- Need to run `npm run build` to generate production react files (if it fails, ensure using correct node version)
+- Includes font awesome, default components, styles & variables: see /styles page
+- To format with prettier, run `npm run format`
+- To run unit tests (Jest), cd to client and run `npm test`
