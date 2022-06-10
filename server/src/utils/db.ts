@@ -1,6 +1,8 @@
 import mongodb from 'mongodb';
 import { MongoClient } from 'mongodb';
 
+export const USERS_COLLECTION_NAME = 'users';
+
 const url =
   process.env.URI ||
   'mongodb+srv://njs91:bIucm9ZNvYAZiAZG@cluster0.f4crzod.mongodb.net/?retryWrites=true&w=majority'; // @todo remove

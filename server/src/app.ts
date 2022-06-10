@@ -6,6 +6,8 @@ const app: Application = express();
 
 const PORT = process.env.PORT || 8000;
 
+app.use(express.json()); // seemingly required for req.body
+
 app.get('/', (req: Request, res: Response, next: NextFunction) => {
   res.send('test homepage response');
 });

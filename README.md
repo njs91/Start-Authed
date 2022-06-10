@@ -40,15 +40,19 @@ Basic login system with authenticated routes, built in react and node (with TS).
 ### Running the Back-end
 
 1. CD to server and change env.example to .env
-2. Build the .ts files into the dist folder:
+2. Install dependencies:
+   ```sh
+   npm install
+   ```
+3. Build the .ts files into the dist folder:
    ```sh
    npm run build
    ```
-3. Start the server, or skip to 4:
+4. Start the server, or skip to 5:
    ```sh
    npm start
    ```
-4. (Optional) watch for .ts file changes and run the server:
+5. (Optional) watch for .ts file changes and run the server:
    ```sh
    npm run dev
    ```
