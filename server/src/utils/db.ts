@@ -16,7 +16,6 @@ export const connectToDb = async (callback: () => void) => {
     _db = client.db(dbName); // method connecting and storing the connection to the db (keeps running)
     callback(); // callback(client)
   } catch (err) {
-    console.error(err);
     throw err;
   }
 };

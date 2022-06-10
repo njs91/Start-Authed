@@ -1,4 +1,6 @@
-import { getDb } from '../utils/db';
+import { getCollection } from '../utils/helpers';
+
+const COLLECTION_NAME = 'users';
 
 export class User {
   email: string;
@@ -10,18 +12,22 @@ export class User {
   }
 
   static async fetchAll() {
-    const collectionName = 'users';
-
     try {
-      const db = getDb();
-      const collection = db.collection(collectionName);
-      const users = await collection.find().toArray(); // may need to optimise as it gets ALL users - what if a million users existed?
+      const collection = getCollection(COLLECTION_NAME);
+      const users = await collection.find().toArray(); // @todo: may need to optimise as it gets ALL users - what if a million users existed?
       return users;
     } catch (err) {
-      console.error(err);
       throw err;
     }
   }
 
-  // also add other methods like a save method instead of manually calling insertOne for example
+  static async findByEmail(email: string) {
+    try {
+      const collection = getCollection(COLLECTION_NAME);
+      const user = await collection.findOne({ email });
+      return user;
+    } catch (err) {
+      throw err;
+    }
+  }
 }
