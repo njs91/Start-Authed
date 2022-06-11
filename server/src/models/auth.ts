@@ -5,23 +5,12 @@ import jwt from 'jsonwebtoken';
 export class User {
   email: string;
   hashedPassword: any;
-  dateCreated: string;
+  dateCreated: Date;
 
   constructor(email: string, hashedPassword: any) {
-    this.email = email;
+    this.email = email; // make email.toLowerCase(); and remove sanitised email?
     this.hashedPassword = hashedPassword;
-    this.dateCreated = (function () {
-      const d = new Date(),
-        fullDate =
-          d.getDate() +
-          ' ' +
-          d.toLocaleString('default', {
-            month: 'long',
-          }) +
-          ' ' +
-          d.getFullYear();
-      return fullDate;
-    })();
+    this.dateCreated = new Date();
   }
 
   async saveToDb() {
