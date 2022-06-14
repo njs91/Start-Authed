@@ -8,20 +8,28 @@ export class User {
   dateCreated: Date;
 
   constructor(email: string, hashedPassword: any) {
-    this.email = email; // make email.toLowerCase(); and remove sanitised email?
+    this.email = email.toLowerCase();
     this.hashedPassword = hashedPassword;
     this.dateCreated = new Date();
+  }
+
+  signToken() {
+    try {
+      // { ...this } overcomes error `Expected "payload" to be a plain object`
+      const token = jwt.sign({ ...this }, this.email, {
+        expiresIn: 60 * 24,
+      });
+      return token;
+    } catch (err) {
+      throw err;
+    }
   }
 
   async saveToDb() {
     try {
       const collection = getCollection(USERS_COLLECTION_NAME);
-      const sanitisedEmail = this.email.toLowerCase();
-      const insertedUser = await collection.insertOne(this);
-      const token = jwt.sign(insertedUser, sanitisedEmail, {
-        expiresIn: 60 * 24,
-      });
-      return token;
+      const saveResult = await collection.insertOne(this);
+      return saveResult;
     } catch (err) {
       throw err;
     }

@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { User } from '../models/auth';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 
 export const createUser = async (req: Request, res: Response) => {
   const { email, password } = req.body;
@@ -13,9 +12,15 @@ export const createUser = async (req: Request, res: Response) => {
 
   const hashedPassword = await bcrypt.hash(password, 10);
   const newUser = new User(email, hashedPassword);
-  const token = await newUser.saveToDb();
+  const saveToDb = await newUser.saveToDb();
 
-  res.status(201).json({ token });
+  if (!saveToDb) {
+    return res.status(500).send('Could not insert user into the database.');
+  }
+
+  const token = newUser.signToken();
+
+  res.status(201).json({ token }); // if want to return an id, presumably need to generate one
 };
 
 export const getUser = async (req: Request, res: Response) => {
@@ -40,6 +45,7 @@ export const getUsers = async (req: Request, res: Response) => {
 
 export const logUserIn = async (req: Request, res: Response) => {
   const { email, password } = req.body;
+
   const user = await User.findByEmail(email);
 
   if (!user) {
@@ -52,9 +58,10 @@ export const logUserIn = async (req: Request, res: Response) => {
     return res.status(403).send('Wrong password for this account.');
   }
 
-  const token = jwt.sign(user, email, {
-    // @todo: add method to class instead
-    expiresIn: 60 * 24,
-  });
-  res.json({ token });
+  // assign object methods to the user instance as objects retrieved from db don't have methods
+  Object.setPrototypeOf(user, User.prototype);
+
+  const token = user.signToken();
+
+  return res.json({ token }); // may want to also return an id
 };
