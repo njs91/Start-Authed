@@ -3,6 +3,8 @@ import { getCollection } from '../utils/helpers';
 import jwt from 'jsonwebtoken';
 const mongodb = require('mongodb'); // do not convert to import (otherwise undefined)
 
+// does anywhere here NOT need try catch?
+
 export class User {
   email: string;
   hashedPassword: any;
@@ -14,7 +16,7 @@ export class User {
     this.dateCreated = new Date();
   }
 
-  signToken() {
+  signToken(): string {
     try {
       // { ...this } overcomes error `Expected "payload" to be a plain object`
       const token = jwt.sign({ ...this }, this.email, {
@@ -26,7 +28,7 @@ export class User {
     }
   }
 
-  async saveToDb() {
+  async saveToDb(): Promise<any> {
     try {
       const collection = getCollection(USERS_COLLECTION_NAME);
       const saveResult = await collection.insertOne(this);
@@ -36,10 +38,10 @@ export class User {
     }
   }
 
-  static async delete(id: string) {
+  static async delete(id: string): Promise<any> {
     try {
       const collection = getCollection(USERS_COLLECTION_NAME);
-      const user = await User.findById(new mongodb.ObjectId(id));
+      const user = await User.findById(id);
 
       if (!user) throw new Error('404 - User not found');
 
@@ -53,7 +55,7 @@ export class User {
     }
   }
 
-  static async fetchAll() {
+  static async fetchAll(): Promise<any> {
     try {
       const collection = getCollection(USERS_COLLECTION_NAME);
       const users = await collection.find().toArray(); // @todo: may need to optimise as it gets ALL users - what if a million users existed?
@@ -63,7 +65,7 @@ export class User {
     }
   }
 
-  static async findByEmail(email: string) {
+  static async findByEmail(email: string): Promise<any> {
     try {
       const collection = getCollection(USERS_COLLECTION_NAME);
       const user = await collection.findOne({ email });
@@ -73,13 +75,13 @@ export class User {
     }
   }
 
-  static async findById(id: string) {
-    try {
-      const collection = getCollection(USERS_COLLECTION_NAME);
-      const user = await collection.findOne({ _id: new mongodb.ObjectId(id) });
-      return user;
-    } catch (err) {
-      throw err;
-    }
+  static async findById(id: string): Promise<any> {
+    // try {
+    const collection = getCollection(USERS_COLLECTION_NAME);
+    const user = await collection.findOne({ _id: new mongodb.ObjectId(id) });
+    return user;
+    // } catch (err) {
+    //   throw err;
+    // }
   }
 }

@@ -5,6 +5,8 @@ import { USERS_COLLECTION_NAME } from '../utils/db';
 import { getCollection } from '../utils/helpers';
 const mongodb = require('mongodb'); // do not convert to import (otherwise undefined)
 
+// does anywhere else here need try catch?
+
 export const createUser = async (req: Request, res: Response) => {
   const { email, password } = req.body;
   const existingUser = await User.findByEmail(email);
@@ -26,26 +28,30 @@ export const createUser = async (req: Request, res: Response) => {
   res.status(201).json({ token, id: saveToDb.insertedId });
 };
 
-// fails if wrong id entered
 // only updates email for now...
 export const updateUser = async (req: Request, res: Response) => {
   const collection = getCollection(USERS_COLLECTION_NAME);
-  const updateResult = await collection.updateOne(
-    {
-      _id: new mongodb.ObjectId(req.body.id),
-    },
-    {
-      $set: {
-        email: req.body.email,
+
+  try {
+    const updateResult = await collection.updateOne(
+      {
+        _id: new mongodb.ObjectId(req.body.id), // new mongodb.ObjectId needed, otherwide null; converts to BSON
       },
+      {
+        $set: {
+          email: req.body.email,
+        },
+      }
+    );
+
+    if (!updateResult.modifiedCount) {
+      return res.status(500).send('Could not update user.');
     }
-  );
 
-  if (!updateResult.modifiedCount) {
-    return res.status(500).send('Could not update user.');
+    res.send({ updateResult });
+  } catch (err: any) {
+    return res.status(400).send(err.message);
   }
-
-  res.send({ updateResult });
 };
 
 export const deleteUser = async (req: Request, res: Response) => {
@@ -60,13 +66,17 @@ export const deleteUser = async (req: Request, res: Response) => {
 };
 
 export const getUser = async (req: Request, res: Response) => {
-  const user = await User.findById(req.body.id);
+  try {
+    const user = await User.findById(req.body.id);
 
-  if (!user) {
-    return res.status(404).send('No user found');
+    if (!user) {
+      return res.status(404).send('No user found');
+    }
+
+    res.send(user);
+  } catch (err: any) {
+    return res.status(400).send(err.message);
   }
-
-  res.send(user);
 };
 
 export const getUsers = async (req: Request, res: Response) => {

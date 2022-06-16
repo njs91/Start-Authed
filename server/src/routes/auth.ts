@@ -16,6 +16,6 @@ router.post('/user/create', createUser);
 router.put('/user/update', updateUser);
 router.post('/user/delete', deleteUser);
 router.post('/user/login', logUserIn);
-// if want to be able to view other users' profiles, may need id/username (so can have an account profile url)
+// if want to be able to view other users' profiles, may need dynamic id/username (so can have an account profile url)
 
 export default router;
