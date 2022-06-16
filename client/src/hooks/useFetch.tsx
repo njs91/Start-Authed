@@ -45,9 +45,9 @@ export const useFetch = (): FetchOutputs => {
 
             const data = await res.json();
             setSuccess(data);
-        } catch (e) {
+        } catch (err) {
             setFailed();
-            console.error(e);
+            console.error(err);
         }
     }, []);
 

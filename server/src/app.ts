@@ -3,7 +3,6 @@ import authRoutes from './routes/auth';
 import { connectToDb } from './utils/db';
 
 const app: Application = express();
-
 const PORT = process.env.PORT || 8000;
 
 app.use(express.json()); // seemingly required for req.body

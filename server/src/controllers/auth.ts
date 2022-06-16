@@ -23,6 +23,17 @@ export const createUser = async (req: Request, res: Response) => {
   res.status(201).json({ token }); // if want to return an id, presumably need to generate one
 };
 
+export const deleteUser = async (req: Request, res: Response) => {
+  const { email } = req.body;
+
+  try {
+    const deleteUserResult = await User.deleteUser(email);
+    res.send({ deleteUserResult });
+  } catch (err: any) {
+    return res.status(500).send(err.message); // would prefer to set status code from err as it's not always 500!
+  }
+};
+
 export const getUser = async (req: Request, res: Response) => {
   const user = await User.findByEmail(req.body.email);
 
@@ -45,7 +56,6 @@ export const getUsers = async (req: Request, res: Response) => {
 
 export const logUserIn = async (req: Request, res: Response) => {
   const { email, password } = req.body;
-
   const user = await User.findByEmail(email);
 
   if (!user) {
@@ -60,8 +70,6 @@ export const logUserIn = async (req: Request, res: Response) => {
 
   // assign object methods to the user instance as objects retrieved from db don't have methods
   Object.setPrototypeOf(user, User.prototype);
-
   const token = user.signToken();
-
   return res.json({ token }); // may want to also return an id
 };
