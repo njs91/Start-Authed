@@ -27,7 +27,7 @@ export class User {
 
   async saveToDb() {
     try {
-      const collection = getCollection(USERS_COLLECTION_NAME); // make global variable instead of repeating in every method?
+      const collection = getCollection(USERS_COLLECTION_NAME);
       const saveResult = await collection.insertOne(this);
       return saveResult;
     } catch (err) {
@@ -35,7 +35,7 @@ export class User {
     }
   }
 
-  static async deleteUser(email: string) {
+  static async delete(email: string) {
     try {
       const collection = getCollection(USERS_COLLECTION_NAME);
       const user = await User.findByEmail(email);

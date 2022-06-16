@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import { User } from '../models/auth';
 import bcrypt from 'bcrypt';
+import { USERS_COLLECTION_NAME } from '../utils/db';
+import { getCollection } from '../utils/helpers';
 
 export const createUser = async (req: Request, res: Response) => {
   const { email, password } = req.body;
@@ -23,11 +25,29 @@ export const createUser = async (req: Request, res: Response) => {
   res.status(201).json({ token }); // if want to return an id, presumably need to generate one
 };
 
+export const updateUser = async (req: Request, res: Response) => {
+  const collection = getCollection(USERS_COLLECTION_NAME);
+  const updateResult = await collection.updateOne(
+    { email: req.body.email },
+    {
+      $set: {
+        email: 'hi@test.com',
+      },
+    }
+  );
+
+  if (!updateResult.modifiedCount) {
+    return res.status(500).send('Could not update user.');
+  }
+
+  res.send({ updateResult });
+};
+
 export const deleteUser = async (req: Request, res: Response) => {
   const { email } = req.body;
 
   try {
-    const deleteUserResult = await User.deleteUser(email);
+    const deleteUserResult = await User.delete(email);
     res.send({ deleteUserResult });
   } catch (err: any) {
     return res.status(500).send(err.message); // would prefer to set status code from err as it's not always 500!
