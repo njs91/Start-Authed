@@ -3,6 +3,7 @@ import { User } from '../models/auth';
 import bcrypt from 'bcrypt';
 import { USERS_COLLECTION_NAME } from '../utils/db';
 import { getCollection } from '../utils/helpers';
+const mongodb = require('mongodb'); // do not convert to import (otherwise undefined)
 
 export const createUser = async (req: Request, res: Response) => {
   const { email, password } = req.body;
@@ -22,16 +23,20 @@ export const createUser = async (req: Request, res: Response) => {
 
   const token = newUser.signToken();
 
-  res.status(201).json({ token }); // if want to return an id, presumably need to generate one
+  res.status(201).json({ token, id: saveToDb.insertedId });
 };
 
+// fails if wrong id entered
+// only updates email for now...
 export const updateUser = async (req: Request, res: Response) => {
   const collection = getCollection(USERS_COLLECTION_NAME);
   const updateResult = await collection.updateOne(
-    { email: req.body.email },
+    {
+      _id: new mongodb.ObjectId(req.body.id),
+    },
     {
       $set: {
-        email: 'hi@test.com',
+        email: req.body.email,
       },
     }
   );
@@ -44,10 +49,10 @@ export const updateUser = async (req: Request, res: Response) => {
 };
 
 export const deleteUser = async (req: Request, res: Response) => {
-  const { email } = req.body;
+  const { id } = req.body;
 
   try {
-    const deleteUserResult = await User.delete(email);
+    const deleteUserResult = await User.delete(id);
     res.send({ deleteUserResult });
   } catch (err: any) {
     return res.status(500).send(err.message); // would prefer to set status code from err as it's not always 500!
@@ -55,7 +60,7 @@ export const deleteUser = async (req: Request, res: Response) => {
 };
 
 export const getUser = async (req: Request, res: Response) => {
-  const user = await User.findByEmail(req.body.email);
+  const user = await User.findById(req.body.id);
 
   if (!user) {
     return res.status(404).send('No user found');
@@ -91,5 +96,5 @@ export const logUserIn = async (req: Request, res: Response) => {
   // assign object methods to the user instance as objects retrieved from db don't have methods
   Object.setPrototypeOf(user, User.prototype);
   const token = user.signToken();
-  return res.json({ token }); // may want to also return an id
+  return res.json({ token, id: user._id });
 };

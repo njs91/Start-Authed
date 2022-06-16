@@ -1,6 +1,7 @@
 import { USERS_COLLECTION_NAME } from '../utils/db';
 import { getCollection } from '../utils/helpers';
 import jwt from 'jsonwebtoken';
+const mongodb = require('mongodb'); // do not convert to import (otherwise undefined)
 
 export class User {
   email: string;
@@ -35,10 +36,10 @@ export class User {
     }
   }
 
-  static async delete(email: string) {
+  static async delete(id: string) {
     try {
       const collection = getCollection(USERS_COLLECTION_NAME);
-      const user = await User.findByEmail(email);
+      const user = await User.findById(new mongodb.ObjectId(id));
 
       if (!user) throw new Error('404 - User not found');
 
@@ -66,6 +67,16 @@ export class User {
     try {
       const collection = getCollection(USERS_COLLECTION_NAME);
       const user = await collection.findOne({ email });
+      return user;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  static async findById(id: string) {
+    try {
+      const collection = getCollection(USERS_COLLECTION_NAME);
+      const user = await collection.findOne({ _id: new mongodb.ObjectId(id) });
       return user;
     } catch (err) {
       throw err;
