@@ -23,8 +23,21 @@ export const CreateAccountForm: VFC = () => {
             passwordConfirmation: '',
         },
     });
-    const onSubmit: SubmitHandler<CreateAccountFormInputs> = (data) => {
+    const onSubmit: SubmitHandler<CreateAccountFormInputs> = async (data) => {
         console.log('submitted with: ', data);
+
+        const res = await fetch('http://localhost:8000/api/users'); // test works
+
+        console.log('res json: ', await res.json());
+
+        // const res = await fetch('http://localhost:8000/user/create', {
+        //     method: 'POST',
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify({ name: 'User 1' }),
+        // });
+
+        // might need to set cookies here...
+        // e.g. setCookie('Email', res.data.email) - and same for user id and auth token?
 
         // note: if clicking inside lastName, input changes from null to '', so submit as the following:
         // console.log(
@@ -36,6 +49,26 @@ export const CreateAccountForm: VFC = () => {
     };
     const loading = false; // @todo
     const error = false; // @todo
+
+    // const fetchProducts = async () => { // needs async keyword (returns promise) try { // code to try (that could potentially fail)
+    //     const res = await fetch(url); // add await before Fn returning promise // stores result of promise in a variable
+    //     if (!res.ok) {
+    //     throw new Error(`HTTP error: ${res.status}`); }
+    //     const json = await res.json();
+    //     return json; }
+    //     catch(error) { // what to do if error occurs; catches uncaught errors
+    //     console.error(`Could not get products: ${error}`); }
+    //     finally {
+    //     // code here executes regardless of try-catch result
+    //     } }
+
+    //     // e.g. for posting data
+    // fetch(url, { // options (for not just GETTING data)
+    //     method: 'POST',
+    //     headers: { // needed for JSON stringified data
+    //     'Content-Type': 'application/json' },
+    //     // need to stringify when posting data
+    //     body: JSON.stringify({name: 'User 1'}) })
 
     return (
         <>

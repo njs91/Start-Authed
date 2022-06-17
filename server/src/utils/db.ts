@@ -1,5 +1,4 @@
-import mongodb from 'mongodb';
-import { MongoClient } from 'mongodb';
+import mongodb, { MongoClient } from 'mongodb';
 
 export const USERS_COLLECTION_NAME = 'users';
 

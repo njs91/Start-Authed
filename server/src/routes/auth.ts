@@ -10,12 +10,12 @@ import {
 
 const router = express.Router();
 
-router.get('/users', getUsers);
-router.get('/user', getUser);
-router.post('/user/create', createUser);
-router.put('/user/update', updateUser);
-router.post('/user/delete', deleteUser);
-router.post('/user/login', logUserIn);
+router.get('/api/users', getUsers);
+router.get('/api/user', getUser);
+router.post('/api/user/create', createUser);
+router.put('/api/user/update', updateUser);
+router.post('/api/user/delete', deleteUser);
+router.post('/api/user/login', logUserIn);
 // if want to be able to view other users' profiles, may need dynamic id/username (so can have an account profile url)
 
 export default router;
