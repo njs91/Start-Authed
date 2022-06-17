@@ -1,4 +1,4 @@
-import React, { VFC } from 'react';
+import React, { useState, VFC } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { InputField } from '../default/Form';
 import styles from '../../css/default.module.scss';
@@ -14,6 +14,10 @@ export type CreateAccountFormInputs = {
 };
 
 export const CreateAccountForm: VFC = () => {
+    const [data, setData] = useState<any>();
+    const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<string | null>(null);
+
     const methods = useForm<CreateAccountFormInputs>({
         resolver: yupResolver(createAccountSchema),
         mode: 'onTouched',
@@ -23,18 +27,29 @@ export const CreateAccountForm: VFC = () => {
             passwordConfirmation: '',
         },
     });
-    const onSubmit: SubmitHandler<CreateAccountFormInputs> = async (data) => {
-        console.log('submitted with: ', data);
 
-        const res = await fetch('http://localhost:8000/api/users'); // test works
+    const onSubmit: SubmitHandler<CreateAccountFormInputs> = async (formData) => {
+        try {
+            setLoading(true);
 
-        console.log('res json: ', await res.json());
+            const res = await fetch('http://localhost:8000/api/user/create', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData),
+            });
 
-        // const res = await fetch('http://localhost:8000/user/create', {
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify({ name: 'User 1' }),
-        // });
+            if (!res.ok) {
+                setError(`HTTP error: ${res.status}`);
+                return;
+            }
+
+            const resJson = await res.json();
+            setData(resJson);
+        } catch (err: any) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
 
         // might need to set cookies here...
         // e.g. setCookie('Email', res.data.email) - and same for user id and auth token?
@@ -47,8 +62,10 @@ export const CreateAccountForm: VFC = () => {
         //     data?.lastName?.length === 0 ? null : data.lastName
         // );
     };
-    const loading = false; // @todo
-    const error = false; // @todo
+
+    console.log('data: ', data);
+    console.log('loading: ', loading);
+    console.log('error: ', error);
 
     // const fetchProducts = async () => { // needs async keyword (returns promise) try { // code to try (that could potentially fail)
     //     const res = await fetch(url); // add await before Fn returning promise // stores result of promise in a variable
@@ -94,7 +111,7 @@ export const CreateAccountForm: VFC = () => {
                     )}
                 </form>
             </FormProvider>
-            {error && <Error msg={'Error logging in'} marginTop={true} />}
+            {error && <Error msg={'@todo error message'} marginTop={true} />}
         </>
     );
 };
