@@ -1,6 +1,6 @@
 import React, { createContext, FC, ReactNode, useState } from 'react';
 
-export const UserContext = createContext<UserContextType>(null);
+export const UserContext = createContext<UserContextType>(null); // @todo set from cookies if available?
 
 export const UserProvider: FC<UserProviderProps> = ({ children }) => {
     const [user, setUser] = useState<UserContextType>(null);

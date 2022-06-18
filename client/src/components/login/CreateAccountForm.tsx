@@ -6,6 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { createAccountSchema } from '../../schemas/CreateAccountSchema';
 import { Loading } from '../default/Loading';
 import { Error } from '../default/Error';
+import { useNavigate } from 'react-router-dom';
 
 export type CreateAccountFormInputs = {
     email: string;
@@ -14,7 +15,7 @@ export type CreateAccountFormInputs = {
 };
 
 export const CreateAccountForm: VFC = () => {
-    const [data, setData] = useState<any>();
+    const navigate = useNavigate();
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -39,53 +40,17 @@ export const CreateAccountForm: VFC = () => {
             });
 
             if (!res.ok) {
-                setError(`HTTP error: ${res.status}`);
+                setError(`HTTP error: ${res.status}`); // @todo: want to show the proper error message: https://stackoverflow.com/questions/72667627/error-only-shows-at-the-back-end-but-not-correctly-at-the-front-end
                 return;
             }
 
-            const resJson = await res.json();
-            setData(resJson);
+            navigate('/login');
         } catch (err: any) {
             setError(err.message);
         } finally {
             setLoading(false);
         }
-
-        // might need to set cookies here...
-        // e.g. setCookie('Email', res.data.email) - and same for user id and auth token?
-
-        // note: if clicking inside lastName, input changes from null to '', so submit as the following:
-        // console.log(
-        //     'lastName: ',
-        //     data.lastName,
-        //     ' - will submit as: ',
-        //     data?.lastName?.length === 0 ? null : data.lastName
-        // );
     };
-
-    console.log('data: ', data);
-    console.log('loading: ', loading);
-    console.log('error: ', error);
-
-    // const fetchProducts = async () => { // needs async keyword (returns promise) try { // code to try (that could potentially fail)
-    //     const res = await fetch(url); // add await before Fn returning promise // stores result of promise in a variable
-    //     if (!res.ok) {
-    //     throw new Error(`HTTP error: ${res.status}`); }
-    //     const json = await res.json();
-    //     return json; }
-    //     catch(error) { // what to do if error occurs; catches uncaught errors
-    //     console.error(`Could not get products: ${error}`); }
-    //     finally {
-    //     // code here executes regardless of try-catch result
-    //     } }
-
-    //     // e.g. for posting data
-    // fetch(url, { // options (for not just GETTING data)
-    //     method: 'POST',
-    //     headers: { // needed for JSON stringified data
-    //     'Content-Type': 'application/json' },
-    //     // need to stringify when posting data
-    //     body: JSON.stringify({name: 'User 1'}) })
 
     return (
         <>
@@ -111,7 +76,7 @@ export const CreateAccountForm: VFC = () => {
                     )}
                 </form>
             </FormProvider>
-            {error && <Error msg={'@todo error message'} marginTop={true} />}
+            {error && <Error msg={error} marginTop={true} />}
         </>
     );
 };
