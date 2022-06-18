@@ -15,6 +15,7 @@ export type LoginFormInputs = {
 };
 
 // @todo navigate to profile if logged in already
+// @todo change login button to 'view account' if logged in
 
 export const LoginForm: VFC = () => {
     const navigate = useNavigate();
@@ -42,7 +43,8 @@ export const LoginForm: VFC = () => {
             });
 
             if (!res.ok) {
-                setError(`HTTP error: ${res.status}`); // @todo: want to show the proper error message: https://stackoverflow.com/questions/72667627/error-only-shows-at-the-back-end-but-not-correctly-at-the-front-end
+                const errorText = await res.text();
+                setError(`HTTP error (${res.status}): ${errorText}`);
                 return;
             }
 

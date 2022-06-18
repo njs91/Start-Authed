@@ -40,7 +40,8 @@ export const CreateAccountForm: VFC = () => {
             });
 
             if (!res.ok) {
-                setError(`HTTP error: ${res.status}`); // @todo: want to show the proper error message: https://stackoverflow.com/questions/72667627/error-only-shows-at-the-back-end-but-not-correctly-at-the-front-end
+                const errorText = await res.text();
+                setError(`HTTP error (${res.status}): ${errorText}`);
                 return;
             }
 
