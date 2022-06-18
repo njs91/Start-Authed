@@ -14,9 +14,6 @@ export type LoginFormInputs = {
     password: string;
 };
 
-// @todo navigate to profile if logged in already
-// @todo change login button to 'view account' if logged in
-
 export const LoginForm: VFC = () => {
     const navigate = useNavigate();
     const { setAccount } = useContext<UserContextType>(UserContext);

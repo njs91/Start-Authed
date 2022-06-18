@@ -1,10 +1,11 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useContext, useState } from 'react';
 import headerStyles from '../css/components/header.module.scss';
 import { Link } from 'react-router-dom';
 import defaultStyles from '../css/default.module.scss';
 import { faAngleRight, faBars, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Section } from './default/Section';
+import { UserContextType, UserContext } from '../contexts/UserContext';
 
 interface HeaderProps {
     cls?: string;
@@ -31,12 +32,22 @@ export const Header: FC<HeaderProps> = ({ cls = '' }) => {
                             </li>
                         ))}
                     </ul>
-                    <Link to='/login' className={defaultStyles.btnSecondary}>
-                        Login
-                    </Link>
+                    <AccountButton />
                 </div>
             </div>
         </Section>
+    );
+};
+
+const AccountButton = () => {
+    const { user } = useContext<UserContextType>(UserContext);
+    const path = user ? '/user/profile' : '/login';
+    const text = user ? 'My Account' : 'Login';
+
+    return (
+        <Link to={path} className={defaultStyles.btnSecondary}>
+            {text}
+        </Link>
     );
 };
 
