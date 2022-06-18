@@ -81,3 +81,6 @@ export const asyncDebounce = (fn: () => {}, wait: number, callFirst: any) => {
         });
     };
 };
+
+export const getCookie = (name: string): string =>
+    document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop() || '';
