@@ -84,3 +84,13 @@ export const asyncDebounce = (fn: () => {}, wait: number, callFirst: any) => {
 
 export const getCookie = (name: string): string =>
     document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop() || '';
+
+// note: when cookies deleted, they may not show in the browser tab until you switch tabs and back again
+// if the deleted cookies' paths aren't /, they may not work
+export const deleteCookies = (names: string[]): void => {
+    names.forEach((name: string) => {
+        if (getCookie(name)) {
+            document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/`;
+        }
+    });
+};
