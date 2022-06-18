@@ -4,7 +4,8 @@ import { UserContext, UserContextType } from '../../../contexts/UserContext';
 import { userProfileMeta } from '../../MetaTags';
 
 const UserProfile = () => {
-    const user = useContext<UserContextType>(UserContext);
+    const { user } = useContext<UserContextType>(UserContext);
+    console.log('user from profile: ', user);
 
     return (
         <Page meta={userProfileMeta}>

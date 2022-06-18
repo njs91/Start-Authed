@@ -14,10 +14,11 @@ export type LoginFormInputs = {
     password: string;
 };
 
+// @todo navigate to profile if logged in already
+
 export const LoginForm: VFC = () => {
     const navigate = useNavigate();
-    // const setUser = useContext<UserContextType>(UserContext);
-    const [account, setAccount] = useState<any>(false); // needed, or just set account context?
+    const { setAccount } = useContext<UserContextType>(UserContext);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | boolean>(false);
 
@@ -45,9 +46,9 @@ export const LoginForm: VFC = () => {
                 return;
             }
 
-            const accountData = await res.json();
-            setAccount(accountData); // perhaps change to setUser from context, and then set cookies - or add the logic to setUser to automatically set the relevant cookies
-            setError(false);
+            const loginData = await res.json();
+            const accountData = { ...loginData, email: formData.email };
+            setAccount(accountData);
             navigate('/user/profile');
         } catch (err: any) {
             setError(err.message);
@@ -55,13 +56,6 @@ export const LoginForm: VFC = () => {
             setLoading(false);
         }
     };
-    // might need to set cookies here...
-    // // e.g. setCookie('Email', res.data.email) - and same for user id and auth token?
-    // set data in account context?
-
-    console.log('account: ', account);
-    console.log('loading: ', loading);
-    console.log('error: ', error);
 
     return (
         <>
