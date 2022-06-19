@@ -62,7 +62,7 @@ export const LoginForm: VFC = () => {
                 <form onSubmit={methods.handleSubmit(onSubmit)}>
                     <div className={styles.formInner}>
                         <InputField type='text' title='email' placeholder='joe@bloggs.com' />
-                        <InputField type='text' title='password' placeholder='********' />
+                        <InputField type='password' title='password' placeholder='********' />
                     </div>
 
                     {loading ? (
