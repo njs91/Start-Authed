@@ -13,6 +13,8 @@ interface HeaderProps {
 
 export const Header: FC<HeaderProps> = ({ cls = '' }) => {
     const [menuOpen, setMenuOpen] = useState(false);
+    const { user } = useContext<UserContextType>(UserContext);
+    const headerLinks = useMemo(() => (user ? accountLinks : links), [user]);
 
     return (
         <Section clsOuter={`${headerStyles.headerOuter} ${cls}`} clsInner={headerStyles.headerInner} tag='header'>
@@ -22,7 +24,7 @@ export const Header: FC<HeaderProps> = ({ cls = '' }) => {
             <div className={headerStyles.rightArea}>
                 <FontAwesomeIcon icon={menuOpen ? faTimesCircle : faBars} onClick={() => setMenuOpen(!menuOpen)} />
                 <div className={`${headerStyles.rightAreaInner} ${menuOpen ? headerStyles.open : ''}`}>
-                    <AccountLinks links={links} />
+                    <HeaderLinks links={headerLinks} />
                     <AccountButton />
                 </div>
             </div>
@@ -30,11 +32,11 @@ export const Header: FC<HeaderProps> = ({ cls = '' }) => {
     );
 };
 
-interface AccountLinksProps {
+interface HeaderLinksProps {
     links: Links;
 }
 
-const AccountLinks: FC<AccountLinksProps> = ({ links }) => (
+const HeaderLinks: FC<HeaderLinksProps> = ({ links }) => (
     <ul>
         {links.map((link: LinkType) => (
             <li key={link.title}>
@@ -67,7 +69,7 @@ const AccountButton = () => {
     );
 };
 
-export const links: Links = [
+const links: Links = [
     {
         title: 'Home',
         url: '/',
@@ -75,6 +77,17 @@ export const links: Links = [
     {
         title: 'About',
         url: '/about',
+    },
+];
+
+const accountLinks: Links = [
+    {
+        title: 'Home',
+        url: '/',
+    },
+    {
+        title: 'My Account',
+        url: '/user/profile',
     },
 ];
 
