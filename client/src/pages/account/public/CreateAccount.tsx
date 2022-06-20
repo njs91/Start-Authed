@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { CreateAccountForm } from '../../../components/login/CreateAccountForm';
+import { CreateAccountForm } from '../../../components/account/CreateAccountForm';
 import { Page } from '../../../components/Page';
 import { createAccountMeta } from '../../MetaTags';
 import styles from '../../../css/pages/login.module.scss';

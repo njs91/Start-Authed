@@ -48,7 +48,7 @@ export const DeleteAccountModal = () => {
 
     return (
         <div>
-            <button onClick={openModal} className={styles.btnRed}>
+            <button onClick={openModal} className={`${styles.btnRed} ${styles.marginTop}`}>
                 Delete Account
             </button>
             <Modal

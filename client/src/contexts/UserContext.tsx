@@ -51,5 +51,5 @@ type User = {
     token: string;
     email: string;
 };
-type SetAccountArgs = User | null;
+export type SetAccountArgs = User | null;
 type SetAccountCookiesFn = (arg0: SetAccountArgs, arg1?: string) => void;

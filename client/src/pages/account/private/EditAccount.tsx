@@ -1,12 +1,13 @@
 import React from 'react';
-import { DeleteAccountModal } from '../../../components/login/DeleteAccountModal';
+import { DeleteAccountModal } from '../../../components/account/DeleteAccountModal';
+import { EditAccountForm } from '../../../components/account/EditAccountForm';
 import { Page } from '../../../components/Page';
 import { editAccountMeta } from '../../MetaTags';
 
 const EditAccount = () => (
     <Page meta={editAccountMeta}>
         <h1>Edit Account</h1>
-        <p>Edit your account information here</p>
+        <EditAccountForm />
         <DeleteAccountModal />
     </Page>
 );

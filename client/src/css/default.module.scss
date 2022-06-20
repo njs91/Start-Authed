@@ -157,6 +157,10 @@ a {
     &:visited {
         color: $contrastedColor;
     }
+
+    &.marginTop {
+        margin-top: 2rem;
+    }
 }
 
 .btnPrimary {
@@ -176,6 +180,18 @@ a {
 }
 
 // containers
+.buttonsContainerSpaced {
+    display: flex;
+    justify-content: space-between;
+
+    button ~ button {
+        margin-left: 2rem;
+    }
+
+    &.marginTop {
+        margin-top: 2rem;
+    }
+}
 .pageContainer {
     width: 100vw;
     min-height: 100vh;
@@ -279,6 +295,7 @@ a {
     }
 
     .buttonsContainer {
+        // @todo: do we nee dthis now that we have buttonsContainerSpaced? provably not
         display: flex;
         justify-content: space-between;
 

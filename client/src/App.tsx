@@ -11,7 +11,7 @@ import CreateAccount from './pages/account/public/CreateAccount';
 import EditAccount from './pages/account/private/EditAccount';
 import UserProfile from './pages/account/private/UserProfile';
 import { UserProvider } from './contexts/UserContext';
-import { PrivateRoute } from './components/login/PrivateRoute';
+import { PrivateRoute } from './components/account/PrivateRoute';
 
 const App: FC = () => (
     <UserProvider>
