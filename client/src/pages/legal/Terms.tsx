@@ -4,7 +4,7 @@ import { termsMeta } from '../MetaTags';
 
 const Terms: VFC = () => (
     <Page meta={termsMeta}>
-        <h1>Terms &amp; Conditinos</h1>
+        <h1>Terms &amp; Conditions</h1>
         <p>Content...</p>
     </Page>
 );

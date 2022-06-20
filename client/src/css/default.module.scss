@@ -293,16 +293,6 @@ a {
             transition: $transition-std;
         }
     }
-
-    .buttonsContainer {
-        // @todo: do we nee dthis now that we have buttonsContainerSpaced? provably not
-        display: flex;
-        justify-content: space-between;
-
-        button ~ button {
-            margin-left: 2rem;
-        }
-    }
 }
 
 // forms
