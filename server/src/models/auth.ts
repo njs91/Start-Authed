@@ -7,10 +7,10 @@ const mongodb = require('mongodb'); // do not convert to import (otherwise undef
 
 export class User {
   email: string;
-  hashedPassword: any;
+  hashedPassword: string;
   dateCreated: Date;
 
-  constructor(email: string, hashedPassword: any) {
+  constructor(email: string, hashedPassword: string) {
     this.email = email.toLowerCase();
     this.hashedPassword = hashedPassword;
     this.dateCreated = new Date();
