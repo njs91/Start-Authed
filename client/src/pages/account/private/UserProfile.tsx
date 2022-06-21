@@ -7,12 +7,15 @@ import styles from '../../../css/default.module.scss';
 
 const UserProfile = () => {
     const { user } = useContext<UserContextType>(UserContext);
-    console.log('user from profile: ', user);
 
     return (
         <Page meta={userProfileMeta}>
             <h1>User Profile</h1>
-            <p>View your profile information here</p>
+            <p>View your profile information:</p>
+            <ul>
+                <li>Email: {user?.email}</li>
+                <li>ID: {user?.id}</li>
+            </ul>
             <Link to='/user/edit-account' className={styles.btnPrimary}>
                 Edit Account
             </Link>
