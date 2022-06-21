@@ -29,7 +29,7 @@ export const TestModal: VFC = () => {
 
     return (
         <div>
-            <button onClick={openModal} className={styles.btnPrimary}>
+            <button onClick={openModal} className={styles.btnPrimary} aria-label='open'>
                 Open Modal
             </button>
             <Modal
@@ -40,17 +40,17 @@ export const TestModal: VFC = () => {
                 contentLabel='Example Modal'
                 portalClassName={styles.modalOverlayWrap} // cannot use overlayClassName
             >
-                <button onClick={closeModal} className={styles.close}>
+                <button onClick={closeModal} className={styles.close} aria-label='close'>
                     <FontAwesomeIcon icon={faTimes} />
                 </button>
                 <div>
                     <h2>Title</h2>
                     <p>Content</p>
                     <div className={styles.buttonsContainerSpaced}>
-                        <button onClick={doSomething} className={styles.btnPrimary}>
+                        <button onClick={doSomething} className={styles.btnPrimary} aria-label='submit'>
                             Do Something
                         </button>
-                        <button onClick={closeModal} className={styles.btnRed}>
+                        <button onClick={closeModal} className={styles.btnRed} aria-label='close'>
                             Close
                         </button>
                     </div>

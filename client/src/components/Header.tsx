@@ -22,7 +22,11 @@ export const Header: FC<HeaderProps> = ({ cls = '' }) => {
                 <Link to='/'>TITLE</Link>
             </h2>
             <div className={headerStyles.rightArea}>
-                <FontAwesomeIcon icon={menuOpen ? faTimesCircle : faBars} onClick={() => setMenuOpen(!menuOpen)} />
+                <FontAwesomeIcon
+                    icon={menuOpen ? faTimesCircle : faBars}
+                    onClick={() => setMenuOpen(!menuOpen)}
+                    aria-label='menu'
+                />
                 <div className={`${headerStyles.rightAreaInner} ${menuOpen ? headerStyles.open : ''}`}>
                     <HeaderLinks links={headerLinks} />
                     <AccountButton />
@@ -42,7 +46,7 @@ const HeaderLinks: FC<HeaderLinksProps> = ({ links }) => (
             <li key={link.title}>
                 <Link to={link.url}>
                     {link.title}
-                    <FontAwesomeIcon icon={faAngleRight} />
+                    <FontAwesomeIcon icon={faAngleRight} aria-label='arrow right' />
                 </Link>
             </li>
         ))}

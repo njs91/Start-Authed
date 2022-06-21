@@ -133,7 +133,7 @@ a {
 @mixin buttonStyles($bg, $optionalColor: '') {
     $contrastedColor: contrastText($bg, $optionalColor);
     font-size: $font-std;
-    padding: 1rem 3rem;
+    padding: 0.5em 1.5em;
     background-color: $bg;
     color: $contrastedColor;
     transition: $transition-std;
@@ -159,7 +159,7 @@ a {
     }
 
     &.marginTop {
-        margin-top: 2rem;
+        margin-top: 1em;
     }
 }
 
@@ -185,11 +185,11 @@ a {
     justify-content: space-between;
 
     button ~ button {
-        margin-left: 2rem;
+        margin-left: 1em;
     }
 
     &.marginTop {
-        margin-top: 2rem;
+        margin-top: 1em;
     }
 }
 .pageContainer {
@@ -241,7 +241,7 @@ a {
 .errorText {
     color: $white;
     font-weight: 700;
-    padding: 2rem 3rem;
+    padding: 1em 1.5em;
     background-color: $red;
     display: flex;
     align-items: center;
@@ -257,7 +257,7 @@ a {
     }
 
     &.marginTop {
-        margin-top: 2rem;
+        margin-top: 1em;
     }
 }
 
@@ -300,8 +300,8 @@ form {
     input,
     textarea {
         border: $border-std;
-        padding: 1rem;
-        margin-bottom: 2rem;
+        padding: 0.5em;
+        margin-bottom: 1em;
     }
 
     textarea {
@@ -309,13 +309,13 @@ form {
     }
 
     label {
-        margin-bottom: 1rem;
+        margin-bottom: 0.5em;
     }
 
     select {
         padding: 1em 1.5em 1em 1em;
         font-size: $font-small;
-        margin: 0 auto 2rem 0;
+        margin: 0 auto 1em 0;
         background: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNC45NSIgaGVpZ2h0PSIxMCIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxLjQxIDQuNjcgMi40OCAzLjE4IDMuNTQgNC42NyAxLjQxIDQuNjciLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMy41NCA1LjMzIDIuNDggNi44MiAxLjQxIDUuMzMgMy41NCA1LjMzIi8+PC9zdmc+)
             no-repeat;
         background-position: right 5px top;
@@ -326,8 +326,8 @@ form {
 
     .required {
         color: $red;
-        margin-bottom: 2rem;
-        margin-top: -1rem;
+        margin-bottom: 1em;
+        margin-top: -0.5em;
     }
 
     .formInner {

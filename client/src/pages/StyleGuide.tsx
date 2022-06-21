@@ -75,10 +75,11 @@ const StyleGuide: VFC = () => (
                 <li>Whisky</li>
             </ol>
             <p>
-                Icon Example: <FontAwesomeIcon icon={faCoffee} />
+                Icon Example: <FontAwesomeIcon icon={faCoffee} aria-label='coffee' />
             </p>
             <p>
-                Green Check Icon: <FontAwesomeIcon icon={faCheckCircle} className={styles.greenText} />
+                Green Check Icon:{' '}
+                <FontAwesomeIcon icon={faCheckCircle} className={styles.greenText} aria-label='green tick' />
             </p>
             <p>
                 Icons:{' '}

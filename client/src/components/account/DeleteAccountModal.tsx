@@ -48,7 +48,7 @@ export const DeleteAccountModal = () => {
 
     return (
         <div>
-            <button onClick={openModal} className={`${styles.btnRed} ${styles.marginTop}`}>
+            <button onClick={openModal} className={`${styles.btnRed} ${styles.marginTop}`} aria-label='delete account'>
                 Delete Account
             </button>
             <Modal
@@ -58,7 +58,7 @@ export const DeleteAccountModal = () => {
                 contentLabel='Delete Account Modal'
                 portalClassName={styles.modalOverlayWrap} // cannot use overlayClassName
             >
-                <button onClick={closeModal} className={styles.close}>
+                <button onClick={closeModal} className={styles.close} aria-label='close'>
                     <FontAwesomeIcon icon={faTimes} />
                 </button>
                 <div>
@@ -68,11 +68,11 @@ export const DeleteAccountModal = () => {
                         {loading ? (
                             <Loading />
                         ) : (
-                            <button onClick={deleteAccount} className={styles.btnRed}>
+                            <button onClick={deleteAccount} className={styles.btnRed} aria-label='delete'>
                                 Delete
                             </button>
                         )}
-                        <button onClick={closeModal} className={styles.btnPrimary}>
+                        <button onClick={closeModal} className={styles.btnPrimary} aria-label='close'>
                             Cancel
                         </button>
                     </div>
