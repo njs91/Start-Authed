@@ -23,7 +23,7 @@ export const EditAccountForm = () => {
         resolver: yupResolver(editAccountSchema),
         mode: 'onTouched',
         defaultValues: {
-            email: '',
+            email: user?.email,
         },
     });
 
