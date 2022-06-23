@@ -13,7 +13,11 @@ export const loginMeta = {
 };
 export const forgotPasswordMeta = {
     title: 'Forgot Password',
-    description: 'Reset password page description.',
+    description: 'Forgot password page description.',
+};
+export const forgotPasswordSuccessMeta = {
+    title: 'Forgot Password Success',
+    description: 'Forgot password success page description.',
 };
 export const createAccountMeta = {
     title: 'Create Account',
