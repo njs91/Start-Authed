@@ -3,7 +3,7 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { InputField } from '../default/Form';
 import styles from '../../css/default.module.scss';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { createAccountSchema } from '../../schemas/CreateAccountSchema';
+import { createAccountSchema } from '../../schemas/AccountSchemas';
 import { Loading } from '../default/Loading';
 import { Error } from '../default/Error';
 import { useNavigate } from 'react-router-dom';

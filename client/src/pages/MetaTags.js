@@ -11,6 +11,10 @@ export const loginMeta = {
     title: 'Login',
     description: 'Login page description.',
 };
+export const forgotPasswordMeta = {
+    title: 'Forgot Password',
+    description: 'Reset password page description.',
+};
 export const createAccountMeta = {
     title: 'Create Account',
     description: 'Create account page description.',

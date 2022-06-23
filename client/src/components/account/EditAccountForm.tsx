@@ -3,11 +3,11 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { InputField } from '../default/Form';
 import styles from '../../css/default.module.scss';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { editAccountSchema } from '../../schemas/EditAccountSchema';
 import { Loading } from '../default/Loading';
 import { Error } from '../default/Error';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserContextType, UserContext, SetAccountArgs } from '../../contexts/UserContext';
+import { editAccountSchema } from '../../schemas/AccountSchemas';
 
 export type EditAccountFormInputs = {
     email: string;

@@ -1,54 +1,50 @@
-import React, { useContext, useState, VFC } from 'react';
+import React, { useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { InputField } from '../default/Form';
 import styles from '../../css/default.module.scss';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Loading } from '../default/Loading';
 import { Error } from '../default/Error';
+import { forgotPasswordSchema } from '../../schemas/AccountSchemas';
 import { useNavigate } from 'react-router-dom';
-import { UserContextType, UserContext } from '../../contexts/UserContext';
-import { loginSchema } from '../../schemas/AccountSchemas';
 
-export type LoginFormInputs = {
+export type PasswordResetFormInputs = {
     email: string;
-    password: string;
 };
 
-export const LoginForm: VFC = () => {
+export const PasswordResetForm = () => {
     const navigate = useNavigate();
-    const { setAccount } = useContext<UserContextType>(UserContext);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | boolean>(false);
 
-    const methods = useForm<LoginFormInputs>({
-        resolver: yupResolver(loginSchema),
+    const methods = useForm<PasswordResetFormInputs>({
+        resolver: yupResolver(forgotPasswordSchema),
         mode: 'onTouched',
         defaultValues: {
             email: '',
-            password: '',
         },
     });
 
-    const onSubmit: SubmitHandler<LoginFormInputs> = async (formData) => {
+    const onSubmit: SubmitHandler<PasswordResetFormInputs> = async (formData) => {
+        console.log('This function needs changing so that it sends a password reset email. Form data: ', formData);
+
         try {
-            setLoading(true);
+            // setLoading(true);
 
-            const res = await fetch('http://localhost:8000/api/user/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData),
-            });
+            // const res = await fetch('http://localhost:8000/api/user/login', {
+            //     // @todo: replace with password reset endpoint
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify(formData),
+            // });
 
-            if (!res.ok) {
-                const errorText = await res.text();
-                setError(`HTTP error (${res.status}): ${errorText}`);
-                return;
-            }
+            // if (!res.ok) {
+            //     const errorText = await res.text();
+            //     setError(`HTTP error (${res.status}): ${errorText}`);
+            //     return;
+            // }
 
-            const loginData = await res.json();
-            const accountData = { ...loginData, email: formData.email };
-            setAccount(accountData);
-            navigate('/user/profile');
+            navigate('/forgot-password-success');
         } catch (err: any) {
             setError(err.message);
         } finally {
@@ -62,14 +58,13 @@ export const LoginForm: VFC = () => {
                 <form onSubmit={methods.handleSubmit(onSubmit)}>
                     <div className={styles.formInner}>
                         <InputField type='text' title='email' placeholder='joe@bloggs.com' />
-                        <InputField type='password' title='password' placeholder='********' />
                     </div>
 
                     {loading ? (
                         <Loading />
                     ) : (
                         <button type='submit' className={styles.btnPrimary}>
-                            Log in
+                            Continue
                         </button>
                     )}
                 </form>

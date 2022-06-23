@@ -12,6 +12,7 @@ import EditAccount from './pages/account/private/EditAccount';
 import UserProfile from './pages/account/private/UserProfile';
 import { UserProvider } from './contexts/UserContext';
 import { PrivateRoute } from './components/account/PrivateRoute';
+import ForgotPassword from './pages/account/public/ForgotPassword';
 
 const App: FC = () => (
     <UserProvider>
@@ -22,6 +23,7 @@ const App: FC = () => (
                 <Route path='/about' element={<About />} />
                 <Route path='/login' element={<Login />} />
                 <Route path='/create-account' element={<CreateAccount />} />
+                <Route path='/forgot-password' element={<ForgotPassword />} />
                 <Route
                     path='/user/profile'
                     element={

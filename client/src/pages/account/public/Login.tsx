@@ -18,7 +18,10 @@ const Login: React.VFC = () => {
         <Page meta={loginMeta}>
             <h1>Login</h1>
             <LoginForm />
-            <p className={styles.createAccount}>
+            <p className={styles.signInLink}>
+                <Link to='/forgot-password'>Forgot password</Link>.
+            </p>
+            <p className={styles.signInLink}>
                 Don't have an account? <Link to='/create-account'>Create an account</Link>.
             </p>
         </Page>
