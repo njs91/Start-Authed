@@ -26,6 +26,7 @@ export const PasswordResetForm = () => {
     });
 
     const onSubmit: SubmitHandler<PasswordResetFormInputs> = async (formData) => {
+        // @todo
         console.log('This function needs changing so that it sends a password reset email. Form data: ', formData);
 
         try {
