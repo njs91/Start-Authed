@@ -108,3 +108,20 @@ export const logUserIn = async (req: Request, res: Response) => {
   const token = user.signToken();
   return res.json({ token, id: user._id });
 };
+
+export const sendPasswordResetEmail = async (req: Request, res: Response) => {
+  try {
+    const user = await User.findByEmail(req.body.email);
+
+    if (!user) {
+      return res.status(404).send('No user found');
+    }
+
+    res
+      .status(500)
+      .send('Email-sending functionality has not been implemented yet...');
+    // @todo: send an email, and then send a response saying it has been sent successfully/whatever
+  } catch (err: any) {
+    return res.status(400).send(err.message);
+  }
+};
