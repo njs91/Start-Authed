@@ -26,24 +26,20 @@ export const PasswordResetForm = () => {
     });
 
     const onSubmit: SubmitHandler<PasswordResetFormInputs> = async (formData) => {
-        // @todo
-        console.log('This function needs changing so that it sends a password reset email. Form data: ', formData);
-
         try {
-            // setLoading(true);
+            setLoading(true);
 
-            // const res = await fetch('http://localhost:8000/api/user/login', {
-            //     // @todo: replace with password reset endpoint
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify(formData),
-            // });
+            const res = await fetch('http://localhost:8000/api/user/forgotpassword', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData),
+            });
 
-            // if (!res.ok) {
-            //     const errorText = await res.text();
-            //     setError(`HTTP error (${res.status}): ${errorText}`);
-            //     return;
-            // }
+            if (!res.ok) {
+                const errorText = await res.text();
+                setError(`HTTP error (${res.status}): ${errorText}`);
+                return;
+            }
 
             navigate('/forgot-password-success');
         } catch (err: any) {

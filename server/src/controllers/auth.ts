@@ -120,7 +120,7 @@ export const sendPasswordResetEmail = async (req: Request, res: Response) => {
     res
       .status(500)
       .send('Email-sending functionality has not been implemented yet...');
-    // @todo: send an email, and then send a response saying it has been sent successfully/whatever
+    // @todo: send an email, and then send a success response
   } catch (err: any) {
     return res.status(400).send(err.message);
   }
