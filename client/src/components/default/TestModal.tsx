@@ -29,7 +29,7 @@ export const TestModal: VFC = () => {
 
     return (
         <div>
-            <button onClick={openModal} className={styles.btnPrimary} aria-label='open'>
+            <button onClick={openModal} className={styles.btnPrimary}>
                 Open Modal
             </button>
             <Modal
@@ -47,10 +47,10 @@ export const TestModal: VFC = () => {
                     <h2>Title</h2>
                     <p>Content</p>
                     <div className={styles.buttonsContainerSpaced}>
-                        <button onClick={doSomething} className={styles.btnPrimary} aria-label='submit'>
+                        <button onClick={doSomething} className={styles.btnPrimary}>
                             Do Something
                         </button>
-                        <button onClick={closeModal} className={styles.btnRed} aria-label='close'>
+                        <button onClick={closeModal} className={styles.btnRed}>
                             Close
                         </button>
                     </div>

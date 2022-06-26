@@ -72,7 +72,7 @@ export const CreateAccountForm: VFC = () => {
                         <Loading />
                     ) : (
                         <button type='submit' className={styles.btnPrimary}>
-                            Register
+                            Create Account
                         </button>
                     )}
                 </form>

@@ -48,7 +48,7 @@ export const DeleteAccountModal = () => {
 
     return (
         <div>
-            <button onClick={openModal} className={`${styles.btnRed} ${styles.marginTop}`} aria-label='delete account'>
+            <button onClick={openModal} className={`${styles.btnRed} ${styles.marginTop}`}>
                 Delete Account
             </button>
             <Modal
@@ -68,11 +68,11 @@ export const DeleteAccountModal = () => {
                         {loading ? (
                             <Loading />
                         ) : (
-                            <button onClick={deleteAccount} className={styles.btnRed} aria-label='delete'>
+                            <button onClick={deleteAccount} className={styles.btnRed}>
                                 Delete
                             </button>
                         )}
-                        <button onClick={closeModal} className={styles.btnPrimary} aria-label='close'>
+                        <button onClick={closeModal} className={styles.btnPrimary}>
                             Cancel
                         </button>
                     </div>
