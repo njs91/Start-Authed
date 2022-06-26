@@ -29,7 +29,7 @@ export const PasswordResetForm = () => {
         try {
             setLoading(true);
 
-            const res = await fetch('http://localhost:8000/api/user/forgotpassword', {
+            const res = await fetch('http://localhost:8000/api/user/forgot-password', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData),
