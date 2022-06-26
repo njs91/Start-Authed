@@ -17,8 +17,10 @@ export class User {
   signToken(): string {
     // { ...this } overcomes error `Expected "payload" to be a plain object`
     const token = jwt.sign({ ...this }, this.email, {
+      // really this.email as the secret?
       expiresIn: 60 * 24,
     });
+    console.log('token: ', token);
     return token;
   }
 

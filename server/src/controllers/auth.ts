@@ -3,7 +3,9 @@ import { User } from '../models/auth';
 import bcrypt from 'bcrypt';
 import { USERS_COLLECTION_NAME } from '../utils/db';
 import { getCollection } from '../utils/helpers';
+import jwt from 'jsonwebtoken';
 const mongodb = require('mongodb'); // do not convert to import (otherwise undefined)
+require('dotenv').config(); // enables usage of process.env.SOMETHING
 
 // does anywhere else here need try catch?
 
@@ -117,10 +119,12 @@ export const sendPasswordResetEmail = async (req: Request, res: Response) => {
       return res.status(404).send('No user found');
     }
 
-    res
-      .status(500)
-      .send('Email-sending functionality has not been implemented yet...');
-    // @todo: send an email, and then send a success response
+    const secret = process.env.JWT_SECRET + user.hashedPassword;
+    console.log('secret: ', secret);
+    const token = jwt.sign(user, secret, { expiresIn: '15m' });
+    const link = `http://localhost:3000/reset-password/${user._id}/${token}`; // this is the link sent to the user
+    // @todo: send an email with the link to the user
+    res.send(link);
   } catch (err: any) {
     return res.status(400).send(err.message);
   }

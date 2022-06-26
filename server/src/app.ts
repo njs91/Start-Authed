@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 8000;
 app.use(cors()); // change to the below for a more secure, real app
 // app.use(cors(corsOptions)); // allows front-end to communicate with back-end
 app.use(express.json()); // seemingly required for req.body
+// app.use(express.urlencoded({extended:false})); // may need this?
 
 app.get('/', (req: Request, res: Response, next: NextFunction) => {
   res.send('test homepage response');
