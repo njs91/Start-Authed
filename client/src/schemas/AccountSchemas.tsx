@@ -21,3 +21,8 @@ export const editAccountSchema = Yup.object().shape({
 export const forgotPasswordSchema = Yup.object().shape({
     email: emailSchema,
 });
+
+export const resetPasswordSchema = Yup.object().shape({
+    password: passwordSchema,
+    passwordConfirmation: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match'),
+});

@@ -14,6 +14,7 @@ import { UserProvider } from './contexts/UserContext';
 import { PrivateRoute } from './components/account/PrivateRoute';
 import ForgotPassword from './pages/account/public/ForgotPassword';
 import ForgotPasswordSuccess from './pages/account/public/ForgotPasswordSuccess';
+import ResetPassword from './pages/account/public/ResetPassword';
 
 const App: FC = () => (
     <UserProvider>
@@ -26,6 +27,7 @@ const App: FC = () => (
                 <Route path='/create-account' element={<CreateAccount />} />
                 <Route path='/forgot-password' element={<ForgotPassword />} />
                 <Route path='/forgot-password-success' element={<ForgotPasswordSuccess />} />
+                <Route path='/reset-password' element={<ResetPassword />} />
                 <Route
                     path='/user/profile'
                     element={

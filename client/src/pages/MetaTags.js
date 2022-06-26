@@ -15,6 +15,10 @@ export const forgotPasswordMeta = {
     title: 'Forgot Password',
     description: 'Forgot password page description.',
 };
+export const resetPasswordMeta = {
+    title: 'Reset Password',
+    description: 'Reset password page description.',
+};
 export const forgotPasswordSuccessMeta = {
     title: 'Forgot Password Success',
     description: 'Forgot password success page description.',

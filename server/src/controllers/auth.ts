@@ -120,7 +120,7 @@ export const sendPasswordResetEmail = async (req: Request, res: Response) => {
 
     Object.setPrototypeOf(user, User.prototype);
     const token = user.signToken('15m');
-    const link = `http://localhost:3000/reset-password/${user._id}/${token}`;
+    const link = `http://localhost:3000/reset-password?id=${user._id}&jwt=${token}`;
     // @todo: send an email with the link to the user
     res.send(link);
   } catch (err: any) {
