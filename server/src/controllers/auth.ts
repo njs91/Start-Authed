@@ -3,6 +3,7 @@ import { User } from '../models/auth';
 import bcrypt from 'bcrypt';
 import { USERS_COLLECTION_NAME } from '../utils/db';
 import { getCollection } from '../utils/helpers';
+import jwt from 'jsonwebtoken';
 const mongodb = require('mongodb'); // do not convert to import (otherwise undefined)
 require('dotenv').config();
 
@@ -125,5 +126,46 @@ export const sendPasswordResetEmail = async (req: Request, res: Response) => {
     res.send(link);
   } catch (err: any) {
     return res.status(500).send(err.message);
+  }
+};
+
+export const resetPassword = async (req: Request, res: Response) => {
+  const { id, password, token } = req.body;
+
+  try {
+    // validate id
+    const user = await User.findById(id);
+
+    if (!user) {
+      return res.status(404).send('No user found');
+    }
+
+    // validate token
+    const secret = process.env.JWT_SECRET + user.hashedPassword;
+    jwt.verify(token, secret);
+
+    // hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // set new password
+    const collection = getCollection(USERS_COLLECTION_NAME);
+    const updateResult = await collection.updateOne(
+      {
+        _id: new mongodb.ObjectId(id),
+      },
+      {
+        $set: {
+          hashedPassword,
+        },
+      }
+    );
+
+    if (!updateResult.modifiedCount) {
+      return res.status(500).send('Could not update password.');
+    }
+
+    res.json({ success: true });
+  } catch (err: any) {
+    return res.status(400).send(err.message);
   }
 };

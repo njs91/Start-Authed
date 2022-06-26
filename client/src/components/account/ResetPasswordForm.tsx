@@ -15,10 +15,10 @@ export type ResetPasswordFormInputs = {
 
 export const ResetPasswordForm = () => {
     const [searchParams] = useSearchParams();
-    const [id, jwt] = [searchParams.get('id'), searchParams.get('jwt')];
-    // const navigate = useNavigate();
+    const [id, token] = [searchParams.get('id'), searchParams.get('jwt')];
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
+    const navigate = useNavigate();
 
     const methods = useForm<ResetPasswordFormInputs>({
         resolver: yupResolver(resetPasswordSchema),
@@ -29,24 +29,27 @@ export const ResetPasswordForm = () => {
         },
     });
 
-    const onSubmit: SubmitHandler<ResetPasswordFormInputs> = async (formData) => {
-        console.log('formData: ', formData);
+    const onSubmit: SubmitHandler<ResetPasswordFormInputs> = async ({ password }) => {
         try {
             setLoading(true);
 
-            // const res = await fetch('http://localhost:8000/api/user/reset-password', {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify(formData),
-            // });
+            const res = await fetch('http://localhost:8000/api/user/reset-password', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    id,
+                    password,
+                    token,
+                }),
+            });
 
-            // if (!res.ok) {
-            //     const errorText = await res.text();
-            //     setError(`HTTP error (${res.status}): ${errorText}`);
-            //     return;
-            // }
+            if (!res.ok) {
+                const errorText = await res.text();
+                setError(`HTTP error (${res.status}): ${errorText}`);
+                return;
+            }
 
-            // navigate('/login');
+            navigate('/login');
         } catch (err: any) {
             setError(err.message);
         } finally {
