@@ -3,6 +3,7 @@ import authRoutes from './routes/auth';
 import { connectToDb } from './utils/db';
 import cors from 'cors';
 import { corsOptions } from './utils/cors';
+require('dotenv').config(); // enables usage of process.env.SOMETHING
 
 const app: Application = express();
 const PORT = process.env.PORT || 8000;

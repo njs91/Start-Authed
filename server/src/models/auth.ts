@@ -2,6 +2,7 @@ import { USERS_COLLECTION_NAME } from '../utils/db';
 import { getCollection } from '../utils/helpers';
 import jwt from 'jsonwebtoken';
 const mongodb = require('mongodb'); // do not convert to import (otherwise undefined)
+require('dotenv').config();
 
 export class User {
   email: string;
@@ -14,13 +15,12 @@ export class User {
     this.dateCreated = new Date();
   }
 
-  signToken(): string {
+  signToken(expiry: number | string = 60 * 24): string {
+    const secret = process.env.JWT_SECRET + this.hashedPassword;
     // { ...this } overcomes error `Expected "payload" to be a plain object`
-    const token = jwt.sign({ ...this }, this.email, {
-      // really this.email as the secret?
-      expiresIn: 60 * 24,
+    const token = jwt.sign({ ...this }, secret, {
+      expiresIn: expiry,
     });
-    console.log('token: ', token);
     return token;
   }
 
