@@ -180,9 +180,13 @@ a {
 }
 
 // containers
-.buttonsContainerSpaced {
+.buttonsContainer {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+
+    &.spaced {
+        justify-content: space-between;
+    }
 
     button ~ button {
         margin-left: 1em;
@@ -237,15 +241,22 @@ a {
     color: $red;
 }
 
-// errors
-.errorText {
+// situations: errors & successes
+.situationText {
     color: $white;
     font-weight: 700;
     padding: 0.5em 0.75em;
-    background-color: $red;
     display: flex;
     align-items: center;
     justify-content: center;
+
+    &.error {
+        background-color: $red;
+    }
+
+    &.success {
+        background-color: $green;
+    }
 
     span {
         font-size: $font-std;

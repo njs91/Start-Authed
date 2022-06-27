@@ -6,7 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Loading } from '../default/Loading';
 import { Error } from '../default/Error';
 import { forgotPasswordSchema } from '../../schemas/AccountSchemas';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export type PasswordResetFormInputs = {
     email: string;
@@ -60,9 +60,14 @@ export const PasswordResetForm = () => {
                     {loading ? (
                         <Loading />
                     ) : (
-                        <button type='submit' className={styles.btnPrimary}>
-                            Continue
-                        </button>
+                        <div className={`${styles.buttonsContainer} ${styles.spaced}`}>
+                            <button type='submit' className={styles.btnPrimary}>
+                                Continue
+                            </button>
+                            <Link to='/login' className={styles.btnSecondary}>
+                                Back
+                            </Link>
+                        </div>
                     )}
                 </form>
             </FormProvider>

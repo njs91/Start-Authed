@@ -10,7 +10,7 @@ interface ErrorProps {
 }
 
 export const Error: FC<ErrorProps> = ({ msg, marginTop, cls = '' }) => (
-    <div className={`${styles.errorText} ${cls} ${marginTop ? styles.marginTop : ''}`}>
+    <div className={`${styles.situationText} ${styles.error} ${cls} ${marginTop ? styles.marginTop : ''}`}>
         <FontAwesomeIcon icon={faExclamationTriangle} className={styles.error} aria-label='error' /> <span>{msg}</span>
     </div>
 );

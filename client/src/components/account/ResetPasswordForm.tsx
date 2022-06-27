@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Dispatch, FC, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { InputField } from '../default/Form';
 import styles from '../../css/default.module.scss';
@@ -6,19 +6,22 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { resetPasswordSchema } from '../../schemas/AccountSchemas';
 import { Loading } from '../default/Loading';
 import { Error } from '../default/Error';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 export type ResetPasswordFormInputs = {
     password: string;
     passwordConfirmation: string;
 };
 
-export const ResetPasswordForm = () => {
+interface ResetPasswordFormProps {
+    setSuccess: Dispatch<boolean>;
+}
+
+export const ResetPasswordForm: FC<ResetPasswordFormProps> = ({ setSuccess }) => {
     const [searchParams] = useSearchParams();
     const [id, token] = [searchParams.get('id'), searchParams.get('jwt')];
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
-    const navigate = useNavigate();
 
     const methods = useForm<ResetPasswordFormInputs>({
         resolver: yupResolver(resetPasswordSchema),
@@ -49,7 +52,7 @@ export const ResetPasswordForm = () => {
                 return;
             }
 
-            navigate('/login');
+            setSuccess(true);
         } catch (err: any) {
             setError(err.message);
         } finally {

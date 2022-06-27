@@ -64,7 +64,7 @@ export const DeleteAccountModal = () => {
                 <div>
                     <h2>Delete Your Account</h2>
                     <p>Are you sure you want to delete your account? (this action is irreversable)</p>
-                    <div className={styles.buttonsContainerSpaced}>
+                    <div className={`${styles.buttonsContainer} ${styles.spaced}`}>
                         {loading ? (
                             <Loading />
                         ) : (

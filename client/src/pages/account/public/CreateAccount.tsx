@@ -18,7 +18,7 @@ const CreateAccount: React.VFC = () => {
         <Page meta={createAccountMeta}>
             <h1>Create Account</h1>
             <CreateAccountForm />
-            <p className={styles.signInLink}>
+            <p className={styles.loginLink}>
                 Already have an account? <Link to='/login'>Log in</Link>.
             </p>
         </Page>

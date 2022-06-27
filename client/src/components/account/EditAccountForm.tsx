@@ -62,7 +62,7 @@ export const EditAccountForm = () => {
                     {loading ? (
                         <Loading />
                     ) : (
-                        <div className={styles.buttonsContainerSpaced}>
+                        <div className={`${styles.buttonsContainer} ${styles.spaced}`}>
                             <button type='submit' className={styles.btnPrimary}>
                                 Submit
                             </button>

@@ -46,7 +46,7 @@ export const TestModal: VFC = () => {
                 <div>
                     <h2>Title</h2>
                     <p>Content</p>
-                    <div className={styles.buttonsContainerSpaced}>
+                    <div className={`${styles.buttonsContainer} ${styles.spaced}`}>
                         <button onClick={doSomething} className={styles.btnPrimary}>
                             Do Something
                         </button>

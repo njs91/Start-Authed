@@ -8,6 +8,9 @@ import styles from '../css/default.module.scss';
 import guideStyles from '../css//pages/styleGuide.module.scss';
 import { TestModal } from '../components/default/TestModal';
 import { Section } from '../components/default/Section';
+import { Error } from '../components/default/Error';
+import { Success } from '../components/default/Success';
+import { Loading } from '../components/default/Loading';
 
 const StyleGuide: VFC = () => (
     <Page meta={styleGuideMeta} fullWidth={true}>
@@ -105,6 +108,16 @@ const StyleGuide: VFC = () => (
             <button className={styles.btnRed}>Red</button>
             <button className={styles.btnGreen}>Green</button>
             <button className={styles.btnGrey}>Grey</button>
+        </Section>
+
+        <Section patterned={true}>
+            <h2>Situational Components</h2>
+            <p>Error:</p>
+            <Error msg='Error Message' />
+            <p>Success:</p>
+            <Success msg='Success Message' marginTop={true} />
+            <p>Loading:</p>
+            <Loading />
         </Section>
     </Page>
 );

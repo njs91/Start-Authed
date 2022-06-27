@@ -64,7 +64,7 @@ export const CreateAccountForm: VFC = () => {
                             type='password'
                             title='passwordConfirmation'
                             placeholder='********'
-                            alias='Confirm Password'
+                            alias='Re-enter Password'
                         />
                     </div>
 

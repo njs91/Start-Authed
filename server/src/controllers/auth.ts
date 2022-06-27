@@ -123,7 +123,7 @@ export const sendPasswordResetEmail = async (req: Request, res: Response) => {
     const token = user.signToken('15m');
     const link = `http://localhost:3000/reset-password?id=${user._id}&jwt=${token}`;
     // @todo: send an email with the link to the user
-    res.send(link);
+    res.send(link); // really send the link back? might want to conceal. Just send back blank success response?
   } catch (err: any) {
     return res.status(500).send(err.message);
   }
