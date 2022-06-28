@@ -73,7 +73,7 @@ const AccountButton = () => {
     );
 };
 
-const links: Links = [
+export const links: Links = [
     {
         title: 'Home',
         url: '/',
