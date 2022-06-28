@@ -3,11 +3,13 @@ import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 
 describe('Navbar links', () => {
-    render(
-        <BrowserRouter>
-            <Header />
-        </BrowserRouter>
-    );
+    beforeEach(() => {
+        render(
+            <BrowserRouter>
+                <Header />
+            </BrowserRouter>
+        );
+    });
 
     it('should render links properly', () => {
         links.forEach(({ title, url }) => {
