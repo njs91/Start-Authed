@@ -36,10 +36,10 @@ describe('create account tests', () => {
     });
 
     it('should show errors with invalid inputs', async () => {
-        userEvent.type(email, 'wrong@input');
-        userEvent.type(confirmPassword, 'a');
-        userEvent.click(password);
-        userEvent.click(email);
+        await userEvent.type(email, 'wrong@input');
+        await userEvent.type(confirmPassword, 'a');
+        await userEvent.click(password);
+        await userEvent.click(email);
 
         const errors = [
             await screen.findByText('Enter a valid email address'),
@@ -56,6 +56,11 @@ describe('create account tests', () => {
         await userEvent.type(confirmPassword, 'password');
         await userEvent.click(submit);
 
-        await screen.findByAltText('loading');
+        const loadingImage = await screen.findByAltText('loading');
+        expect(loadingImage).toBeInTheDocument();
+
+        // at this point it should be successful (it worked when I changed it to display a success message on the screen),
+        // but need to test it for sure
+        // when successful, it navigates to /login - how can this be tested?
     });
 });

@@ -1,7 +1,7 @@
 import { rest } from 'msw';
 
 export const handlers = [
-    rest.post('/api/user/create', (req, res, ctx) => {
+    rest.post('http://localhost:8000/api/user/create', (req, res, ctx) => {
         return res(
             ctx.status(200),
             ctx.json({
