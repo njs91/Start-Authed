@@ -7,6 +7,6 @@ interface LoadingProps {
 
 export const Loading: FC<LoadingProps> = ({ clsOuter = '' }) => (
     <div className={clsOuter}>
-        <img src={LoadingImage} alt='Loading' />
+        <img src={LoadingImage} alt='loading' />
     </div>
 );

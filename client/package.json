@@ -67,6 +67,7 @@
         "@types/react-document-meta": "^3.0.2",
         "@types/react-modal": "^3.13.1",
         "jest-watch-typeahead": "^0.6.5",
+        "msw": "^0.42.3",
         "prettier": "2.6.2"
     }
 }

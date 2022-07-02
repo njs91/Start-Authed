@@ -1,4 +1,4 @@
-import { Header, links } from '../components/Header';
+import { Header, links } from '../../components/Header';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 

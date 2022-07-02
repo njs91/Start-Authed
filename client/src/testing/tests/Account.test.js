@@ -1,10 +1,10 @@
-import { CreateAccountForm } from '../components/account/CreateAccountForm';
+import { CreateAccountForm } from '../../components/account/CreateAccountForm';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 
 describe('create account tests', () => {
-    let inputs, labels;
+    let inputs, labels, email, password, confirmPassword, submit;
 
     beforeEach(() => {
         render(
@@ -20,6 +20,7 @@ describe('create account tests', () => {
             screen.getByRole('button', { type: 'submit' }),
         ];
         labels = document.querySelectorAll('form label');
+        [email, password, confirmPassword, submit] = inputs;
     });
 
     it('should render all inputs', () => {
@@ -35,8 +36,6 @@ describe('create account tests', () => {
     });
 
     it('should show errors with invalid inputs', async () => {
-        const [email, password, confirmPassword] = inputs;
-
         userEvent.type(email, 'wrong@input');
         userEvent.type(confirmPassword, 'a');
         userEvent.click(password);
@@ -51,5 +50,12 @@ describe('create account tests', () => {
         errors.forEach((error) => expect(error).toBeInTheDocument());
     });
 
-    // next: create mock with MSW and test form submitting and receiving correct (mocked) response
+    it('should submit correctly with valid inputs', async () => {
+        await userEvent.type(email, 'correct@input.com');
+        await userEvent.type(password, 'password');
+        await userEvent.type(confirmPassword, 'password');
+        await userEvent.click(submit);
+
+        await screen.findByAltText('loading');
+    });
 });
