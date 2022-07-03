@@ -50,10 +50,6 @@ describe('forgot password tests', () => {
         // not whether they're simultaneously in the document like the name implies
     });
 
-    it('should have a working back button', () => {
-        expect(back).toHaveAttribute('href', '/login');
-    });
-
     it('should submit correctly with valid input', async () => {
         await userEvent.type(email, 'correct@input.com');
         await userEvent.click(submit);

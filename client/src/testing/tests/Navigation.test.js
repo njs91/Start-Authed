@@ -16,4 +16,7 @@ describe('Navbar links', () => {
             expect(screen.getByText(title)).toHaveAttribute('href', url);
         });
     });
+
+    // @todo: also test that it renders Login button when not logged in
+    // @todo: also test that it renders Log out button when logged in
 });
