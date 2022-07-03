@@ -20,7 +20,7 @@ describe('create account tests', () => {
             screen.getByLabelText('Re-enter Password:'),
             screen.getByRole('button', { type: 'submit' }),
         ];
-        labels = document.querySelectorAll('form label');
+        labels = [screen.getByText(/Email/), screen.getByText('Password:'), screen.getByText(/Re-enter Password/)];
         [email, password, confirmPassword, submit] = inputs;
     });
 
@@ -91,7 +91,7 @@ describe('forgot password tests', () => {
             screen.getByRole('button', { type: 'submit' }),
             screen.getByText('Back'),
         ];
-        label = document.querySelector('form label');
+        label = screen.getByText(/Email/);
         [email, submit, back] = inputs;
     });
 
