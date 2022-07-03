@@ -1,6 +1,6 @@
 import React from 'react';
 import { DeleteAccountModal } from '../../../components/account/DeleteAccountModal';
-import { EditAccountForm } from '../../../components/account/EditAccountForm';
+import { EditAccountForm } from '../../../components/account/EditAccount';
 import { Page } from '../../../components/Page';
 import { editAccountMeta } from '../../MetaTags';
 

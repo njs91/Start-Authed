@@ -1,12 +1,12 @@
 import React, { Dispatch, FC, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import { InputField } from '../default/Form';
+import { BelowFormLinks, InputField } from '../default/Form';
 import styles from '../../css/default.module.scss';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { resetPasswordSchema } from '../../schemas/AccountSchemas';
 import { Loading } from '../default/Loading';
 import { Error } from '../default/Error';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 
 export type ResetPasswordFormInputs = {
     password: string;
@@ -87,3 +87,9 @@ export const ResetPasswordForm: FC<ResetPasswordFormProps> = ({ setSuccess }) =>
         </>
     );
 };
+
+export const ResetPasswordLinks = () => (
+    <BelowFormLinks>
+        Keep current password and <Link to='/login'>log in</Link>.
+    </BelowFormLinks>
+);

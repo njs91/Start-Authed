@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ResetPasswordForm } from '../../../components/account/ResetPasswordForm';
+import { ResetPasswordForm, ResetPasswordLinks } from '../../../components/account/ResetPassword';
 import { Success } from '../../../components/default/Success';
 import { Page } from '../../../components/Page';
 import { resetPasswordMeta } from '../../MetaTags';
@@ -15,6 +15,7 @@ const ResetPassword = () => {
             <h1>Create New Password</h1>
             <p>We'll ask for this password whenever you sign in.</p>
             <ResetPasswordForm setSuccess={setSuccess} />
+            <ResetPasswordLinks />
         </>
     );
 

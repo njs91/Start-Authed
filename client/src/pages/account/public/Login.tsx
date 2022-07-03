@@ -1,10 +1,10 @@
 import React, { useContext, useEffect } from 'react';
-import { LoginForm } from '../../../components/account/LoginForm';
+import { LoginForm, LoginFormLinks } from '../../../components/account/Login';
 import { Page } from '../../../components/Page';
 import { loginMeta } from '../../MetaTags';
-import styles from '../../../css/pages/login.module.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserContextType, UserContext } from '../../../contexts/UserContext';
+import styles from '../../../css/default.module.scss';
 
 const Login: React.VFC = () => {
     const { user } = useContext<UserContextType>(UserContext);
@@ -18,12 +18,7 @@ const Login: React.VFC = () => {
         <Page meta={loginMeta}>
             <h1>Login</h1>
             <LoginForm />
-            <p className={styles.loginLink}>
-                <Link to='/forgot-password'>Forgot password</Link>.
-            </p>
-            <p className={styles.loginLink}>
-                Don't have an account? <Link to='/create-account'>Create an account</Link>.
-            </p>
+            <LoginFormLinks />
         </Page>
     );
 };
