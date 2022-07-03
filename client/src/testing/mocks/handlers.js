@@ -2,6 +2,12 @@ import { rest } from 'msw';
 
 export const handlers = [
     rest.post('http://localhost:8000/api/user/create', (req, res, ctx) => {
+        const { email } = req.body;
+
+        if (email === 'account@already.exists') {
+            return res(ctx.status(404), ctx.json('User already exists. Please log in.'));
+        }
+
         return res(
             ctx.status(200),
             ctx.json({

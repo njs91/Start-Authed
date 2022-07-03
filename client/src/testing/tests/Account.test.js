@@ -64,6 +64,16 @@ describe('create account tests', () => {
         // but need to test it for sure
         // when successful, it navigates to /login - how can this be tested?
     });
+
+    it('should show error when account already exists', async () => {
+        await userEvent.type(email, 'account@already.exists');
+        await userEvent.type(password, 'password');
+        await userEvent.type(confirmPassword, 'password');
+        await userEvent.click(submit);
+
+        const accountExistsError = await screen.findByText(/User already exists/);
+        expect(accountExistsError).toBeInTheDocument();
+    });
 });
 
 describe('forgot password tests', () => {
