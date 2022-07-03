@@ -1,4 +1,5 @@
 import { CreateAccountForm } from '../../components/account/CreateAccountForm';
+import { ForgotPasswordForm } from '../../components/account/ForgotPasswordForm';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
@@ -59,8 +60,68 @@ describe('create account tests', () => {
         const loadingImage = await screen.findByAltText('loading');
         expect(loadingImage).toBeInTheDocument();
 
-        // at this point it should be successful (it worked when I changed it to display a success message on the screen),
+        // @todo: at this point it should be successful (it worked when I changed it to display a success message on the screen),
         // but need to test it for sure
         // when successful, it navigates to /login - how can this be tested?
+    });
+});
+
+describe('forgot password tests', () => {
+    let inputs, label, email, submit, back;
+
+    beforeEach(() => {
+        render(
+            <BrowserRouter>
+                <ForgotPasswordForm />
+            </BrowserRouter>
+        );
+
+        inputs = [
+            screen.getByRole('textbox', { name: 'Email:' }),
+            screen.getByRole('button', { type: 'submit' }),
+            screen.getByText('Back'),
+        ];
+        label = document.querySelector('form label');
+        [email, submit, back] = inputs;
+    });
+
+    it('should render all inputs', () => {
+        inputs.forEach((input) => {
+            expect(input).toBeInTheDocument();
+        });
+    });
+
+    it('should render label', () => {
+        expect(label).toBeInTheDocument();
+    });
+
+    it('should show errors with invalid inputs', async () => {
+        // empty error
+        await userEvent.click(submit);
+        const emptyError = await screen.findByText('Enter an email address');
+
+        // format error
+        await userEvent.type(email, 'wrong@input');
+        await userEvent.click(submit);
+        const formatError = await screen.findByText('Enter a valid email address');
+
+        [emptyError, formatError].forEach((error) => expect(error).toBeInTheDocument());
+        // note: toBeInTheDocument checks whether they're valid DOM elements,
+        // not whether they're simultaneously in the document like the name implies
+    });
+
+    it('should have a working back button', () => {
+        expect(back).toHaveAttribute('href', '/login');
+    });
+
+    it('should submit correctly with valid input', async () => {
+        await userEvent.type(email, 'correct@input.com');
+        await userEvent.click(submit);
+
+        const loadingImage = await screen.findByAltText('loading');
+        expect(loadingImage).toBeInTheDocument();
+
+        // @todo: at this point it should be successful, but should test it for sure
+        // when successful, it navigates to /forgot-password-success - how can this be tested?
     });
 });

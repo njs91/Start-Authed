@@ -8,16 +8,16 @@ import { Error } from '../default/Error';
 import { forgotPasswordSchema } from '../../schemas/AccountSchemas';
 import { Link, useNavigate } from 'react-router-dom';
 
-export type PasswordResetFormInputs = {
+export type ForgotPasswordFormInputs = {
     email: string;
 };
 
-export const PasswordResetForm = () => {
+export const ForgotPasswordForm = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | boolean>(false);
 
-    const methods = useForm<PasswordResetFormInputs>({
+    const methods = useForm<ForgotPasswordFormInputs>({
         resolver: yupResolver(forgotPasswordSchema),
         mode: 'onTouched',
         defaultValues: {
@@ -25,7 +25,7 @@ export const PasswordResetForm = () => {
         },
     });
 
-    const onSubmit: SubmitHandler<PasswordResetFormInputs> = async (formData) => {
+    const onSubmit: SubmitHandler<ForgotPasswordFormInputs> = async (formData) => {
         try {
             setLoading(true);
 
