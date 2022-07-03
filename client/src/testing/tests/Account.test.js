@@ -124,4 +124,11 @@ describe('forgot password tests', () => {
         // @todo: at this point it should be successful, but should test it for sure
         // when successful, it navigates to /forgot-password-success - how can this be tested?
     });
+
+    it('should show error when user not found', async () => {
+        await userEvent.type(email, 'user@not.found');
+        await userEvent.click(submit);
+        const notFoundError = await screen.findByText(/No user found/);
+        expect(notFoundError).toBeInTheDocument();
+    });
 });
