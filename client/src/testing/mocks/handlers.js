@@ -28,11 +28,11 @@ export const handlers = [
     }),
 
     rest.post('http://localhost:8000/api/user/reset-password', (req, res, ctx) => {
-        // const { email } = req.body;
+        const { password } = req.body;
 
-        // if (email === 'user@not.found') {
-        //     return res(ctx.status(404), ctx.json('No user found'));
-        // }
+        if (password === 'usernotfounderror') {
+            return res(ctx.status(404), ctx.json('No user found'));
+        }
 
         return res(ctx.status(200));
     }),

@@ -64,6 +64,10 @@ describe('forgot password tests', () => {
     it('should show error when user not found', async () => {
         await userEvent.type(email, 'user@not.found');
         await userEvent.click(submit);
+
+        const loadingImage = await screen.findByAltText('loading');
+        expect(loadingImage).toBeInTheDocument();
+
         const notFoundError = await screen.findByText(/No user found/);
         expect(notFoundError).toBeInTheDocument();
     });

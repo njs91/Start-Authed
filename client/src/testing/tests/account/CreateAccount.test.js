@@ -77,6 +77,9 @@ describe('create account tests', () => {
         await userEvent.type(confirmPassword, 'password');
         await userEvent.click(submit);
 
+        const loadingImage = await screen.findByAltText('loading');
+        expect(loadingImage).toBeInTheDocument();
+
         const accountExistsError = await screen.findByText(/User already exists/);
         expect(accountExistsError).toBeInTheDocument();
     });

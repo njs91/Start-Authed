@@ -70,9 +70,15 @@ describe('reset password tests', () => {
         expect(successHeader).toBeInTheDocument();
     });
 
-    // should show error when user not found
-    // NOTE: id and token will probably be undefined (as they're got from search params)
-    // in the mock, just make it so that server ignores both of them as they'll probably be undefined
-    // but add a test for showing the error - e.g. if password === 'usernotfounderror' then make
-    // MSW return a 404 error with 'No user found' message
+    it('should show error when user not found', async () => {
+        await userEvent.type(password, 'usernotfounderror');
+        await userEvent.type(confirmPassword, 'usernotfounderror');
+        await userEvent.click(submit);
+
+        const loadingImage = await screen.findByAltText('loading');
+        expect(loadingImage).toBeInTheDocument();
+
+        const notFoundError = await screen.findByText(/No user found/);
+        expect(notFoundError).toBeInTheDocument();
+    });
 });
