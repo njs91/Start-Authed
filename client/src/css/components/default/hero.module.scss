@@ -2,8 +2,13 @@
 @import '../../default.module.scss';
 
 .heroAreaOuter {
-    min-height: $viewport-height-minus-header;
+    min-height: $viewport-height-adjusted;
     display: flex;
+
+    header + div > div &:first-of-type {
+        // hero area immediately after header
+        margin-top: -$header-padding;
+    }
 
     .heroAreaInner {
         display: flex;
@@ -22,10 +27,6 @@
         .textAndButtonContainer {
             @include nonMobileStyles {
                 max-width: 60%;
-            }
-
-            @include mobileStyles {
-                margin-bottom: 2em;
             }
         }
 

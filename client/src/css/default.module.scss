@@ -207,6 +207,7 @@ a {
 
         &.mainBody {
             margin-top: $header-height;
+            padding-top: $header-padding;
         }
 
         .inner {
@@ -223,6 +224,9 @@ a {
         .patterned {
             padding: $content-vertical-padding 0;
 
+            &:first-of-type {
+                margin-top: -$header-padding;
+            }
             &:nth-child(odd) {
                 background-color: $white;
             }

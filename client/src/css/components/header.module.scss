@@ -58,8 +58,8 @@
                     background: $white;
                     position: absolute;
                     left: 0;
-                    top: 60px;
-                    height: $viewport-height-minus-header;
+                    top: $header-height;
+                    height: $viewport-height-adjusted;
                     width: 100vw;
 
                     &.open {
