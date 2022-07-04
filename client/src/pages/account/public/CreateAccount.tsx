@@ -2,9 +2,8 @@ import React, { useContext, useEffect } from 'react';
 import { CreateAccountForm, CreateAccountLinks } from '../../../components/account/CreateAccount';
 import { Page } from '../../../components/Page';
 import { createAccountMeta } from '../../MetaTags';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { UserContextType, UserContext } from '../../../contexts/UserContext';
-import styles from '../../../css/default.module.scss';
 
 const CreateAccount: React.VFC = () => {
     const { user } = useContext<UserContextType>(UserContext);

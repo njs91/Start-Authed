@@ -39,15 +39,13 @@ describe('forgot password tests', () => {
         // empty error
         await userEvent.click(submit);
         const emptyError = await screen.findByText('Enter an email address');
+        expect(emptyError).toBeInTheDocument();
 
         // format error
         await userEvent.type(email, 'wrong@input');
         await userEvent.click(submit);
         const formatError = await screen.findByText('Enter a valid email address');
-
-        [emptyError, formatError].forEach((error) => expect(error).toBeInTheDocument());
-        // note: toBeInTheDocument checks whether they're valid DOM elements,
-        // not whether they're simultaneously in the document like the name implies
+        expect(formatError).toBeInTheDocument();
     });
 
     it('should submit correctly with valid input', async () => {

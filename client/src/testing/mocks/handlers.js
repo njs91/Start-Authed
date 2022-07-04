@@ -24,7 +24,7 @@ export const handlers = [
             return res(ctx.status(404), ctx.json('No user found'));
         }
 
-        return res(ctx.status(200), ctx.send('http://localhost:3000/reset-password?id=some_id&jwt=some_token'));
+        return res(ctx.status(200));
     }),
 
     rest.post('http://localhost:8000/api/user/reset-password', (req, res, ctx) => {
@@ -35,5 +35,21 @@ export const handlers = [
         }
 
         return res(ctx.status(200));
+    }),
+
+    rest.post('http://localhost:8000/api/user/login', (req, res, ctx) => {
+        const { email } = req.body;
+
+        if (email === 'user@not.found') {
+            return res(ctx.status(404), ctx.json('User not found. Please create an account.'));
+        }
+
+        return res(
+            ctx.status(200),
+            ctx.json({
+                token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmIwMjA3MTllZTI0ZTM2ZjY2ZmM1ZDciLCJlbWFpbCI6ImFAYS5hIiwiaGFzaGVkUGFzc3dvcmQiOiIkMmIkMTAkdkR2dU4uR3I3NFR5L2sxbEREaDF3dWZIT2FaQkwzUzdiTWJBSnR5QWV0emlvR3hUemNoOGEiLCJkYXRlQ3JlYXRlZCI6IjIwMjItMDYtMjBUMDc6MjM6MjkuNjQyWiIsImlhdCI6MTY1Njk1NjI5MywiZXhwIjoxNjU2OTU3NzMzfQ.s0hwENfzRliKk1FDJHqouS3j-_Gtqb5pwEibziKLS1s',
+                id: '62b020719ee24e36f66fc5d7',
+            })
+        );
     }),
 ];

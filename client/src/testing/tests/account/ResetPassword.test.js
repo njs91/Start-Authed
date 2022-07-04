@@ -3,10 +3,11 @@ import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 
-// @todo: also need login tests
 // @todo: also need edit account tests
 // @todo: also need delete account (modal) tests
 // @todo: perhaps also test user id and email being rendered on user profile page
+// @todo: when testing for errors, also test that they disappear after enting the correct inputs? e.g. see login.test.js
+// @todo: complete all other @todos
 
 describe('reset password tests', () => {
     let inputs, labels, password, confirmPassword, submit, back;
