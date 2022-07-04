@@ -1,4 +1,4 @@
-import { ResetPasswordForm, ResetPasswordLinks } from '../../../components/account/ResetPassword';
+import ResetPassword from '../../../pages/account/public/ResetPassword';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
@@ -14,15 +14,14 @@ describe('reset password tests', () => {
     beforeEach(() => {
         render(
             <BrowserRouter>
-                <ResetPasswordForm />
-                <ResetPasswordLinks />
+                <ResetPassword />
             </BrowserRouter>
         );
 
         inputs = [
             screen.getByLabelText('New Password:'),
             screen.getByLabelText('Re-enter Password:'),
-            screen.getByRole('button', { type: 'submit' }),
+            screen.getByText('Reset Password'),
         ];
         labels = [screen.getByText('New Password:'), screen.getByText('Re-enter Password:')];
         [password, confirmPassword, submit] = inputs;
@@ -59,11 +58,17 @@ describe('reset password tests', () => {
         expect(confirmationError).toBeInTheDocument();
     });
 
-    // should submit correctly with valid inputs
-    // testing for success: on success, it should render <ResetPasswordFinish /> component
-    // change this test so that it renders <ResetPassword /> page itself rather than the 2
-    // current <ResetPasswordForm /> and <ResetPasswordLinks /> components manually
-    // note: might break the other tests, but just fix them if this happens...
+    it('should submit correctly with valid inputs', async () => {
+        await userEvent.type(password, 'password');
+        await userEvent.type(confirmPassword, 'password');
+        await userEvent.click(submit);
+
+        const loadingImage = await screen.findByAltText('loading');
+        expect(loadingImage).toBeInTheDocument();
+
+        const successHeader = await screen.findByText(/Success/);
+        expect(successHeader).toBeInTheDocument();
+    });
 
     // should show error when user not found
     // NOTE: id and token will probably be undefined (as they're got from search params)
