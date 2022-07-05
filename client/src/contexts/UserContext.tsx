@@ -39,7 +39,7 @@ const setAccountCookies: SetAccountCookiesFn = (userData, path = '/') => {
     // });
 };
 
-interface UserProviderProps {
+export interface UserProviderProps {
     children: ReactNode;
 }
 export type UserContextType = {

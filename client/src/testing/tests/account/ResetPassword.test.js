@@ -5,7 +5,6 @@ import userEvent from '@testing-library/user-event';
 
 // @todo: also need edit account tests
 // @todo: also need delete account (modal) tests
-// @todo: perhaps also test user id and email being rendered on user profile page
 // @todo: complete all other @todos
 
 describe('reset password tests', () => {
