@@ -42,7 +42,7 @@ describe('create account tests', () => {
         expect(back).toHaveAttribute('href', '/login');
     });
 
-    it('should show errors with invalid inputs', async () => {
+    it('should show errors with invalid inputs and disappear when corrected', async () => {
         await userEvent.type(email, 'wrong@input');
         await userEvent.type(confirmPassword, 'a');
         await userEvent.click(password);
@@ -54,7 +54,16 @@ describe('create account tests', () => {
             await screen.findByText('Passwords must match'),
         ];
 
+        // errors show
         errors.forEach((error) => expect(error).toBeInTheDocument());
+
+        // errors disappear
+        [email, confirmPassword].forEach((input) => (input.value = ''));
+        await userEvent.type(email, 'correct@email.input');
+        await userEvent.type(password, 'password');
+        await userEvent.type(confirmPassword, 'password');
+        await userEvent.click(submit);
+        errors.forEach((error) => expect(error).not.toBeInTheDocument());
     });
 
     it('should submit correctly with valid inputs', async () => {

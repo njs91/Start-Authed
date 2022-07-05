@@ -6,7 +6,6 @@ import userEvent from '@testing-library/user-event';
 // @todo: also need edit account tests
 // @todo: also need delete account (modal) tests
 // @todo: perhaps also test user id and email being rendered on user profile page
-// @todo: when testing for errors, also test that they disappear after enting the correct inputs? e.g. see login.test.js
 // @todo: complete all other @todos
 
 describe('reset password tests', () => {
@@ -46,7 +45,7 @@ describe('reset password tests', () => {
         expect(back).toHaveAttribute('href', '/login');
     });
 
-    it('should show errors with invalid inputs', async () => {
+    it('should show errors with invalid inputs and disappear when corrected', async () => {
         // empty error
         await userEvent.click(submit);
         const emptyError = await screen.findByText(/Enter a password/);
@@ -57,6 +56,11 @@ describe('reset password tests', () => {
         await userEvent.click(submit);
         const confirmationError = await screen.findByText(/Passwords must match/);
         expect(confirmationError).toBeInTheDocument();
+
+        // errors disappear
+        await userEvent.type(confirmPassword, 'password');
+        await userEvent.click(submit);
+        [emptyError, confirmationError].forEach((error) => expect(error).not.toBeInTheDocument());
     });
 
     it('should submit correctly with valid inputs', async () => {

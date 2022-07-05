@@ -35,7 +35,7 @@ describe('forgot password tests', () => {
         expect(back).toHaveAttribute('href', '/login');
     });
 
-    it('should show errors with invalid inputs', async () => {
+    it('should show errors with invalid inputs and disappear when corrected', async () => {
         // empty error
         await userEvent.click(submit);
         const emptyError = await screen.findByText('Enter an email address');
@@ -46,6 +46,12 @@ describe('forgot password tests', () => {
         await userEvent.click(submit);
         const formatError = await screen.findByText('Enter a valid email address');
         expect(formatError).toBeInTheDocument();
+
+        // errors disappear
+        email.value = '';
+        await userEvent.type(email, 'correct@email.input');
+        await userEvent.click(submit);
+        [emptyError, formatError].forEach((error) => expect(error).not.toBeInTheDocument());
     });
 
     it('should submit correctly with valid input', async () => {
