@@ -2,18 +2,24 @@ import EditAccount from '../../../pages/account/private/EditAccount';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { MockUserContext, mockUser } from '../../mocks/contexts';
+import userEvent from '@testing-library/user-event';
+import Modal from 'react-modal';
 
 describe('edit account tests', () => {
     let inputs, label, email, submit, buttons, cancelBtn, deleteAccountBtn;
 
     beforeEach(() => {
         render(
-            <BrowserRouter>
-                <MockUserContext>
-                    <EditAccount />
-                </MockUserContext>
-            </BrowserRouter>
+            <div id='root'>
+                <BrowserRouter>
+                    <MockUserContext>
+                        <EditAccount />
+                    </MockUserContext>
+                </BrowserRouter>
+            </div>
         );
+
+        Modal.setAppElement('#root'); // needed when rendering modals
 
         // use this? expect(screen.getByRole('input', { name: 'the-inputs-id' }))
         inputs = [screen.getByLabelText('Email:'), screen.getByText('Submit')];
@@ -42,7 +48,21 @@ describe('edit account tests', () => {
             expect(button).toBeInTheDocument();
         });
         expect(cancelBtn).toHaveAttribute('href', '/user/profile');
-        // expect clicking delete account button to show the modal
+    });
+
+    it('should be able to open the model when clicking delete account', async () => {
+        // opens when clicking deleteAccountBtn
+        await userEvent.click(deleteAccountBtn);
+        const openedModal = document.getElementsByClassName('ReactModal__Body--open')[0];
+        const modalTitle = screen.getByText(/Delete Your Account/);
+        expect(openedModal).toBeInTheDocument();
+        expect(modalTitle).toBeInTheDocument();
+
+        // closes when clicking cancel
+        const cancelModalBtn = screen.getAllByText('Cancel')[1];
+        await userEvent.click(cancelModalBtn);
+        expect(openedModal).not.toHaveClass('ReactModal__Body--open');
+        expect(modalTitle).not.toBeInTheDocument();
     });
 
     // it('should show errors with invalid inputs and disappear when corrected', async () => {
