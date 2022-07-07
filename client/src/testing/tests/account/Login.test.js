@@ -63,7 +63,7 @@ describe('reset password tests', () => {
         expect(passwordError).not.toBeInTheDocument();
 
         // email error disappears
-        email.value = '';
+        await userEvent.clear(email);
         await userEvent.type(email, 'correct@email.input');
         expect(emailError).not.toBeInTheDocument();
     });

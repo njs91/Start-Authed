@@ -48,7 +48,7 @@ describe('forgot password tests', () => {
         expect(formatError).toBeInTheDocument();
 
         // errors disappear
-        email.value = '';
+        await userEvent.clear(email);
         await userEvent.type(email, 'correct@email.input');
         await userEvent.click(submit);
         [emptyError, formatError].forEach((error) => expect(error).not.toBeInTheDocument());

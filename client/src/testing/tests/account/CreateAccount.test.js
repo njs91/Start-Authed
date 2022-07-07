@@ -58,7 +58,7 @@ describe('create account tests', () => {
         errors.forEach((error) => expect(error).toBeInTheDocument());
 
         // errors disappear
-        [email, confirmPassword].forEach((input) => (input.value = ''));
+        [email, confirmPassword].forEach(async (input) => await userEvent.clear(input));
         await userEvent.type(email, 'correct@email.input');
         await userEvent.type(password, 'password');
         await userEvent.type(confirmPassword, 'password');
