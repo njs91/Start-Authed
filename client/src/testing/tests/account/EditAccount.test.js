@@ -84,17 +84,18 @@ describe('edit account tests', () => {
         [emptyError, inputError].forEach((error) => expect(error).not.toBeInTheDocument());
     });
 
-    // it('should submit correctly with valid inputs', async () => {
-    //     await userEvent.type(password, 'password');
-    //     await userEvent.type(confirmPassword, 'password');
-    //     await userEvent.click(submit);
+    it('should submit correctly with valid inputs', async () => {
+        await userEvent.clear(email);
+        await userEvent.type(email, 'correct@email.input');
+        await userEvent.click(submit);
 
-    //     const loadingImage = await screen.findByAltText('loading');
-    //     expect(loadingImage).toBeInTheDocument();
+        const loadingImage = await screen.findByAltText('loading');
+        expect(loadingImage).toBeInTheDocument();
 
-    //     const successHeader = await screen.findByText(/Success/);
-    //     expect(successHeader).toBeInTheDocument();
-    // });
+        // @todo: how to verify that submission was successful? should be successful at this point. Does this:
+        // setAccount({ ...user, ...formData } as SetAccountArgs);
+        // navigate('/user/profile');
+    });
 
     it('should show error when same current email submitted', async () => {
         await userEvent.clear(email);
