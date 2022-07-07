@@ -57,6 +57,7 @@ describe('edit account tests', () => {
             screen.getByText(/Delete Your Account/),
             screen.getByText('Delete'),
             screen.getAllByText('Cancel')[1],
+            screen.getByRole('button', { name: 'close' }),
         ];
         [openedModal, ...modalElements].forEach((el) => expect(el).toBeInTheDocument());
 
@@ -65,6 +66,13 @@ describe('edit account tests', () => {
         await userEvent.click(cancelModalBtn);
         expect(openedModal).not.toHaveClass('ReactModal__Body--open');
         modalElements.forEach((el) => expect(el).not.toBeInTheDocument());
+
+        // closes when clicking cross
+        await userEvent.click(deleteAccountBtn);
+        expect(openedModal).toHaveClass('ReactModal__Body--open');
+        const crossBtn = screen.getByRole('button', { name: 'close' }); // cannot use modalElements[3], otherwise it's not in the document
+        await userEvent.click(crossBtn);
+        expect(openedModal).not.toHaveClass('ReactModal__Body--open');
     });
 
     it('should show errors with invalid inputs and disappear when corrected', async () => {
