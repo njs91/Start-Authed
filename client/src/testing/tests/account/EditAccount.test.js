@@ -21,7 +21,6 @@ describe('edit account tests', () => {
 
         Modal.setAppElement('#root'); // needed when rendering modals
 
-        // use this? expect(screen.getByRole('input', { name: 'the-inputs-id' }))
         inputs = [screen.getByLabelText('Email:'), screen.getByText('Submit')];
         [email, submit] = inputs;
         label = screen.getByText(/Email/);
@@ -65,23 +64,25 @@ describe('edit account tests', () => {
         expect(modalTitle).not.toBeInTheDocument();
     });
 
-    // it('should show errors with invalid inputs and disappear when corrected', async () => {
-    //     // empty error
-    //     await userEvent.click(submit);
-    //     const emptyError = await screen.findByText(/Enter a password/);
-    //     expect(emptyError).toBeInTheDocument();
+    it('should show errors with invalid inputs and disappear when corrected', async () => {
+        // empty email error
+        await userEvent.clear(email);
+        await userEvent.click(submit);
+        const emptyError = await screen.findByText(/Enter an email address/);
+        expect(emptyError).toBeInTheDocument();
 
-    //     // confirm password error
-    //     await userEvent.type(password, 'password');
-    //     await userEvent.click(submit);
-    //     const confirmationError = await screen.findByText(/Passwords must match/);
-    //     expect(confirmationError).toBeInTheDocument();
+        // invalid email error
+        await userEvent.type(email, 'wrong@input');
+        await userEvent.click(submit);
+        const inputError = await screen.findByText(/Enter a valid email address/);
+        expect(inputError).toBeInTheDocument();
 
-    //     // errors disappear
-    //     await userEvent.type(confirmPassword, 'password');
-    //     await userEvent.click(submit);
-    //     [emptyError, confirmationError].forEach((error) => expect(error).not.toBeInTheDocument());
-    // });
+        // error disappears
+        email.value = '';
+        await userEvent.type(email, 'correct@email.input');
+        await userEvent.click(label);
+        [emptyError, inputError].forEach((error) => expect(error).not.toBeInTheDocument());
+    });
 
     // it('should submit correctly with valid inputs', async () => {
     //     await userEvent.type(password, 'password');
