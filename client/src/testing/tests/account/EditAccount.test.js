@@ -50,18 +50,21 @@ describe('edit account tests', () => {
     });
 
     it('should be able to open & close modal and render correct elements', async () => {
-        // opens when clicking deleteAccountBtn
+        // opens when clicking deleteAccountBtn and renders elements
         await userEvent.click(deleteAccountBtn);
         const openedModal = document.getElementsByClassName('ReactModal__Body--open')[0];
-        const modalTitle = screen.getByText(/Delete Your Account/);
-        const modalDeleteBtn = screen.getByText('Delete');
-        [openedModal, modalTitle, modalDeleteBtn].forEach((el) => expect(el).toBeInTheDocument());
+        const modalElements = [
+            screen.getByText(/Delete Your Account/),
+            screen.getByText('Delete'),
+            screen.getAllByText('Cancel')[1],
+        ];
+        [openedModal, ...modalElements].forEach((el) => expect(el).toBeInTheDocument());
 
         // closes when clicking cancel
-        const cancelModalBtn = screen.getAllByText('Cancel')[1];
+        const cancelModalBtn = modalElements[2];
         await userEvent.click(cancelModalBtn);
         expect(openedModal).not.toHaveClass('ReactModal__Body--open');
-        expect(modalTitle).not.toBeInTheDocument();
+        modalElements.forEach((el) => expect(el).not.toBeInTheDocument());
     });
 
     it('should show errors with invalid inputs and disappear when corrected', async () => {
