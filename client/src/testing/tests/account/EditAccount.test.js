@@ -49,13 +49,13 @@ describe('edit account tests', () => {
         expect(cancelBtn).toHaveAttribute('href', '/user/profile');
     });
 
-    it('should be able to open the model when clicking delete account', async () => {
+    it('should be able to open & close modal and render correct elements', async () => {
         // opens when clicking deleteAccountBtn
         await userEvent.click(deleteAccountBtn);
         const openedModal = document.getElementsByClassName('ReactModal__Body--open')[0];
         const modalTitle = screen.getByText(/Delete Your Account/);
-        expect(openedModal).toBeInTheDocument();
-        expect(modalTitle).toBeInTheDocument();
+        const modalDeleteBtn = screen.getByText('Delete');
+        [openedModal, modalTitle, modalDeleteBtn].forEach((el) => expect(el).toBeInTheDocument());
 
         // closes when clicking cancel
         const cancelModalBtn = screen.getAllByText('Cancel')[1];
@@ -78,7 +78,7 @@ describe('edit account tests', () => {
         expect(inputError).toBeInTheDocument();
 
         // error disappears
-        email.value = '';
+        await userEvent.clear(email);
         await userEvent.type(email, 'correct@email.input');
         await userEvent.click(label);
         [emptyError, inputError].forEach((error) => expect(error).not.toBeInTheDocument());
@@ -96,15 +96,14 @@ describe('edit account tests', () => {
     //     expect(successHeader).toBeInTheDocument();
     // });
 
-    // it('should show error when user not found', async () => {
-    //     await userEvent.type(password, 'usernotfounderror');
-    //     await userEvent.type(confirmPassword, 'usernotfounderror');
-    //     await userEvent.click(submit);
+    it('should show error when same current email submitted', async () => {
+        await userEvent.clear(email);
+        await userEvent.type(email, 'current@same.email');
+        await userEvent.click(submit);
 
-    //     const loadingImage = await screen.findByAltText('loading');
-    //     expect(loadingImage).toBeInTheDocument();
+        const sameEmailError = await screen.findByText(/Could not update user/);
+        expect(sameEmailError).toBeInTheDocument();
+    });
 
-    //     const notFoundError = await screen.findByText(/No user found/);
-    //     expect(notFoundError).toBeInTheDocument();
-    // });
+    // should also show modal inputs buttons whatever and submit modal successfully
 });

@@ -52,4 +52,14 @@ export const handlers = [
             })
         );
     }),
+
+    rest.put('http://localhost:8000/api/user/update', (req, res, ctx) => {
+        const { email } = req.body;
+
+        if (email === 'current@same.email') {
+            return res(ctx.status(500), ctx.json('Could not update user.'));
+        }
+
+        return res(ctx.status(200));
+    }),
 ];
