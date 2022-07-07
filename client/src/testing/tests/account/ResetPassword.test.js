@@ -3,8 +3,6 @@ import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 
-// @todo: also need edit account tests
-// @todo: also need delete account (modal) tests
 // @todo: turn test files from .test.js to .test.ts/tsx?
 // @todo: complete all other @todos
 

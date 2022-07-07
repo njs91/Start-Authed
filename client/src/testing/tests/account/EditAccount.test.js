@@ -117,5 +117,15 @@ describe('edit account tests', () => {
         expect(sameEmailError).toBeInTheDocument();
     });
 
-    // should also show modal inputs buttons whatever and submit modal successfully
+    it('should be able to successfully delete an account; modal should submit', async () => {
+        await userEvent.click(deleteAccountBtn);
+        const deleteBtn = screen.getByText('Delete');
+        await userEvent.click(deleteBtn);
+
+        const loadingImage = await screen.findByAltText('loading');
+        expect(loadingImage).toBeInTheDocument();
+
+        // @todo: how to verify that submission was successful? should be successful at this point
+        // does this upon successful deletion: setAccount(null);
+    });
 });
