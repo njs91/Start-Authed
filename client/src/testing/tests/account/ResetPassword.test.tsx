@@ -7,7 +7,12 @@ import userEvent from '@testing-library/user-event';
 // @todo: complete all other @todos
 
 describe('reset password tests', () => {
-    let inputs, labels, password, confirmPassword, submit, back;
+    let inputs: HTMLElement[],
+        labels: HTMLElement[],
+        password: HTMLElement,
+        confirmPassword: HTMLElement,
+        submit: HTMLElement,
+        back: HTMLElement;
 
     beforeEach(() => {
         render(
@@ -27,13 +32,13 @@ describe('reset password tests', () => {
     });
 
     it('should render all inputs', () => {
-        inputs.forEach((input) => {
+        inputs.forEach((input: HTMLElement): void => {
             expect(input).toBeInTheDocument();
         });
     });
 
     it('should render all labels', () => {
-        labels.forEach((label) => {
+        labels.forEach((label: HTMLElement): void => {
             expect(label).toBeInTheDocument();
         });
     });
@@ -58,7 +63,7 @@ describe('reset password tests', () => {
         // errors disappear
         await userEvent.type(confirmPassword, 'password');
         await userEvent.click(submit);
-        [emptyError, confirmationError].forEach((error) => expect(error).not.toBeInTheDocument());
+        [emptyError, confirmationError].forEach((error: HTMLElement): void => expect(error).not.toBeInTheDocument());
     });
 
     it('should submit correctly with valid inputs', async () => {

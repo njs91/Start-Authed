@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 
 describe('forgot password tests', () => {
-    let inputs, label, email, submit, back;
+    let inputs: HTMLElement[], label: HTMLElement, email: HTMLElement, submit: HTMLElement, back: HTMLElement;
 
     beforeEach(() => {
         render(
@@ -14,14 +14,14 @@ describe('forgot password tests', () => {
             </BrowserRouter>
         );
 
-        inputs = [screen.getByRole('textbox', { name: 'Email:' }), screen.getByRole('button', { type: 'submit' })];
+        inputs = [screen.getByRole('textbox', { name: 'Email:' }), screen.getByRole('button', { name: /Continue/ })];
         label = screen.getByText(/Email/);
         [email, submit] = inputs;
         back = screen.getByText('login');
     });
 
     it('should render all inputs', () => {
-        inputs.forEach((input) => {
+        inputs.forEach((input: HTMLElement): void => {
             expect(input).toBeInTheDocument();
         });
     });
@@ -51,7 +51,7 @@ describe('forgot password tests', () => {
         await userEvent.clear(email);
         await userEvent.type(email, 'correct@email.input');
         await userEvent.click(submit);
-        [emptyError, formatError].forEach((error) => expect(error).not.toBeInTheDocument());
+        [emptyError, formatError].forEach((error: HTMLElement): void => expect(error).not.toBeInTheDocument());
     });
 
     it('should submit correctly with valid input', async () => {

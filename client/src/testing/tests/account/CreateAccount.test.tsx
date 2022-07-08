@@ -4,7 +4,13 @@ import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 
 describe('create account tests', () => {
-    let inputs, labels, email, password, confirmPassword, submit, back;
+    let inputs: HTMLElement[],
+        labels: HTMLElement[],
+        email: HTMLElement,
+        password: HTMLElement,
+        confirmPassword: HTMLElement,
+        submit: HTMLElement,
+        back: HTMLElement;
 
     beforeEach(() => {
         render(
@@ -18,7 +24,7 @@ describe('create account tests', () => {
             screen.getByRole('textbox', { name: 'Email:' }),
             screen.getByLabelText('Password:'),
             screen.getByLabelText('Re-enter Password:'),
-            screen.getByRole('button', { type: 'submit' }),
+            screen.getByRole('button', { name: /Create Account/ }),
         ];
         labels = [screen.getByText(/Email/), screen.getByText('Password:'), screen.getByText(/Re-enter Password/)];
         [email, password, confirmPassword, submit] = inputs;
@@ -26,13 +32,13 @@ describe('create account tests', () => {
     });
 
     it('should render all inputs', () => {
-        inputs.forEach((input) => {
+        inputs.forEach((input: HTMLElement): void => {
             expect(input).toBeInTheDocument();
         });
     });
 
     it('should render all labels', () => {
-        labels.forEach((label) => {
+        labels.forEach((label: HTMLElement): void => {
             expect(label).toBeInTheDocument();
         });
     });
@@ -55,15 +61,15 @@ describe('create account tests', () => {
         ];
 
         // errors show
-        errors.forEach((error) => expect(error).toBeInTheDocument());
+        errors.forEach((error: HTMLElement): void => expect(error).toBeInTheDocument());
 
         // errors disappear
-        [email, confirmPassword].forEach(async (input) => await userEvent.clear(input));
+        [email, confirmPassword].forEach(async (input: HTMLElement): Promise<void> => await userEvent.clear(input));
         await userEvent.type(email, 'correct@email.input');
         await userEvent.type(password, 'password');
         await userEvent.type(confirmPassword, 'password');
         await userEvent.click(submit);
-        errors.forEach((error) => expect(error).not.toBeInTheDocument());
+        errors.forEach((error: HTMLElement): void => expect(error).not.toBeInTheDocument());
     });
 
     it('should submit correctly with valid inputs', async () => {

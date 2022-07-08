@@ -95,7 +95,7 @@ const accountLinks: Links = [
     },
 ];
 
-type LinkType = {
+export type LinkType = {
     title: string;
     url: string;
 };

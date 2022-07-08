@@ -4,7 +4,14 @@ import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 
 describe('reset password tests', () => {
-    let inputs, labels, email, password, submit, links, forgotPassword, createAccount;
+    let inputs: HTMLElement[],
+        labels: HTMLElement[],
+        links: HTMLElement[],
+        email: HTMLElement,
+        password: HTMLElement,
+        submit: HTMLElement,
+        forgotPassword: HTMLElement,
+        createAccount: HTMLElement;
 
     beforeEach(() => {
         render(
@@ -21,19 +28,19 @@ describe('reset password tests', () => {
     });
 
     it('should render all inputs', () => {
-        inputs.forEach((input) => {
+        inputs.forEach((input: HTMLElement): void => {
             expect(input).toBeInTheDocument();
         });
     });
 
     it('should render all labels', () => {
-        labels.forEach((label) => {
+        labels.forEach((label: HTMLElement): void => {
             expect(label).toBeInTheDocument();
         });
     });
 
     it('should render all links with correct hrefs', () => {
-        links.forEach((link) => {
+        links.forEach((link: HTMLElement): void => {
             expect(link).toBeInTheDocument();
         });
 
@@ -48,7 +55,7 @@ describe('reset password tests', () => {
             await screen.findByText(/Enter an email address/),
             await screen.findByText(/Enter a password/),
         ];
-        emptyErrors.forEach((error) => {
+        emptyErrors.forEach((error: HTMLElement): void => {
             expect(error).toBeInTheDocument();
         });
 

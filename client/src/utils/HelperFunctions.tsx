@@ -25,19 +25,6 @@ export const capitalise = (str: string): string => {
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 };
 
-export const removeItemFromArray = (id: number, arr: Array<{ id: number }>): Array<{}> => {
-    const indexToRemove: number = arr.map((el) => el.id).indexOf(id);
-    ~indexToRemove && arr.splice(indexToRemove, 1); // ~ = >= 0
-    return arr;
-};
-
-export const updateArray = (arr: Array<{ id: number }>, id: number, newEl: { id: number }): Array<{}> => {
-    const indexToReplace: number = arr.map((el) => el.id).indexOf(id);
-    ~indexToReplace && arr.splice(indexToReplace, 1);
-    arr.unshift(newEl); // add to front of array so it shows latest edited item
-    return arr;
-};
-
 export const debounce = (fn: () => {}, timeout: number = 300) => {
     let timer: ReturnType<typeof setTimeout>;
     return (...args: any) => {
