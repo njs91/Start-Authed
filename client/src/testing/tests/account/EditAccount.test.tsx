@@ -6,7 +6,13 @@ import userEvent from '@testing-library/user-event';
 import Modal from 'react-modal';
 
 describe('edit account tests', () => {
-    let inputs, label, email, submit, buttons, cancelBtn, deleteAccountBtn;
+    let inputs: HTMLElement[],
+        label: HTMLElement,
+        email: HTMLElement,
+        submit: HTMLElement,
+        buttons: HTMLElement[],
+        cancelBtn: HTMLElement,
+        deleteAccountBtn: HTMLElement;
 
     beforeEach(() => {
         render(
@@ -29,7 +35,7 @@ describe('edit account tests', () => {
     });
 
     it('should render all inputs', () => {
-        inputs.forEach((input) => {
+        inputs.forEach((input: HTMLElement): void => {
             expect(input).toBeInTheDocument();
         });
     });
@@ -43,7 +49,7 @@ describe('edit account tests', () => {
     });
 
     it('should render buttons with correct hrefs', () => {
-        buttons.forEach((button) => {
+        buttons.forEach((button: HTMLElement): void => {
             expect(button).toBeInTheDocument();
         });
         expect(cancelBtn).toHaveAttribute('href', '/user/profile');
@@ -59,13 +65,13 @@ describe('edit account tests', () => {
             screen.getAllByText('Cancel')[1],
             screen.getByRole('button', { name: 'close' }),
         ];
-        [openedModal, ...modalElements].forEach((el) => expect(el).toBeInTheDocument());
+        [openedModal, ...modalElements].forEach((el: Element): void => expect(el).toBeInTheDocument());
 
         // closes when clicking cancel
         const cancelModalBtn = modalElements[2];
         await userEvent.click(cancelModalBtn);
         expect(openedModal).not.toHaveClass('ReactModal__Body--open');
-        modalElements.forEach((el) => expect(el).not.toBeInTheDocument());
+        modalElements.forEach((el: HTMLElement): void => expect(el).not.toBeInTheDocument());
 
         // closes when clicking cross
         await userEvent.click(deleteAccountBtn);
@@ -92,7 +98,7 @@ describe('edit account tests', () => {
         await userEvent.clear(email);
         await userEvent.type(email, 'correct@email.input');
         await userEvent.click(label);
-        [emptyError, inputError].forEach((error) => expect(error).not.toBeInTheDocument());
+        [emptyError, inputError].forEach((error: HTMLElement): void => expect(error).not.toBeInTheDocument());
     });
 
     it('should submit correctly with valid inputs', async () => {

@@ -1,4 +1,4 @@
-import { Header, links } from '../../components/Header';
+import { Header, links, LinkType } from '../../components/Header';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 
@@ -12,7 +12,7 @@ describe('Navbar links', () => {
     });
 
     it('should render links properly', () => {
-        links.forEach(({ title, url }) => {
+        links.forEach(({ title, url }: LinkType): void => {
             expect(screen.getByText(title)).toHaveAttribute('href', url);
         });
     });

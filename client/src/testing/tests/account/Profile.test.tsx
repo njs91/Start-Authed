@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { MockUserContext, mockUser } from '../../mocks/contexts';
 
 describe('user profile tests', () => {
-    let editAccountBtn;
+    let editAccountBtn: HTMLElement;
 
     beforeEach(() => {
         render(
