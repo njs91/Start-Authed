@@ -65,10 +65,10 @@ const FieldContainer: FC<FieldContainerProps> = ({ title, cls = '', children, al
     );
 };
 
-interface BelowFormLinks {
+interface BelowFormLinkProps {
     children: ReactNode;
 }
 
-export const BelowFormLinks: React.FC<BelowFormLinks> = ({ children }) => (
+export const BelowFormLinks: React.FC<BelowFormLinkProps> = ({ children }) => (
     <p className={styles.belowFormLink}>{children}</p>
 );

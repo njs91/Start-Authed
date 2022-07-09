@@ -17,6 +17,10 @@ describe('Navbar links', () => {
         });
     });
 
+    it('should fail', () => {
+        expect(false).toBe(true);
+    });
+
     // @todo: also test that it renders Login button when not logged in
     // @todo: also test that it renders Log out button when logged in
 });
