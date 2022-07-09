@@ -55,20 +55,21 @@ interface FieldContainerProps {
 
 const FieldContainer: FC<FieldContainerProps> = ({ title, cls = '', children, alias }) => {
     const { errors } = useFormState();
+    const errorMsg: any = errors?.[title]?.message;
 
     return (
         <div className={`${styles.inputContainer} ${cls}`}>
             <label htmlFor={title}>{alias ?? capitalise(title)}:</label>
             {children}
-            {errors?.[title] && <span className={styles.required}>{errors?.[title]?.message}</span>}
+            {errors?.[title] && <span className={styles.required}>{errorMsg}</span>}
         </div>
     );
 };
 
-interface BelowFormLinks {
+interface BelowFormLinksProps {
     children: ReactNode;
 }
 
-export const BelowFormLinks: React.FC<BelowFormLinks> = ({ children }) => (
+export const BelowFormLinks: React.FC<BelowFormLinksProps> = ({ children }) => (
     <p className={styles.belowFormLink}>{children}</p>
 );
