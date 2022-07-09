@@ -140,10 +140,18 @@ describe('edit account tests', () => {
         const deleteBtn = screen.getByText('Delete');
         await userEvent.click(deleteBtn);
 
+        // loading image shows
         const loadingImage = await screen.findByAltText('loading');
         expect(loadingImage).toBeInTheDocument();
 
-        // @todo: how to verify that submission was successful? should be successful at this point
-        // does this upon successful deletion: setAccount(null);
+        // loading image disappears
+        await waitForElementToBeRemoved(loadingImage);
+        expect(loadingImage).not.toBeInTheDocument();
+
+        // navigates away
+        // expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
+        // expect(mockedUseNavigate).toHaveBeenCalledWith('/login');
+
+        // NOTE: it does this instead: <Navigate to='/login' /> (after setAccount(null)); does not use useNavigate hook
     });
 });

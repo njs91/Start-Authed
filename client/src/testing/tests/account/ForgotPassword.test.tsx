@@ -1,7 +1,14 @@
 import { ForgotPasswordForm, ForgotPasswordLinks } from '../../../components/account/ForgotPassword';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitForElementToBeRemoved } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
+
+const mockedUseNavigate = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useNavigate: () => mockedUseNavigate,
+}));
 
 describe('forgot password tests', () => {
     let inputs: HTMLElement[], label: HTMLElement, email: HTMLElement, submit: HTMLElement, back: HTMLElement;
@@ -58,11 +65,17 @@ describe('forgot password tests', () => {
         await userEvent.type(email, 'correct@input.com');
         await userEvent.click(submit);
 
+        // loading image shows
         const loadingImage = await screen.findByAltText('loading');
         expect(loadingImage).toBeInTheDocument();
 
-        // @todo: at this point it should be successful, but should test it for sure
-        // when successful, it navigates to /forgot-password-success - how can this be tested?
+        // loading image disappears
+        await waitForElementToBeRemoved(loadingImage);
+        expect(loadingImage).not.toBeInTheDocument();
+
+        // navigates away
+        // expect(mockedUseNavigate).toHaveBeenCalledTimes(1); // works with 2
+        expect(mockedUseNavigate).toHaveBeenCalledWith('/forgot-password-success');
     });
 
     it('should show error when user not found', async () => {

@@ -1,7 +1,14 @@
 import { CreateAccountForm, CreateAccountLinks } from '../../../components/account/CreateAccount';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitForElementToBeRemoved } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
+
+const mockedUseNavigate = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useNavigate: () => mockedUseNavigate,
+}));
 
 describe('create account tests', () => {
     let inputs: HTMLElement[],
@@ -78,12 +85,17 @@ describe('create account tests', () => {
         await userEvent.type(confirmPassword, 'password');
         await userEvent.click(submit);
 
+        // loading image shows
         const loadingImage = await screen.findByAltText('loading');
         expect(loadingImage).toBeInTheDocument();
 
-        // @todo: at this point it should be successful (it worked when I changed it to display a success message on the screen),
-        // but need to test it for sure
-        // when successful, it navigates to /login - how can this be tested?
+        // loading image disappears
+        await waitForElementToBeRemoved(loadingImage);
+        expect(loadingImage).not.toBeInTheDocument();
+
+        // navigates away
+        // expect(mockedUseNavigate).toHaveBeenCalledTimes(1); // works with 2 only although presumably should only navigate once
+        expect(mockedUseNavigate).toHaveBeenCalledWith('/login');
     });
 
     it('should show error when account already exists', async () => {

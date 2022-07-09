@@ -1,7 +1,14 @@
 import Login from '../../../pages/account/public/Login';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitForElementToBeRemoved } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
+
+const mockedUseNavigate = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useNavigate: () => mockedUseNavigate,
+}));
 
 describe('reset password tests', () => {
     let inputs: HTMLElement[],
@@ -80,13 +87,17 @@ describe('reset password tests', () => {
         await userEvent.type(password, 'password');
         await userEvent.click(submit);
 
+        // loading image shows
         const loadingImage = await screen.findByAltText('loading');
         expect(loadingImage).toBeInTheDocument();
 
-        // @todo: how to test for success here? the form does the following:
-        // setAccount(accountData);
-        // navigate('/user/profile');
-        // testing for Log out button on the next page seems to fail
+        // loading image disappears
+        await waitForElementToBeRemoved(loadingImage);
+        expect(loadingImage).not.toBeInTheDocument();
+
+        // navigates away
+        expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
+        expect(mockedUseNavigate).toHaveBeenCalledWith('/user/profile');
     });
 
     it('should show error when user not found', async () => {
