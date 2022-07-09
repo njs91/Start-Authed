@@ -1,9 +1,16 @@
 import EditAccount from '../../../pages/account/private/EditAccount';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitForElementToBeRemoved } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { MockUserContext, mockUser } from '../../mocks/contexts';
 import userEvent from '@testing-library/user-event';
 import Modal from 'react-modal';
+
+const mockedUseNavigate = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useNavigate: () => mockedUseNavigate,
+}));
 
 describe('edit account tests', () => {
     let inputs: HTMLElement[],
@@ -106,12 +113,17 @@ describe('edit account tests', () => {
         await userEvent.type(email, 'correct@email.input');
         await userEvent.click(submit);
 
+        // loading image shows
         const loadingImage = await screen.findByAltText('loading');
         expect(loadingImage).toBeInTheDocument();
 
-        // @todo: how to verify that submission was successful? should be successful at this point. Does this:
-        // setAccount({ ...user, ...formData } as SetAccountArgs);
-        // navigate('/user/profile');
+        // loading image disappears
+        await waitForElementToBeRemoved(loadingImage);
+        expect(loadingImage).not.toBeInTheDocument();
+
+        // navigates away
+        expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
+        expect(mockedUseNavigate).toHaveBeenCalledWith('/user/profile');
     });
 
     it('should show error when same current email submitted', async () => {
