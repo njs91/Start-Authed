@@ -84,7 +84,7 @@ export const links: Links = [
     },
 ];
 
-const accountLinks: Links = [
+export const accountLinks: Links = [
     {
         title: 'Home',
         url: '/',

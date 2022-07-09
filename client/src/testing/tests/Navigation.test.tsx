@@ -1,8 +1,9 @@
-import { Header, links, LinkType } from '../../components/Header';
+import { accountLinks, Header, links, LinkType } from '../../components/Header';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
+import { MockUserContext } from '../mocks/contexts';
 
-describe('Navbar links', () => {
+describe('navbar links when logged out', () => {
     beforeEach(() => {
         render(
             <BrowserRouter>
@@ -17,6 +18,35 @@ describe('Navbar links', () => {
         });
     });
 
-    // @todo: also test that it renders Login button when not logged in
-    // @todo: also test that it renders Log out button when logged in
+    it('should show login button and not logout', () => {
+        const login = screen.getByText('Login');
+        expect(login).toBeInTheDocument();
+        const logout = screen.queryByText('Log out');
+        expect(logout).not.toBeInTheDocument();
+    });
+});
+
+describe('navbar links when logged in', () => {
+    beforeEach(() => {
+        render(
+            <BrowserRouter>
+                <MockUserContext>
+                    <Header />
+                </MockUserContext>
+            </BrowserRouter>
+        );
+    });
+
+    it('should render account links properly', () => {
+        accountLinks.forEach(({ title, url }: LinkType): void => {
+            expect(screen.getByText(title)).toHaveAttribute('href', url);
+        });
+    });
+
+    it('should show logout and not login button', () => {
+        const logout = screen.getByText('Log out');
+        expect(logout).toBeInTheDocument();
+        const login = screen.queryByText('Login');
+        expect(login).not.toBeInTheDocument();
+    });
 });
