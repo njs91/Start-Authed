@@ -50,14 +50,12 @@ describe('forgot password tests', () => {
 
         // format error
         await userEvent.type(email, 'wrong@input');
-        await userEvent.click(submit);
         const formatError = await screen.findByText('Enter a valid email address');
         expect(formatError).toBeInTheDocument();
 
         // errors disappear
         await userEvent.clear(email);
         await userEvent.type(email, 'correct@email.input');
-        await userEvent.click(submit);
         [emptyError, formatError].forEach((error: HTMLElement): void => expect(error).not.toBeInTheDocument());
     });
 
@@ -74,7 +72,7 @@ describe('forgot password tests', () => {
         expect(loadingImage).not.toBeInTheDocument();
 
         // navigates away
-        // expect(mockedUseNavigate).toHaveBeenCalledTimes(1); // works with 2
+        expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
         expect(mockedUseNavigate).toHaveBeenCalledWith('/forgot-password-success');
     });
 

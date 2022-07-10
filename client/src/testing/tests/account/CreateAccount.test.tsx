@@ -75,7 +75,6 @@ describe('create account tests', () => {
         await userEvent.type(email, 'correct@email.input');
         await userEvent.type(password, 'password');
         await userEvent.type(confirmPassword, 'password');
-        await userEvent.click(submit);
         errors.forEach((error: HTMLElement): void => expect(error).not.toBeInTheDocument());
     });
 
@@ -94,7 +93,7 @@ describe('create account tests', () => {
         expect(loadingImage).not.toBeInTheDocument();
 
         // navigates away
-        // expect(mockedUseNavigate).toHaveBeenCalledTimes(1); // works with 2 only although presumably should only navigate once
+        expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
         expect(mockedUseNavigate).toHaveBeenCalledWith('/login');
     });
 

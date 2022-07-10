@@ -151,6 +151,7 @@ describe('edit account tests', () => {
         // navigates away
         // expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
         // expect(mockedUseNavigate).toHaveBeenCalledWith('/login');
+        // @todo
 
         // NOTE: it does this instead: <Navigate to='/login' /> (after setAccount(null)); does not use useNavigate hook
     });
