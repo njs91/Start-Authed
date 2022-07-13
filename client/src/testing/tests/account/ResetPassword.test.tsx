@@ -21,11 +21,11 @@ describe('reset password tests', () => {
         inputs = [
             screen.getByLabelText('New Password:'),
             screen.getByLabelText('Re-enter Password:'),
-            screen.getByText('Reset Password'),
+            screen.getByText(/reset password/i),
         ];
         labels = [screen.getByText('New Password:'), screen.getByText('Re-enter Password:')];
         [password, confirmPassword, submit] = inputs;
-        back = screen.getByText('log in');
+        back = screen.getByText(/log in/i);
     });
 
     it('should render all inputs', () => {
@@ -48,13 +48,13 @@ describe('reset password tests', () => {
     it('should show errors with invalid inputs and disappear when corrected', async () => {
         // empty error
         await userEvent.click(submit);
-        const emptyError = await screen.findByText(/Enter a password/);
+        const emptyError = await screen.findByText(/enter a password/i);
         expect(emptyError).toBeInTheDocument();
 
         // confirm password error
         await userEvent.type(password, 'password');
         await userEvent.click(submit);
-        const confirmationError = await screen.findByText(/Passwords must match/);
+        const confirmationError = await screen.findByText(/passwords must match/i);
         expect(confirmationError).toBeInTheDocument();
 
         // errors disappear
@@ -68,10 +68,10 @@ describe('reset password tests', () => {
         await userEvent.type(confirmPassword, 'password');
         await userEvent.click(submit);
 
-        const loadingImage = await screen.findByAltText('loading');
+        const loadingImage = await screen.findByAltText(/loading/i);
         expect(loadingImage).toBeInTheDocument();
 
-        const successHeader = await screen.findByText(/Success/);
+        const successHeader = await screen.findByText(/success/);
         expect(successHeader).toBeInTheDocument();
     });
 
@@ -80,10 +80,10 @@ describe('reset password tests', () => {
         await userEvent.type(confirmPassword, 'usernotfounderror');
         await userEvent.click(submit);
 
-        const loadingImage = await screen.findByAltText('loading');
+        const loadingImage = await screen.findByAltText(/loading/i);
         expect(loadingImage).toBeInTheDocument();
 
-        const notFoundError = await screen.findByText(/No user found/);
+        const notFoundError = await screen.findByText(/no user found/i);
         expect(notFoundError).toBeInTheDocument();
     });
 });

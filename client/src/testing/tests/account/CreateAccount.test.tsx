@@ -28,14 +28,14 @@ describe('create account tests', () => {
         );
 
         inputs = [
-            screen.getByRole('textbox', { name: 'Email:' }),
+            screen.getByRole('textbox', { name: /email/i }),
             screen.getByLabelText('Password:'),
-            screen.getByLabelText('Re-enter Password:'),
-            screen.getByRole('button', { name: /Create Account/ }),
+            screen.getByLabelText(/re-enter password/i),
+            screen.getByRole('button', { name: /create account/i }),
         ];
-        labels = [screen.getByText(/Email/), screen.getByText('Password:'), screen.getByText(/Re-enter Password/)];
+        labels = [screen.getByText(/email/i), screen.getByText('Password:'), screen.getByText(/re-enter password/i)];
         [email, password, confirmPassword, submit] = inputs;
-        back = screen.getByText('Log in');
+        back = screen.getByText(/log in/i);
     });
 
     it('should render all inputs', () => {
@@ -62,9 +62,9 @@ describe('create account tests', () => {
         await userEvent.click(email);
 
         const errors = [
-            await screen.findByText('Enter a valid email address'),
-            await screen.findByText('Enter a password'),
-            await screen.findByText('Passwords must match'),
+            await screen.findByText(/enter a valid email address/i),
+            await screen.findByText(/enter a password/i),
+            await screen.findByText(/passwords must match/i),
         ];
 
         // errors show
@@ -85,7 +85,7 @@ describe('create account tests', () => {
         await userEvent.click(submit);
 
         // loading image shows
-        const loadingImage = await screen.findByAltText('loading');
+        const loadingImage = await screen.findByAltText(/loading/i);
         expect(loadingImage).toBeInTheDocument();
 
         // loading image disappears
@@ -103,10 +103,10 @@ describe('create account tests', () => {
         await userEvent.type(confirmPassword, 'password');
         await userEvent.click(submit);
 
-        const loadingImage = await screen.findByAltText('loading');
+        const loadingImage = await screen.findByAltText(/loading/i);
         expect(loadingImage).toBeInTheDocument();
 
-        const accountExistsError = await screen.findByText(/User already exists/);
+        const accountExistsError = await screen.findByText(/user already exists/i);
         expect(accountExistsError).toBeInTheDocument();
     });
 });

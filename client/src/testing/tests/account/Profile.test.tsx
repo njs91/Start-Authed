@@ -15,7 +15,7 @@ describe('user profile tests', () => {
             </BrowserRouter>
         );
 
-        editAccountBtn = screen.getByText(/Edit Account/);
+        editAccountBtn = screen.getByText(/edit account/i);
     });
 
     it('should render account information', () => {

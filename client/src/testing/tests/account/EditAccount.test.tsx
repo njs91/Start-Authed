@@ -34,10 +34,10 @@ describe('edit account tests', () => {
 
         Modal.setAppElement('#root'); // needed when rendering modals
 
-        inputs = [screen.getByLabelText('Email:'), screen.getByText('Submit')];
+        inputs = [screen.getByLabelText(/email/i), screen.getByText(/submit/i)];
         [email, submit] = inputs;
-        label = screen.getByText(/Email/);
-        buttons = [screen.getByText(/Cancel/), screen.getByText(/Delete Account/)];
+        label = screen.getByText(/email/i);
+        buttons = [screen.getByText(/cancel/i), screen.getByText(/delete account/i)];
         [cancelBtn, deleteAccountBtn] = buttons;
     });
 
@@ -67,8 +67,8 @@ describe('edit account tests', () => {
         await userEvent.click(deleteAccountBtn);
         const openedModal = document.getElementsByClassName('ReactModal__Body--open')[0];
         const modalElements = [
-            screen.getByText(/Delete Your Account/),
-            screen.getByText('Delete'),
+            screen.getByText(/delete your account/),
+            screen.getByText(/delete/),
             screen.getAllByText('Cancel')[1],
             screen.getByRole('button', { name: 'close' }),
         ];
@@ -83,7 +83,7 @@ describe('edit account tests', () => {
         // closes when clicking cross
         await userEvent.click(deleteAccountBtn);
         expect(openedModal).toHaveClass('ReactModal__Body--open');
-        const crossBtn = screen.getByRole('button', { name: 'close' }); // cannot use modalElements[3], otherwise it's not in the document
+        const crossBtn = screen.getByRole('button', { name: /close/i }); // cannot use modalElements[3], otherwise it's not in the document
         await userEvent.click(crossBtn);
         expect(openedModal).not.toHaveClass('ReactModal__Body--open');
     });
@@ -92,13 +92,13 @@ describe('edit account tests', () => {
         // empty email error
         await userEvent.clear(email);
         await userEvent.click(submit);
-        const emptyError = await screen.findByText(/Enter an email address/);
+        const emptyError = await screen.findByText(/enter an email address/i);
         expect(emptyError).toBeInTheDocument();
 
         // invalid email error
         await userEvent.type(email, 'wrong@input');
         await userEvent.click(submit);
-        const inputError = await screen.findByText(/Enter a valid email address/);
+        const inputError = await screen.findByText(/enter a valid email address/i);
         expect(inputError).toBeInTheDocument();
 
         // error disappears
@@ -114,7 +114,7 @@ describe('edit account tests', () => {
         await userEvent.click(submit);
 
         // loading image shows
-        const loadingImage = await screen.findByAltText('loading');
+        const loadingImage = await screen.findByAltText(/loading/i);
         expect(loadingImage).toBeInTheDocument();
 
         // loading image disappears
@@ -131,7 +131,7 @@ describe('edit account tests', () => {
         await userEvent.type(email, 'current@same.email');
         await userEvent.click(submit);
 
-        const sameEmailError = await screen.findByText(/Could not update user/);
+        const sameEmailError = await screen.findByText(/could not update user/i);
         expect(sameEmailError).toBeInTheDocument();
     });
 
@@ -141,7 +141,7 @@ describe('edit account tests', () => {
         await userEvent.click(deleteBtn);
 
         // loading image shows
-        const loadingImage = await screen.findByAltText('loading');
+        const loadingImage = await screen.findByAltText(/loading/i);
         expect(loadingImage).toBeInTheDocument();
 
         // loading image disappears

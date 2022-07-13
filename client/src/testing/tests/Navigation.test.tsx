@@ -19,9 +19,9 @@ describe('navbar links when logged out', () => {
     });
 
     it('should show login button and not logout', () => {
-        const login = screen.getByText('Login');
+        const login = screen.getByText(/login/i);
         expect(login).toBeInTheDocument();
-        const logout = screen.queryByText('Log out');
+        const logout = screen.queryByText(/log out/i);
         expect(logout).not.toBeInTheDocument();
     });
 });
@@ -44,9 +44,9 @@ describe('navbar links when logged in', () => {
     });
 
     it('should show logout and not login button', () => {
-        const logout = screen.getByText('Log out');
+        const logout = screen.getByText(/log out/i);
         expect(logout).toBeInTheDocument();
-        const login = screen.queryByText('Login');
+        const login = screen.queryByText(/login/i);
         expect(login).not.toBeInTheDocument();
     });
 });

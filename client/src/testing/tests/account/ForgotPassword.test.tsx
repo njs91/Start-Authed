@@ -21,10 +21,10 @@ describe('forgot password tests', () => {
             </BrowserRouter>
         );
 
-        inputs = [screen.getByRole('textbox', { name: 'Email:' }), screen.getByRole('button', { name: /Continue/ })];
-        label = screen.getByText(/Email/);
+        inputs = [screen.getByRole('textbox', { name: /email/i }), screen.getByRole('button', { name: /continue/i })];
+        label = screen.getByText(/email/i);
         [email, submit] = inputs;
-        back = screen.getByText('login');
+        back = screen.getByText(/login/i);
     });
 
     it('should render all inputs', () => {
@@ -45,12 +45,12 @@ describe('forgot password tests', () => {
     it('should show errors with invalid inputs and disappear when corrected', async () => {
         // empty error
         await userEvent.click(submit);
-        const emptyError = await screen.findByText('Enter an email address');
+        const emptyError = await screen.findByText(/enter an email address/i);
         expect(emptyError).toBeInTheDocument();
 
         // format error
         await userEvent.type(email, 'wrong@input');
-        const formatError = await screen.findByText('Enter a valid email address');
+        const formatError = await screen.findByText(/enter a valid email address/i);
         expect(formatError).toBeInTheDocument();
 
         // errors disappear
@@ -64,7 +64,7 @@ describe('forgot password tests', () => {
         await userEvent.click(submit);
 
         // loading image shows
-        const loadingImage = await screen.findByAltText('loading');
+        const loadingImage = await screen.findByAltText(/loading/i);
         expect(loadingImage).toBeInTheDocument();
 
         // loading image disappears
@@ -80,10 +80,10 @@ describe('forgot password tests', () => {
         await userEvent.type(email, 'user@not.found');
         await userEvent.click(submit);
 
-        const loadingImage = await screen.findByAltText('loading');
+        const loadingImage = await screen.findByAltText(/loading/i);
         expect(loadingImage).toBeInTheDocument();
 
-        const notFoundError = await screen.findByText(/No user found/);
+        const notFoundError = await screen.findByText(/no user found/i);
         expect(notFoundError).toBeInTheDocument();
     });
 });

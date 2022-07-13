@@ -27,9 +27,9 @@ describe('reset password tests', () => {
             </BrowserRouter>
         );
 
-        labels = [screen.getByText('Email:'), screen.getByText('Password:')];
-        inputs = [screen.getByLabelText('Email:'), screen.getByLabelText('Password:'), screen.getByText('Log in')];
-        links = [screen.getByText(/Forgot password/), screen.getByText(/Create an account/)];
+        labels = [screen.getByText(/email/i), screen.getByText(/password/)];
+        inputs = [screen.getByLabelText(/email/i), screen.getByLabelText(/password/i), screen.getByText(/log in/i)];
+        links = [screen.getByText(/forgot password/i), screen.getByText(/create an account/i)];
         [email, password, submit] = inputs;
         [forgotPassword, createAccount] = links;
     });
@@ -59,8 +59,8 @@ describe('reset password tests', () => {
         // empty errors
         await userEvent.click(submit);
         const emptyErrors = [
-            await screen.findByText(/Enter an email address/),
-            await screen.findByText(/Enter a password/),
+            await screen.findByText(/enter an email address/i),
+            await screen.findByText(/enter a password/i),
         ];
         emptyErrors.forEach((error: HTMLElement): void => {
             expect(error).toBeInTheDocument();
@@ -69,11 +69,11 @@ describe('reset password tests', () => {
         // invalid email error
         await userEvent.type(email, 'wrong@input');
         await userEvent.type(password, 'password');
-        const emailError = screen.getByText(/Enter a valid email address/);
+        const emailError = screen.getByText(/enter a valid email address/i);
         expect(emailError).toBeInTheDocument();
 
         // password error disappears
-        const passwordError = screen.queryByText(/Enter a password/);
+        const passwordError = screen.queryByText(/enter a password/i);
         expect(passwordError).not.toBeInTheDocument();
 
         // email error disappears
@@ -88,7 +88,7 @@ describe('reset password tests', () => {
         await userEvent.click(submit);
 
         // loading image shows
-        const loadingImage = await screen.findByAltText('loading');
+        const loadingImage = await screen.findByAltText(/loading/i);
         expect(loadingImage).toBeInTheDocument();
 
         // loading image disappears
@@ -105,10 +105,10 @@ describe('reset password tests', () => {
         await userEvent.type(password, 'password');
         await userEvent.click(submit);
 
-        const loadingImage = await screen.findByAltText('loading');
+        const loadingImage = await screen.findByAltText(/loading/i);
         expect(loadingImage).toBeInTheDocument();
 
-        const notFoundError = await screen.findByText(/User not found/);
+        const notFoundError = await screen.findByText(/user not found/i);
         expect(notFoundError).toBeInTheDocument();
     });
 });
