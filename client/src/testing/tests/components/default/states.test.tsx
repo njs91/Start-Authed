@@ -23,4 +23,10 @@ describe('error component', () => {
         rerender(<Error msg={'Error found'} cls='testcls' marginTop={true} />);
         expect(wrappingElement).toHaveClass(`${initialClasses} testcls marginTop`);
     });
+
+    it('should render icon', () => {
+        const icon = container.querySelector("svg[data-icon='triangle-exclamation']");
+
+        expect(icon).toBeInTheDocument();
+    });
 });
