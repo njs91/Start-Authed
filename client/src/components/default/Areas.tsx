@@ -1,9 +1,9 @@
-import React, { FC } from 'react';
-import styles from '../../css/components/default/hero.module.scss';
+import React, { FC, ReactNode } from 'react';
+import styles from '../../css/components/default/area.module.scss';
 import defaultStyles from '../../css/default.module.scss';
 import { Link } from 'react-router-dom';
-import { Section } from './Section';
 
+// hero area
 interface HeroAreaProps {
     title: string;
     description: string;
@@ -16,7 +16,6 @@ interface HeroAreaProps {
     image?: string;
     imageAlt?: string;
 }
-
 export const HeroArea: FC<HeroAreaProps> = ({
     title,
     description,
@@ -43,5 +42,30 @@ export const HeroArea: FC<HeroAreaProps> = ({
             </div>
             {image && <img src={image} alt={imageAlt} />}
         </Section>
+    );
+};
+
+// section
+interface SectionProps {
+    children: ReactNode;
+    clsOuter?: string;
+    clsInner?: string;
+    tag?: any;
+    patterned?: boolean;
+}
+export const Section: FC<SectionProps> = ({
+    children,
+    clsOuter = '',
+    clsInner = '',
+    patterned,
+    tag: Tag = 'section',
+}) => {
+    const outerClasses = `${defaultStyles.outer} ${patterned ? defaultStyles.patterned : ''} ${clsOuter}`;
+    const innerClasses = `${defaultStyles.inner} ${clsInner}`;
+
+    return (
+        <Tag className={outerClasses}>
+            <div className={innerClasses}>{children}</div>
+        </Tag>
     );
 };

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ResetPasswordForm, ResetPasswordLinks } from '../../../components/account/ResetPassword';
-import { Success } from '../../../components/default/Success';
+import { Success } from '../../../components/default/States';
 import { Page } from '../../../components/Page';
 import { resetPasswordMeta } from '../../MetaTags';
 import styles from '../../../css/default.module.scss';

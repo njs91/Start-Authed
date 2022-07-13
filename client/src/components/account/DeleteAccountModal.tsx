@@ -4,8 +4,7 @@ import Modal from 'react-modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { UserContextType, UserContext } from '../../contexts/UserContext';
-import { Loading } from '../default/Loading';
-import { Error } from '../default/Error';
+import { Loading, Error } from '../default/States';
 
 export const DeleteAccountModal = () => {
     const { user, setAccount } = useContext<UserContextType>(UserContext);

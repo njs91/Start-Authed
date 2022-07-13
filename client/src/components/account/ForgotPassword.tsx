@@ -3,8 +3,7 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { BelowFormLinks, InputField } from '../default/Form';
 import styles from '../../css/default.module.scss';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Loading } from '../default/Loading';
-import { Error } from '../default/Error';
+import { Error, Loading } from '../default/States';
 import { forgotPasswordSchema } from '../../schemas/AccountSchemas';
 import { Link, useNavigate } from 'react-router-dom';
 

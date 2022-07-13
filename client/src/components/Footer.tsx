@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import footerStyles from '../css/components/footer.module.scss';
-import { Section } from './default/Section';
 import { Link } from 'react-router-dom';
+import { Section } from './default/Areas';
 
 interface FooterProps {
     cls?: string;

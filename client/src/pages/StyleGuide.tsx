@@ -7,10 +7,8 @@ import { styleGuideMeta } from './MetaTags';
 import styles from '../css/default.module.scss';
 import guideStyles from '../css//pages/styleGuide.module.scss';
 import { TestModal } from '../components/default/TestModal';
-import { Section } from '../components/default/Section';
-import { Error } from '../components/default/Error';
-import { Success } from '../components/default/Success';
-import { Loading } from '../components/default/Loading';
+import { Error, Success, Loading } from '../components/default/States';
+import { Section } from '../components/default/Areas';
 
 const StyleGuide: VFC = () => (
     <Page meta={styleGuideMeta} fullWidth={true}>

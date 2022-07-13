@@ -4,8 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import defaultStyles from '../css/default.module.scss';
 import { faAngleRight, faBars, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Section } from './default/Section';
 import { UserContextType, UserContext } from '../contexts/UserContext';
+import { Section } from './default/Areas';
 
 interface HeaderProps {
     cls?: string;
