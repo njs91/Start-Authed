@@ -15,41 +15,44 @@ import { PrivateRoute } from './components/account/PrivateRoute';
 import ForgotPassword from './pages/account/public/ForgotPassword';
 import ForgotPasswordSuccess from './pages/account/public/ForgotPasswordSuccess';
 import ResetPassword from './pages/account/public/ResetPassword';
+import { HelmetProvider } from 'react-helmet-async';
 
 const App: FC = () => (
-    <UserProvider>
-        <BrowserRouter>
-            <Routes>
-                <Route path='/' element={<Homepage />} />
-                <Route path='/styles' element={<StyleGuide />} />
-                <Route path='/about' element={<About />} />
-                <Route path='/login' element={<Login />} />
-                <Route path='/create-account' element={<CreateAccount />} />
-                <Route path='/forgot-password' element={<ForgotPassword />} />
-                <Route path='/forgot-password-success' element={<ForgotPasswordSuccess />} />
-                <Route path='/reset-password' element={<ResetPassword />} />
-                <Route
-                    path='/user/profile'
-                    element={
-                        <PrivateRoute>
-                            <UserProfile />
-                        </PrivateRoute>
-                    }
-                />
-                <Route
-                    path='/user/edit-account'
-                    element={
-                        <PrivateRoute>
-                            <EditAccount />
-                        </PrivateRoute>
-                    }
-                />
-                <Route path='/terms' element={<Terms />} />
-                <Route path='/privacy' element={<Privacy />} />
-                <Route path='*' element={<NotFound />} />
-            </Routes>
-        </BrowserRouter>
-    </UserProvider>
+    <HelmetProvider>
+        <UserProvider>
+            <BrowserRouter>
+                <Routes>
+                    <Route path='/' element={<Homepage />} />
+                    <Route path='/styles' element={<StyleGuide />} />
+                    <Route path='/about' element={<About />} />
+                    <Route path='/login' element={<Login />} />
+                    <Route path='/create-account' element={<CreateAccount />} />
+                    <Route path='/forgot-password' element={<ForgotPassword />} />
+                    <Route path='/forgot-password-success' element={<ForgotPasswordSuccess />} />
+                    <Route path='/reset-password' element={<ResetPassword />} />
+                    <Route
+                        path='/user/profile'
+                        element={
+                            <PrivateRoute>
+                                <UserProfile />
+                            </PrivateRoute>
+                        }
+                    />
+                    <Route
+                        path='/user/edit-account'
+                        element={
+                            <PrivateRoute>
+                                <EditAccount />
+                            </PrivateRoute>
+                        }
+                    />
+                    <Route path='/terms' element={<Terms />} />
+                    <Route path='/privacy' element={<Privacy />} />
+                    <Route path='*' element={<NotFound />} />
+                </Routes>
+            </BrowserRouter>
+        </UserProvider>
+    </HelmetProvider>
 );
 
 export default App;

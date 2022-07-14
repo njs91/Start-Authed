@@ -1,4 +1,4 @@
-// info: https://www.npmjs.com/package/react-document-meta
+// note: currently the Page component only accepts title & description - change if want to add more meta tags
 export const homepageMeta = {
     title: 'Homepage',
     description: 'Homepage meta description.',
