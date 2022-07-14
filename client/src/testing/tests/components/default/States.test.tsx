@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { Error, Success } from '../../../../components/default/States';
+import { Error, Loading, Success } from '../../../../components/default/States';
 
 describe('error component', () => {
     let container: HTMLElement, rerender: any;
@@ -58,5 +58,28 @@ describe('success component', () => {
         const icon = container.querySelector("svg[data-icon='circle-check']");
 
         expect(icon).toBeInTheDocument();
+    });
+});
+
+describe('loading component', () => {
+    let container: HTMLElement, rerender: any;
+
+    beforeEach(() => {
+        const rendered = render(<Loading />);
+        [container, rerender] = [rendered.container, rendered.rerender];
+    });
+
+    it('should render image', () => {
+        const image = screen.getByAltText('loading');
+
+        expect(image).toBeInTheDocument();
+    });
+
+    it('should render class names', () => {
+        const wrappingElement = container.firstChild;
+
+        // expect(wrappingElement).toHaveClass(''); // should be empty classlist
+        rerender(<Loading clsOuter='outerclass' />);
+        expect(wrappingElement).toHaveClass('outerclass');
     });
 });
