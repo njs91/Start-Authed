@@ -1,7 +1,7 @@
 import React, { FC, ReactNode } from 'react';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
-import DocumentMeta from 'react-document-meta';
+// import DocumentMeta from 'react-document-meta';
 import styles from '../css/default.module.scss';
 
 export const Page: FC<PageProps> = ({
@@ -21,7 +21,8 @@ export const Page: FC<PageProps> = ({
     const innerClasses = `${!fullWidth ? styles.inner : ''} ${clsInner}`;
 
     return (
-        <DocumentMeta {...meta}>
+        <>
+            {/* <DocumentMeta {...meta}> */}
             <div className={pageClasses}>
                 {showHeader && <Header cls={clsHeader} />}
                 <div className={outerClasses}>
@@ -29,7 +30,8 @@ export const Page: FC<PageProps> = ({
                 </div>
                 {showFooter && <Footer cls={clsFooter} />}
             </div>
-        </DocumentMeta>
+            {/* </DocumentMeta> */}
+        </>
     );
 };
 
