@@ -143,15 +143,15 @@ a {
 
     &:hover {
         cursor: pointer;
-        background-color: lighten($bg, 15%);
+        background-color: lighten($bg, 8%); // may need to change this percentage per project & test how it looks
         color: $contrastedColor;
     }
     &:focus {
-        background-color: lighten($bg, 10%);
+        background-color: lighten($bg, 7%); // may need to change this percentage per project & test how it looks
         color: $contrastedColor;
     }
     &:active {
-        background-color: lighten($bg, 25%);
+        background-color: lighten($bg, 12%); // may need to change this percentage per project & test how it looks
         color: $contrastedColor;
     }
     &:visited {
