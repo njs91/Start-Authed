@@ -2,7 +2,7 @@ import React, { FC, ReactNode } from 'react';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import styles from '../css/default.module.scss';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
 export const Page: FC<PageProps> = ({
     meta,
