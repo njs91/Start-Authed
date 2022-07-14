@@ -1,8 +1,8 @@
 import React, { FC, ReactNode } from 'react';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
-// import DocumentMeta from 'react-document-meta';
 import styles from '../css/default.module.scss';
+import { Helmet } from 'react-helmet';
 
 export const Page: FC<PageProps> = ({
     meta,
@@ -19,10 +19,14 @@ export const Page: FC<PageProps> = ({
     const pageClasses = `${styles.pageContainer} ${clsPage}`;
     const outerClasses = `${styles.outer} ${styles.mainBody} ${clsOuter}`;
     const innerClasses = `${!fullWidth ? styles.inner : ''} ${clsInner}`;
+    const { title, description } = meta;
 
     return (
         <>
-            {/* <DocumentMeta {...meta}> */}
+            <Helmet>
+                <title>{title}</title>
+                <meta name='description' content={description} />
+            </Helmet>
             <div className={pageClasses}>
                 {showHeader && <Header cls={clsHeader} />}
                 <div className={outerClasses}>
@@ -30,7 +34,6 @@ export const Page: FC<PageProps> = ({
                 </div>
                 {showFooter && <Footer cls={clsFooter} />}
             </div>
-            {/* </DocumentMeta> */}
         </>
     );
 };

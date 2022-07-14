@@ -1,4 +1,3 @@
-// info: https://www.npmjs.com/package/react-document-meta
 export const homepageMeta = {
     title: 'Homepage',
     description: 'Homepage meta description.',
