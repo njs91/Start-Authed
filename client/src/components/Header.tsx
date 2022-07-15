@@ -99,4 +99,4 @@ export type LinkType = {
     title: string;
     url: string;
 };
-type Links = LinkType[];
+export type Links = LinkType[];
