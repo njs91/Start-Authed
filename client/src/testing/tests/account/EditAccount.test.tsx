@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { MockUserContext, mockUser } from '../../mocks/contexts';
 import userEvent from '@testing-library/user-event';
 import Modal from 'react-modal';
+import { HelmetProvider } from 'react-helmet-async';
 
 const mockedUseNavigate = jest.fn();
 
@@ -24,11 +25,13 @@ describe('edit account tests', () => {
     beforeEach(() => {
         render(
             <div id='root'>
-                <BrowserRouter>
-                    <MockUserContext>
-                        <EditAccount />
-                    </MockUserContext>
-                </BrowserRouter>
+                <HelmetProvider>
+                    <BrowserRouter>
+                        <MockUserContext>
+                            <EditAccount />
+                        </MockUserContext>
+                    </BrowserRouter>
+                </HelmetProvider>
             </div>
         );
 

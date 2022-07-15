@@ -2,6 +2,7 @@ import Login from '../../../pages/account/public/Login';
 import { render, screen, waitForElementToBeRemoved } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
+import { HelmetProvider } from 'react-helmet-async';
 
 const mockedUseNavigate = jest.fn();
 
@@ -10,7 +11,7 @@ jest.mock('react-router-dom', () => ({
     useNavigate: () => mockedUseNavigate,
 }));
 
-describe('reset password tests', () => {
+describe('login tests', () => {
     let inputs: HTMLElement[],
         labels: HTMLElement[],
         links: HTMLElement[],
@@ -22,9 +23,11 @@ describe('reset password tests', () => {
 
     beforeEach(() => {
         render(
-            <BrowserRouter>
-                <Login />
-            </BrowserRouter>
+            <HelmetProvider>
+                <BrowserRouter>
+                    <Login />
+                </BrowserRouter>
+            </HelmetProvider>
         );
 
         labels = [screen.getByText(/email/i), screen.getByText(/password/)];

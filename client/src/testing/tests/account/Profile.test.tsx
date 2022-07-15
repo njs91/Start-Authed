@@ -2,17 +2,20 @@ import UserProfile from '../../../pages/account/private/UserProfile';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { MockUserContext, mockUser } from '../../mocks/contexts';
+import { HelmetProvider } from 'react-helmet-async';
 
 describe('user profile tests', () => {
     let editAccountBtn: HTMLElement;
 
     beforeEach(() => {
         render(
-            <BrowserRouter>
-                <MockUserContext>
-                    <UserProfile />
-                </MockUserContext>
-            </BrowserRouter>
+            <HelmetProvider>
+                <BrowserRouter>
+                    <MockUserContext>
+                        <UserProfile />
+                    </MockUserContext>
+                </BrowserRouter>
+            </HelmetProvider>
         );
 
         editAccountBtn = screen.getByText(/edit account/i);

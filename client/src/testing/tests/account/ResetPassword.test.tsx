@@ -2,6 +2,7 @@ import ResetPassword from '../../../pages/account/public/ResetPassword';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
+import { HelmetProvider } from 'react-helmet-async';
 
 describe('reset password tests', () => {
     let inputs: HTMLElement[],
@@ -13,9 +14,11 @@ describe('reset password tests', () => {
 
     beforeEach(() => {
         render(
-            <BrowserRouter>
-                <ResetPassword />
-            </BrowserRouter>
+            <HelmetProvider>
+                <BrowserRouter>
+                    <ResetPassword />
+                </BrowserRouter>
+            </HelmetProvider>
         );
 
         inputs = [
