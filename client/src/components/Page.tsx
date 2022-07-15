@@ -38,13 +38,13 @@ export const Page: FC<PageProps> = ({
     );
 };
 
-type MetaTag = {
+export type MetaTags = {
     title: string;
     description: string;
     [key: string]: any;
 };
 interface PageProps {
-    meta: MetaTag;
+    meta: MetaTags;
     children: ReactNode;
     clsPage?: string;
     clsOuter?: string;

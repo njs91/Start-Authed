@@ -1,13 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter } from 'react-router-dom';
-import { Page } from '../../../components/Page';
+import { MetaTags, Page } from '../../../components/Page';
 
 describe('page wrapper', () => {
     let container: HTMLElement, rerender: any;
 
-    const mockMeta: any = {
-        // cannot assign correct MetaTag type - possibly an IDE bug. Cannot even export MetaTag type, or change its name, or add a comment - Page.tsx line 41
+    const mockMeta: MetaTags = {
         title: 'Mock Title',
         description: 'Mock description.',
     };

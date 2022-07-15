@@ -1,7 +1,7 @@
-import { accountLinks, Header, links, LinkType } from '../../components/Header';
+import { accountLinks, Header, links, LinkType } from '../../../../components/Header';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
-import { MockUserContext } from '../mocks/contexts';
+import { MockUserContext } from '../../../mocks/contexts';
 
 describe('navbar links when logged out', () => {
     beforeEach(() => {
