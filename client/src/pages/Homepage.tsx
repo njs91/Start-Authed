@@ -6,7 +6,7 @@ import { HeroArea } from '../components/default/Areas';
 
 const Homepage: React.VFC = () => (
     <Page meta={homepageMeta} clsPage={styles.homepage} fullWidth={true}>
-        <HeroArea title='Title' description='Description...' buttonText='Find Out More' buttonLink='/styles' />
+        <HeroArea title='Title' description='Description...' buttonText='Style Guide' buttonLink='/styles' />
     </Page>
 );
 

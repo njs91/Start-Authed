@@ -8,7 +8,7 @@ import styles from '../css/default.module.scss';
 import guideStyles from '../css//pages/styleGuide.module.scss';
 import { TestModal } from '../components/default/TestModal';
 import { Error, Success, Loading } from '../components/default/States';
-import { Section } from '../components/default/Areas';
+import { HeroArea, Section } from '../components/default/Areas';
 
 const StyleGuide: VFC = () => (
     <Page meta={styleGuideMeta} fullWidth={true}>
@@ -112,11 +112,23 @@ const StyleGuide: VFC = () => (
             <h2>Situational Components</h2>
             <p>Error:</p>
             <Error msg='Error Message' />
-            <p>Success:</p>
+            <p>
+                <br /> Success:
+            </p>
             <Success msg='Success Message' marginTop={true} />
-            <p>Loading:</p>
+            <p>
+                <br />
+                Loading:
+            </p>
             <Loading />
         </Section>
+
+        <HeroArea
+            title='Hero Area'
+            description='Text goes here. Good for above-the-fold areas.'
+            buttonText='Call-to-action'
+            buttonLink='/styles'
+        />
     </Page>
 );
 
