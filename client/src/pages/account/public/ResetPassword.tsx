@@ -6,7 +6,7 @@ import { Page } from '../../../components/Page';
 import { resetPasswordMeta } from '../../MetaTags';
 import styles from '../../../css/default.module.scss';
 
-// option 1
+// option 1 - apparently defining inner-components is an anti-pattern?
 const ResetPassword = () => {
     const [success, setSuccess] = useState<boolean>(false);
 
@@ -65,5 +65,7 @@ const ResetPassword = () => {
 //         </div>
 //     </>
 // );
+
+// option 3: use higher order components? https://www.robinwieruch.de/react-higher-order-components/
 
 export default ResetPassword;
