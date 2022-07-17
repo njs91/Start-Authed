@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Dispatch, FC, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ResetPasswordForm, ResetPasswordLinks } from '../../../components/account/ResetPassword';
 import { Success } from '../../../components/default/States';
@@ -6,66 +6,38 @@ import { Page } from '../../../components/Page';
 import { resetPasswordMeta } from '../../MetaTags';
 import styles from '../../../css/default.module.scss';
 
-// option 1 - apparently defining inner-components is an anti-pattern?
 const ResetPassword = () => {
     const [success, setSuccess] = useState<boolean>(false);
 
-    const ResetPasswordStart = () => (
-        <>
-            <h1>Create New Password</h1>
-            <p>We'll ask for this password whenever you sign in.</p>
-            <ResetPasswordForm setSuccess={setSuccess} />
-            <ResetPasswordLinks />
-        </>
+    return (
+        <Page meta={resetPasswordMeta}>
+            {success ? <ResetPasswordFinish /> : <ResetPasswordStart setSuccess={setSuccess} />}
+        </Page>
     );
-
-    const ResetPasswordFinish = () => (
-        <>
-            <h1>Success</h1>
-            <Success msg='Password successfully reset' marginTop={true} />
-            <div className={`${styles.buttonsContainer} ${styles.spaced} ${styles.marginTop}`}>
-                <Link to='/login' className={styles.btnPrimary}>
-                    Login
-                </Link>
-            </div>
-        </>
-    );
-
-    return <Page meta={resetPasswordMeta}>{success ? <ResetPasswordFinish /> : <ResetPasswordStart />}</Page>;
 };
 
-// // option 2
-// const ResetPassword = () => {
-//     const [success, setSuccess] = useState<boolean>(false);
+const ResetPasswordFinish = () => (
+    <>
+        <h1>Success</h1>
+        <Success msg='Password successfully reset' marginTop={true} />
+        <div className={`${styles.buttonsContainer} ${styles.spaced} ${styles.marginTop}`}>
+            <Link to='/login' className={styles.btnPrimary}>
+                Login
+            </Link>
+        </div>
+    </>
+);
 
-//     if (success)
-//         return (
-//             <Page meta={resetPasswordMeta}>
-//                 <ResetPasswordFinish />
-//             </Page>
-//         );
-
-//     return (
-//         <Page meta={resetPasswordMeta}>
-//             <h1>Create New Password</h1>
-//             <p>We'll ask for this password whenever you sign in.</p>
-//             <ResetPasswordForm setSuccess={setSuccess} />
-//         </Page>
-//     );
-// };
-
-// const ResetPasswordFinish = () => (
-//     <>
-//         <h1>Success</h1>
-//         <Success msg='Password successfully reset' marginTop={true} />
-//         <div className={`${styles.buttonsContainer} ${styles.spaced} ${styles.marginTop}`}>
-//             <Link to='/login' className={styles.btnPrimary}>
-//                 Login
-//             </Link>
-//         </div>
-//     </>
-// );
-
-// option 3: use higher order components? https://www.robinwieruch.de/react-higher-order-components/
+interface ResetPasswordStartProps {
+    setSuccess: Dispatch<boolean>;
+}
+const ResetPasswordStart: FC<ResetPasswordStartProps> = ({ setSuccess }) => (
+    <>
+        <h1>Create New Password</h1>
+        <p>We'll ask for this password whenever you sign in.</p>
+        <ResetPasswordForm setSuccess={setSuccess} />
+        <ResetPasswordLinks />
+    </>
+);
 
 export default ResetPassword;
