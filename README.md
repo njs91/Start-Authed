@@ -18,6 +18,7 @@ Basic login system with authenticated routes, built in react and node (with TS).
       <ul>
         <li><a href="#formatting">Formatting</a></li>
         <li><a href="#preprocessing--transpiling">Preprocessing & Transpiling</a></li>
+        <li><a href="#testing">Testing</a></li>
         <li><a href="#miscellaneous">Miscellaneous</a></li>
       </ul>
     </li>
@@ -68,9 +69,14 @@ Formatting is configured by prettier in package.json
 - TypeScript is transpiled into JavaScript for files with .tsx extensions (rather than .js)
 - Front-end uses SASS preprocessor with CSS modules (transpiles name.module.scss (& .sass) files to .css files)
 
+### Testing
+
+- Unit & integration tests use Jest and end-to-end tests use cypress
+- To run Jest tests, cd to client and run `npm test`
+- To open Cypress, cd to client and run `npm run cypress:open`
+
 ### Miscellaneous
 
 - Need to run `npm run build` to generate production react files (if it fails, ensure using correct node version)
 - Includes font awesome, default components, styles & variables: see /styles page
 - To format with prettier, run `npm run format`
-- To run unit tests (Jest), cd to client and run `npm test`

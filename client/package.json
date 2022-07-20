@@ -30,7 +30,8 @@
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
-        "format": "prettier --write ."
+        "format": "prettier --write .",
+        "cypress:open": "cypress open"
     },
     "prettier": {
         "printWidth": 120,
@@ -64,6 +65,7 @@
     },
     "devDependencies": {
         "@types/react-modal": "^3.13.1",
+        "cypress": "^10.3.1",
         "jest-watch-typeahead": "^2.0.0",
         "msw": "^0.44.1",
         "prettier": "2.7.1",
