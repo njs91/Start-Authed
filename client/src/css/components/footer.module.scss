@@ -13,19 +13,21 @@
         align-items: center;
         padding-top: 0.5em !important; // @todo...
         padding-bottom: 0.5em !important; // @todo...
+        flex-direction: column;
+        text-align: center;
 
-        @include smallStyles {
-            flex-direction: column;
-            text-align: center;
+        @include nonMobileStyles {
+            flex-direction: row;
         }
 
         ul {
             display: flex;
             list-style: none;
+            padding-left: 0;
+            margin-top: 0.75em;
 
-            @include smallStyles {
-                padding-left: 0;
-                margin-top: 0.75em;
+            @include nonMobileStyles {
+                margin-top: 0;
             }
 
             li {

@@ -15,14 +15,18 @@
         align-items: center;
         justify-content: center;
         width: 100%;
+        flex-direction: column;
 
-        @include mobileStyles {
-            flex-direction: column;
+        @include nonMobileStyles {
+            flex-direction: row;
+            justify-content: space-evenly;
         }
 
         &.fullWidth {
             max-width: none;
         }
+
+        $vertical-spacing: 2em;
 
         .textAndButtonContainer {
             display: flex;
@@ -30,25 +34,29 @@
             align-items: center;
             text-align: center;
 
+            @include mobileStyles {
+                margin-bottom: $vertical-spacing;
+            }
+
             @include nonMobileStyles {
                 max-width: 60%;
             }
         }
 
         img {
-            margin: 2em 0;
+            margin: $vertical-spacing 0;
             max-height: 500px;
             object-fit: contain;
-
-            @include mobileStyles {
-                max-height: 300px;
-                max-width: 350px;
-                width: 100%;
-                order: -1;
-            }
+            max-height: 300px;
+            max-width: 350px;
+            width: 100%;
+            order: -1;
 
             @include nonMobileStyles {
                 padding-left: 1em;
+                order: 0;
+                max-height: 500px;
+                max-width: 550px;
             }
 
             @include tabletStyles {

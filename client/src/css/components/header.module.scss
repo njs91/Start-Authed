@@ -41,99 +41,152 @@
             > svg {
                 font-size: $font-lg-3;
                 cursor: pointer;
-                display: none;
+                display: inline-block;
 
-                @include mobileStyles {
-                    display: inline-block;
+                @include nonMobileStyles {
+                    display: none;
                 }
             }
 
             .rightAreaInner {
-                display: flex;
                 align-items: center;
+                display: none;
+                flex-direction: column;
+                background: $white;
+                position: absolute;
+                left: 0;
+                top: $header-height;
+                height: $viewport-height-adjusted;
+                width: 100vw;
+                overflow-y: auto;
 
-                @include mobileStyles {
-                    display: none;
-                    flex-direction: column;
-                    background: $white;
-                    position: absolute;
-                    left: 0;
-                    top: $header-height;
-                    height: $viewport-height-adjusted;
-                    width: 100vw;
+                &.open {
+                    display: flex;
+                }
 
-                    &.open {
-                        display: flex;
-                    }
+                @include nonMobileStyles {
+                    all: unset;
+                    display: flex;
+                    align-items: center;
                 }
 
                 ul {
-                    display: flex;
                     list-style: none;
                     padding: 0;
                     margin: 0;
+                    width: 100%;
+                    display: table;
 
-                    @include mobileStyles {
-                        width: 100%;
-                        display: table;
+                    @include nonMobileStyles {
+                        width: unset;
+                        display: flex;
+                        align-items: center;
                     }
 
                     li {
-                        @include mobileStyles {
-                            // .pageContainer & > a { // @todo: cannot do this, because .pageContainer is in another file
-                            // ask on stackoverflow how to reference this, then remove !important
-                            margin-right: 0 !important;
-                            display: flex;
+                        display: flex;
 
-                            &:not(:last-child) a {
-                                border-bottom: $border-std;
-                            }
-                        }
-
-                        a {
-                            @extend .linkSecondary;
-                            text-decoration: none;
-
-                            svg {
-                                display: none;
-                            }
-
-                            @include mobileStyles {
-                                flex: 0 0 100%;
-                                display: flex;
-                                padding: 1em 1.5em 1em $content-padding;
-                                align-items: center;
-
-                                svg {
-                                    margin-left: auto;
-                                    display: inline-block;
-                                    font-size: $font-lg-2;
-                                }
-                            }
+                        @include nonMobileStyles {
+                            display: list-item;
+                            position: relative;
                         }
 
                         &:not(:last-child) {
-                            margin-right: 1em;
-
                             @include nonMobileStyles {
                                 &::after {
                                     content: '|';
                                     margin-left: 1em;
                                     color: $secondary;
                                     opacity: 0.25;
+                                    position: absolute;
+                                    right: 0;
+                                    top: 50%;
+                                    transform: translateY(-50%);
+                                    pointer-events: none;
+                                }
+                            }
+
+                            a {
+                                border-bottom: $border-std;
+                            }
+                        }
+
+                        a {
+                            flex: 0 0 100%;
+                            display: flex;
+                            padding: 1em 1.5em 1em $content-padding;
+                            align-items: center;
+                            @extend .linkSecondary;
+                            text-decoration: none;
+
+                            svg {
+                                margin-left: auto;
+                                display: inline-block;
+                                font-size: $font-lg-2;
+
+                                @include nonMobileStyles {
+                                    display: none;
                                 }
                             }
                         }
                     }
 
-                    + button {
-                        margin-left: 1em;
-                        overflow: unset;
+                    // === start of old, non-mobile-first styles ===
+                    // keep in case I want to revert
 
-                        @include mobileStyles {
-                            // .pageContainer & > a { // @todo: cannot do this, because .pageContainer is in another file
-                            // ask on stackoverflow how to reference this, then remove !important
-                            margin: 1em 0 !important;
+                    // li {
+                    //     @include mobileStyles {
+                    //         // .pageContainer & > a { // cannot do this, because .pageContainer is in another file
+                    //         // ask on stackoverflow how to reference this, then remove !important
+                    //         margin-right: 0 !important;
+                    //         display: flex;
+
+                    //         &:not(:last-child) a {
+                    //             border-bottom: $border-std;
+                    //         }
+                    //     }
+
+                    //     &:not(:last-child) {
+                    //         margin-right: 1em;
+
+                    //         @include nonMobileStyles {
+                    //             &::after {
+                    //                 content: '|';
+                    //                 margin-left: 1em;
+                    //                 color: $secondary;
+                    //                 opacity: 0.25;
+                    //             }
+                    //         }
+                    //     }
+
+                    //     a {
+                    //         @extend .linkSecondary;
+                    //         text-decoration: none;
+
+                    //         svg {
+                    //             display: none;
+                    //         }
+
+                    //         @include mobileStyles {
+                    //             flex: 0 0 100%;
+                    //             display: flex;
+                    //             padding: 1em 1.5em 1em $content-padding;
+                    //             align-items: center;
+
+                    //             svg {
+                    //                 margin-left: auto;
+                    //                 display: inline-block;
+                    //                 font-size: $font-lg-2;
+                    //             }
+                    //         }
+                    //     }
+                    // }
+
+                    // === end of old, non-mobile-first styles ===
+
+                    @include mobileStyles {
+                        + button {
+                            margin: 1em 0;
                         }
                     }
                 }

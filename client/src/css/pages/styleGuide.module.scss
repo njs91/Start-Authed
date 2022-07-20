@@ -1,14 +1,10 @@
 @import '../variables.module.scss';
 
 .testBreakpoints {
-    background-color: $green;
-
-    @include mobileStyles {
-        background-color: $red;
-    }
+    background-color: $red;
 
     @include tabletStyles {
-        background-color: #0000ff;
+        background-color: $blue;
     }
 
     @include desktopStyles {
