@@ -31,7 +31,9 @@
         "test": "react-scripts test",
         "eject": "react-scripts eject",
         "format": "prettier --write .",
-        "cypress:open": "cypress open"
+        "cypress:open": "cypress open",
+        "cypress:run": "cypress run",
+        "cypress:run:headed": "cypress run --headed"
     },
     "prettier": {
         "printWidth": 120,

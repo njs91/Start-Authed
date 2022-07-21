@@ -40,7 +40,7 @@ Basic login system with authenticated routes, built in react and node (with TS).
 
 ### Running the Back-end
 
-1. CD to server and change env.example to .env
+1. CD to server and rename env.example to .env
 2. Install dependencies:
    ```sh
    npm install
@@ -71,12 +71,12 @@ Formatting is configured by prettier in package.json
 
 ### Testing
 
-- Unit & integration tests use Jest and end-to-end tests use cypress
+- Unit & integration tests use Jest and end-to-end tests use Cypress
 - To run Jest tests, cd to client and run `npm test`
-- To open Cypress, cd to client and run `npm run cypress:open`
+- To open Cypress, cd to client and run `npm run cypress:open`. Run with `npm run cypress:run` or `npm run cypress:run:headed`
 
 ### Miscellaneous
 
-- Need to run `npm run build` to generate production react files (if it fails, ensure using correct node version)
-- Includes font awesome, default components, styles & variables: see /styles page
+- Run `npm run build` to generate production react files (if it fails, ensure using correct node version)
+- Includes font awesome, default components, styles & variables - see /styles page
 - To format with prettier, run `npm run format`
