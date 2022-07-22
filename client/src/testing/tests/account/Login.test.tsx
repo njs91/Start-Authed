@@ -3,6 +3,8 @@ import { render, screen, waitForElementToBeRemoved } from '@testing-library/reac
 import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import { HelmetProvider } from 'react-helmet-async';
+import puppeteer from 'puppeteer';
+import { wrongUser } from '../fixtures/User';
 
 const mockedUseNavigate = jest.fn();
 
@@ -11,7 +13,7 @@ jest.mock('react-router-dom', () => ({
     useNavigate: () => mockedUseNavigate,
 }));
 
-describe('login tests', () => {
+describe('login unit/integration tests', () => {
     let inputs: HTMLElement[],
         labels: HTMLElement[],
         links: HTMLElement[],
@@ -113,5 +115,62 @@ describe('login tests', () => {
 
         const notFoundError = await screen.findByText(/user not found/i);
         expect(notFoundError).toBeInTheDocument();
+    });
+});
+
+jest.setTimeout(30000);
+
+describe('login e2e tests', () => {
+    let browser: puppeteer.Browser;
+    let page: puppeteer.Page;
+
+    beforeAll(async () => {
+        browser = await puppeteer.launch({
+            // headless: false,
+            // slowMo: 10,
+            // devtools: true,
+        });
+        page = await browser.newPage();
+    });
+
+    afterAll(async () => {
+        await browser.close();
+    });
+
+    it('should redirect unauthenticated user to sign-in page', async () => {
+        // visit private link
+        await Promise.all([
+            page.goto('http://localhost:3000/user/profile'),
+            page.waitForNavigation({ waitUntil: 'networkidle0' }),
+        ]);
+
+        // expect to be redirected
+        const url = page.url();
+        expect(url).toContain('/login');
+    });
+
+    it('should show error when submitting invalid credentials', async () => {
+        // fill in the form
+        await page.type('input[name=email]', wrongUser.email);
+        await page.type('input[name=password]', wrongUser.password);
+        await page.keyboard.press('Enter');
+
+        // should show loading image
+        const loadingImg = await page.waitForSelector('img[alt=loading]', { visible: true });
+        expect(loadingImg).toBeDefined();
+
+        // should show error
+        const errorImage = await page.waitForSelector('svg[data-icon="triangle-exclamation"]', { visible: true });
+        const pageContent = await page.$eval('body', (el) => el.innerText);
+        expect(errorImage).toBeDefined();
+        expect(pageContent).toContain('User not found');
+    });
+
+    it('should submit correctly, show loading, set cookies & redirect to profile', async () => {
+        // fill in the form
+        // should show loading image
+        // should redirect to user profile
+        // should reflect being logged in
+        // auth cookies should exist
     });
 });
