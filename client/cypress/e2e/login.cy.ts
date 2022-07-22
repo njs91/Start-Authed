@@ -26,7 +26,6 @@ describe('login', () => {
         // should reflect being logged in
         cy.get('button').should('contain', 'Log out');
         cy.contains(this.user.email);
-        cy.contains(this.user.id);
 
         // auth cookies should exist
         cy.getCookie('accountToken').should('exist');
