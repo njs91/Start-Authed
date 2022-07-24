@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import { HelmetProvider } from 'react-helmet-async';
 import puppeteer from 'puppeteer';
-import { wrongUser } from '../fixtures/User';
+import { wrongUser } from '../../fixtures/user';
 
 const mockedUseNavigate = jest.fn();
 
