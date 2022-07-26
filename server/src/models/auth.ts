@@ -1,18 +1,44 @@
 import { USERS_COLLECTION_NAME } from '../utils/db';
 import { getCollection } from '../utils/helpers';
 import jwt from 'jsonwebtoken';
+import { ObjectID } from 'bson';
 const mongodb = require('mongodb'); // do not convert to import (otherwise undefined)
 require('dotenv').config();
 
+type Plans = {
+  free: string;
+  lite: string;
+  pro: string;
+};
+const PLANS: Plans = {
+  free: 'free',
+  lite: 'lite',
+  pro: 'pro',
+};
+
+type Referrer = null | ObjectID;
 export class User {
   email: string;
   hashedPassword: string;
   dateCreated: Date;
+  plan: string;
+  directAffiliateSignup: boolean;
+  referrer: Referrer;
 
-  constructor(email: string, hashedPassword: string) {
+  constructor(
+    email: string,
+    hashedPassword: string,
+    plan: string = PLANS.free,
+    directAffiliateSignup: boolean = false,
+    referrer: Referrer = null
+  ) {
     this.email = email.toLowerCase();
     this.hashedPassword = hashedPassword;
     this.dateCreated = new Date();
+    this.plan = plan;
+    this.directAffiliateSignup = directAffiliateSignup;
+    this.referrer = referrer; // must ensure referral code is valid (i.e. referrer exists) and are not referring themself
+    // note: uses _id for referral id (i.e. instead of having this.affiliatePromoCode = some_uuid)
   }
 
   signToken(expiry: number | string = 60 * 24): string {
