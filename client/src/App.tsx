@@ -17,6 +17,7 @@ import ForgotPasswordSuccess from './pages/account/public/ForgotPasswordSuccess'
 import ResetPassword from './pages/account/public/ResetPassword';
 import { HelmetProvider } from 'react-helmet-async';
 import { setAffiliateCookies } from './scripts/affiliates';
+import AffiliateProgram from './pages/affiliates/AffiliateProgram';
 
 const App: FC = () => {
     setAffiliateCookies();
@@ -52,6 +53,7 @@ const App: FC = () => {
                         />
                         <Route path='/terms' element={<Terms />} />
                         <Route path='/privacy' element={<Privacy />} />
+                        <Route path='/affiliates' element={<AffiliateProgram />} />
                         <Route path='*' element={<NotFound />} />
                     </Routes>
                 </BrowserRouter>

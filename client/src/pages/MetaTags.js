@@ -51,3 +51,7 @@ export const termsMeta = {
     title: 'Terms & Conditions',
     description: 'Terms page description.',
 };
+export const affiliateProgramMeta = {
+    title: 'Our Affiliate Program',
+    description: 'Affiliate program page description.',
+};
