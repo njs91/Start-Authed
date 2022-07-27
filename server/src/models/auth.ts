@@ -2,6 +2,7 @@ import { USERS_COLLECTION_NAME } from '../utils/db';
 import { getCollection } from '../utils/helpers';
 import jwt from 'jsonwebtoken';
 import { DeleteResult } from 'mongodb';
+import { v4 as uuidv4 } from 'uuid';
 const mongodb = require('mongodb'); // do not convert to import (otherwise undefined)
 require('dotenv').config();
 
@@ -29,6 +30,7 @@ export class User {
   dateCreated: Date;
   plan: string;
   directAffiliateSignup: boolean;
+  referrerId: string;
   referrer: Referrer;
 
   constructor({
@@ -42,6 +44,7 @@ export class User {
     this.dateCreated = new Date();
     this.plan = plan;
     this.directAffiliateSignup = directAffiliateSignup;
+    this.referrerId = uuidv4();
     this.referrer = null;
   }
 
@@ -61,7 +64,7 @@ export class User {
   }
 
   async addReferrer(referrerId: string): Promise<void> {
-    const validReferrer = await User.findById(referrerId);
+    const validReferrer = await User.findByReferralId(referrerId);
     if (!validReferrer) return;
     this.referrer = referrerId;
   }
@@ -90,6 +93,12 @@ export class User {
   static async findById(id: string): Promise<any> {
     const collection = getCollection(USERS_COLLECTION_NAME);
     const user = await collection.findOne({ _id: new mongodb.ObjectId(id) });
+    return user;
+  }
+
+  static async findByReferralId(id: string): Promise<any> {
+    const collection = getCollection(USERS_COLLECTION_NAME);
+    const user = await collection.findOne({ referrerId: id });
     return user;
   }
 }
