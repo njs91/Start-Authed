@@ -6,17 +6,21 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { createAccountSchema } from '../../schemas/AccountSchemas';
 import { Loading, Error } from '../default/States';
 import { Link, useNavigate } from 'react-router-dom';
+import { getCookie } from '../../utils/HelperFunctions';
 
+type Referrer = string | null;
 export type CreateAccountFormInputs = {
     email: string;
     password: string;
     passwordConfirmation: string;
+    referrer: Referrer;
 };
 
 export const CreateAccountForm: VFC = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
+    const referrer: Referrer = getCookie('referrer');
 
     const methods = useForm<CreateAccountFormInputs>({
         resolver: yupResolver(createAccountSchema),
@@ -25,6 +29,7 @@ export const CreateAccountForm: VFC = () => {
             email: '',
             password: '',
             passwordConfirmation: '',
+            referrer,
         },
     });
 

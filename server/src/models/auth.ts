@@ -10,13 +10,20 @@ type Plans = {
   lite: string;
   pro: string;
 };
-const PLANS: Plans = {
+export const PLANS: Plans = {
   free: 'free',
   lite: 'lite',
   pro: 'pro',
 };
 
 type Referrer = null | ObjectID;
+type UserConstructor = {
+  email: string;
+  hashedPassword: string;
+  referrer: Referrer;
+  plan: string;
+  directAffiliateSignup: boolean;
+};
 export class User {
   email: string;
   hashedPassword: string;
@@ -25,13 +32,13 @@ export class User {
   directAffiliateSignup: boolean;
   referrer: Referrer;
 
-  constructor(
-    email: string,
-    hashedPassword: string,
-    plan: string = PLANS.free,
-    directAffiliateSignup: boolean = false,
-    referrer: Referrer = null
-  ) {
+  constructor({
+    email,
+    hashedPassword,
+    plan,
+    directAffiliateSignup,
+    referrer,
+  }: UserConstructor) {
     this.email = email.toLowerCase();
     this.hashedPassword = hashedPassword;
     this.dateCreated = new Date();

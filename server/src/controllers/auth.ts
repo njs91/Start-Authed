@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { User } from '../models/auth';
+import { PLANS, User } from '../models/auth';
 import bcrypt from 'bcrypt';
 import { USERS_COLLECTION_NAME } from '../utils/db';
 import { getCollection } from '../utils/helpers';
@@ -10,7 +10,7 @@ require('dotenv').config();
 // does anywhere else here need try catch?
 
 export const createUser = async (req: Request, res: Response) => {
-  const { email, password } = req.body;
+  const { email, password, referrer } = req.body;
   const existingUser = await User.findByEmail(email);
 
   if (existingUser) {
@@ -18,7 +18,13 @@ export const createUser = async (req: Request, res: Response) => {
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
-  const newUser = new User(email, hashedPassword);
+  const newUser = new User({
+    email,
+    hashedPassword,
+    referrer,
+    plan: PLANS.free,
+    directAffiliateSignup: false,
+  });
   const saveToDb = await newUser.saveToDb();
 
   if (!saveToDb) {
