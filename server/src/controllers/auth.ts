@@ -21,10 +21,10 @@ export const createUser = async (req: Request, res: Response) => {
   const newUser = new User({
     email,
     hashedPassword,
-    referrer,
     plan: PLANS.free,
     directAffiliateSignup: false,
   });
+  if (referrer) await newUser.addReferrer(referrer);
   const saveToDb = await newUser.saveToDb();
 
   if (!saveToDb) {

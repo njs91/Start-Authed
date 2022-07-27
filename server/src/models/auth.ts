@@ -1,7 +1,7 @@
 import { USERS_COLLECTION_NAME } from '../utils/db';
 import { getCollection } from '../utils/helpers';
 import jwt from 'jsonwebtoken';
-import { ObjectID } from 'bson';
+import { DeleteResult } from 'mongodb';
 const mongodb = require('mongodb'); // do not convert to import (otherwise undefined)
 require('dotenv').config();
 
@@ -16,11 +16,10 @@ export const PLANS: Plans = {
   pro: 'pro',
 };
 
-type Referrer = null | ObjectID;
+type Referrer = null | string;
 type UserConstructor = {
   email: string;
   hashedPassword: string;
-  referrer: Referrer;
   plan: string;
   directAffiliateSignup: boolean;
 };
@@ -37,15 +36,13 @@ export class User {
     hashedPassword,
     plan,
     directAffiliateSignup,
-    referrer,
   }: UserConstructor) {
     this.email = email.toLowerCase();
     this.hashedPassword = hashedPassword;
     this.dateCreated = new Date();
     this.plan = plan;
     this.directAffiliateSignup = directAffiliateSignup;
-    this.referrer = referrer; // must ensure referral code is valid (i.e. referrer exists) and are not referring themself
-    // note: uses _id for referral id (i.e. instead of having this.affiliatePromoCode = some_uuid)
+    this.referrer = null;
   }
 
   signToken(expiry: number | string = 60 * 24): string {
@@ -63,16 +60,18 @@ export class User {
     return saveResult;
   }
 
-  static async delete(id: string): Promise<any> {
+  async addReferrer(referrerId: string): Promise<void> {
+    const validReferrer = await User.findById(referrerId);
+    if (!validReferrer) return;
+    this.referrer = referrerId;
+  }
+
+  static async delete(id: string): Promise<DeleteResult> {
     const collection = getCollection(USERS_COLLECTION_NAME);
     const user = await User.findById(id);
-
     if (!user) throw new Error('404 - User not found');
-
     const deleteResult = await collection.deleteOne(user);
-
     if (!deleteResult) throw new Error('500 - Could not delete user');
-
     return deleteResult;
   }
 

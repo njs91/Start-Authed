@@ -32,7 +32,6 @@ export const DeleteAccountModal = () => {
 
             if (!res.ok) {
                 const errorText = await res.text();
-                console.log('errorText', errorText);
                 setError(`HTTP error (${res.status}): ${errorText}`);
                 return;
             }
