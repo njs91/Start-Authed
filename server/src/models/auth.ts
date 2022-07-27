@@ -30,8 +30,8 @@ export class User {
   dateCreated: Date;
   plan: string;
   directAffiliateSignup: boolean;
-  referrerId: string;
-  referrer: Referrer;
+  referralPromoCode: string;
+  referredBy: Referrer;
 
   constructor({
     email,
@@ -44,8 +44,8 @@ export class User {
     this.dateCreated = new Date();
     this.plan = plan;
     this.directAffiliateSignup = directAffiliateSignup;
-    this.referrerId = uuidv4();
-    this.referrer = null;
+    this.referralPromoCode = uuidv4();
+    this.referredBy = null;
   }
 
   signToken(expiry: number | string = 60 * 24): string {
@@ -63,10 +63,10 @@ export class User {
     return saveResult;
   }
 
-  async addReferrer(referrerId: string): Promise<void> {
-    const validReferrer = await User.findByReferralId(referrerId);
+  async addReferrer(referralPromoCode: string): Promise<void> {
+    const validReferrer = await User.findReferrer(referralPromoCode);
     if (!validReferrer) return;
-    this.referrer = referrerId;
+    this.referredBy = referralPromoCode;
   }
 
   static async delete(id: string): Promise<DeleteResult> {
@@ -96,9 +96,9 @@ export class User {
     return user;
   }
 
-  static async findByReferralId(id: string): Promise<any> {
+  static async findReferrer(referralCode: string): Promise<any> {
     const collection = getCollection(USERS_COLLECTION_NAME);
-    const user = await collection.findOne({ referrerId: id });
+    const user = await collection.findOne({ referralPromoCode: referralCode });
     return user;
   }
 }
