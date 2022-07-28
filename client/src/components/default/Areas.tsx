@@ -4,21 +4,16 @@ import defaultStyles from '../../css/default.module.scss';
 import { Link } from 'react-router-dom';
 
 // hero area
-interface HeroAreaProps {
+interface HeroAreaProps extends ButtonsProps {
     title: string;
     description: string;
-    buttonText: string;
-    buttonLink: string;
     clsOuter?: string;
     clsInner?: string;
-    clsBtn?: string;
     fullWidth?: boolean;
     image?: string;
     imageAlt?: string;
-    buttonTwoText?: string;
-    buttonTwoLink?: string;
-    clsBtnTwo?: string;
 }
+
 export const HeroArea: FC<HeroAreaProps> = ({
     title,
     description,
@@ -34,40 +29,56 @@ export const HeroArea: FC<HeroAreaProps> = ({
     buttonTwoLink,
     clsBtnTwo = defaultStyles.btnSecondary,
 }) => {
-    const outerClasses = `${styles.heroAreaOuter} ${clsOuter}`;
-    const innerClasses = `${styles.heroAreaInner} ${fullWidth ? styles.fullWidth : ''} ${clsInner}`;
-    const samePageLinkOne = buttonLink[0] === '#';
-    const samePageLinkTwo = buttonTwoLink && buttonTwoLink[0] === '#';
+    const outerClasses: string = `${styles.heroAreaOuter} ${clsOuter}`;
+    const innerClasses: string = `${styles.heroAreaInner} ${fullWidth ? styles.fullWidth : ''} ${clsInner}`;
+    const btnProps: ButtonsProps = { buttonLink, buttonText, clsBtn, buttonTwoLink, buttonTwoText, clsBtnTwo };
 
     return (
         <Section clsOuter={outerClasses} clsInner={innerClasses} tag='section'>
             <div className={styles.textAndButtonContainer}>
                 <h1>{title}</h1>
                 <p>{description}</p>
-                <div className={`${defaultStyles.buttonsContainer} ${defaultStyles.largeButtons}`}>
-                    {samePageLinkOne ? (
-                        <a href={buttonLink} className={clsBtn}>
-                            {buttonText}
-                        </a>
-                    ) : (
-                        <Link to={buttonLink} className={clsBtn}>
-                            {buttonText}
-                        </Link>
-                    )}
-                    {buttonTwoLink &&
-                        (samePageLinkTwo ? (
-                            <a href={buttonTwoLink} className={clsBtnTwo}>
-                                {buttonTwoText}
-                            </a>
-                        ) : (
-                            <Link to={buttonTwoLink} className={clsBtnTwo}>
-                                {buttonTwoText}
-                            </Link>
-                        ))}
-                </div>
+                <Buttons {...btnProps} />
             </div>
             {image && <img src={image} alt={imageAlt} />}
         </Section>
+    );
+};
+
+interface ButtonsProps {
+    buttonText: string;
+    buttonLink: string;
+    clsBtn?: string;
+    buttonTwoText?: string;
+    buttonTwoLink?: string;
+    clsBtnTwo?: string;
+}
+const Buttons: FC<ButtonsProps> = ({ buttonLink, buttonText, clsBtn, buttonTwoLink, buttonTwoText, clsBtnTwo }) => {
+    const samePageLinkOne = buttonLink[0] === '#';
+    const samePageLinkTwo = buttonTwoLink && buttonTwoLink[0] === '#';
+
+    return (
+        <div className={`${defaultStyles.buttonsContainer} ${defaultStyles.largeButtons}`}>
+            {samePageLinkOne ? (
+                <a href={buttonLink} className={clsBtn}>
+                    {buttonText}
+                </a>
+            ) : (
+                <Link to={buttonLink} className={clsBtn}>
+                    {buttonText}
+                </Link>
+            )}
+            {buttonTwoLink &&
+                (samePageLinkTwo ? (
+                    <a href={buttonTwoLink} className={clsBtnTwo}>
+                        {buttonTwoText}
+                    </a>
+                ) : (
+                    <Link to={buttonTwoLink} className={clsBtnTwo}>
+                        {buttonTwoText}
+                    </Link>
+                ))}
+        </div>
     );
 };
 

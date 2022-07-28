@@ -55,3 +55,8 @@ export const affiliateProgramMeta = {
     title: 'Our Affiliate Program',
     description: 'Affiliate program page description.',
 };
+
+export const affiliateDashboardMeta = {
+    title: 'Affiliate Dashboard',
+    description: 'Affiliate dashboard page description.',
+};

@@ -11,7 +11,7 @@ const AffiliateProgram = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (user) navigate('/user/profile/affiliates');
+        if (user) navigate('/user/profile/affiliate');
     }, [user, navigate]);
 
     return (

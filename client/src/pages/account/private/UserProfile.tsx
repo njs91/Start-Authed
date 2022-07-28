@@ -19,6 +19,10 @@ const UserProfile = () => {
             <Link to='/user/edit-account' className={styles.btnPrimary}>
                 Edit Account
             </Link>
+            <p>
+                <br />
+                View your <Link to='/user/profile/affiliate'>affiliate profile</Link>.
+            </p>
         </Page>
     );
 };

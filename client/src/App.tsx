@@ -18,6 +18,7 @@ import ResetPassword from './pages/account/public/ResetPassword';
 import { HelmetProvider } from 'react-helmet-async';
 import { setAffiliateCookies } from './scripts/affiliates';
 import AffiliateProgram from './pages/affiliates/AffiliateProgram';
+import AffiliateDashboard from './pages/account/private/AffiliateDashboard';
 
 const App: FC = () => {
     setAffiliateCookies();
@@ -40,6 +41,14 @@ const App: FC = () => {
                             element={
                                 <PrivateRoute>
                                     <UserProfile />
+                                </PrivateRoute>
+                            }
+                        />
+                        <Route
+                            path='/user/profile/affiliate'
+                            element={
+                                <PrivateRoute>
+                                    <AffiliateDashboard />
                                 </PrivateRoute>
                             }
                         />
