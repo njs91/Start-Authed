@@ -19,10 +19,36 @@ describe('hero area', () => {
         els.forEach((el) => expect(el).toBeInTheDocument());
     });
 
-    it('should render button with correct link & text', () => {
+    it('should render button/s with correct link/s & text', () => {
         const button: HTMLElement = screen.getByRole('link', { name: /click me/i });
         expect(button).toBeInTheDocument();
         expect(button).toHaveAttribute('href', '/url');
+
+        // rerender with 2nd button
+        const [link1, link2]: Array<string> = ['/one', '/two'];
+        rerender(
+            <BrowserRouter>
+                <HeroArea
+                    image='/src'
+                    imageAlt='image alt'
+                    title='title'
+                    description='description'
+                    buttonText='click me'
+                    buttonLink={link1}
+                    buttonTwoText='click second button'
+                    buttonTwoLink={link2}
+                />
+            </BrowserRouter>
+        );
+
+        const buttonTwo: HTMLElement | null = screen.queryByRole('link', { name: /click second button/i });
+        [
+            { button, href: link1 },
+            { button: buttonTwo, href: link2 },
+        ].forEach(({ button: btn, href }) => {
+            expect(btn).toBeInTheDocument();
+            expect(btn).toHaveAttribute('href', href);
+        });
     });
 
     it('should only render image when provided', () => {
@@ -79,6 +105,24 @@ describe('hero area', () => {
         expect(wrappingParent).toHaveClass('outer heroAreaOuter outerclass');
         expect(wrappingChild).toHaveClass('inner heroAreaInner fullWidth innerclass');
     });
+
+    // it('should render multiple buttons', () => {
+    //     rerender(
+    //         <BrowserRouter>
+    //             <HeroArea
+    //                 image='/src'
+    //                 imageAlt='image alt'
+    //                 title='title'
+    //                 description='description'
+    //                 buttonText='click me'
+    //                 buttonLink='/url'
+    //                 buttonTwoText='click second button'
+    //                 buttonTwoLink='/two'
+    //             />
+    //         </BrowserRouter>
+    //     );
+
+    // });
 });
 
 describe('sections', () => {
