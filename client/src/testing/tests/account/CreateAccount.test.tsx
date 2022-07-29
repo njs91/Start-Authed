@@ -17,16 +17,18 @@ describe('create account tests', () => {
         password: HTMLElement,
         confirmPassword: HTMLElement,
         submit: HTMLElement,
-        back: HTMLElement;
+        back: HTMLElement,
+        rerender: any;
 
     beforeEach(() => {
-        render(
+        const rendered = render(
             <BrowserRouter>
                 <CreateAccountForm affiliateForm={false} />
                 <CreateAccountLinks />
             </BrowserRouter>
         );
 
+        rerender = rendered.rerender;
         inputs = [
             screen.getByRole('textbox', { name: /email/i }),
             screen.getByLabelText('Password:'),
@@ -92,7 +94,7 @@ describe('create account tests', () => {
         await waitForElementToBeRemoved(loadingImage);
         expect(loadingImage).not.toBeInTheDocument();
 
-        // navigates away
+        // navigates away (to /login)
         expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
         expect(mockedUseNavigate).toHaveBeenCalledWith('/login');
     });
@@ -108,5 +110,31 @@ describe('create account tests', () => {
 
         const accountExistsError = await screen.findByText(/user already exists/i);
         expect(accountExistsError).toBeInTheDocument();
+    });
+
+    it('should redirect to correct path with affiliate form', async () => {
+        rerender(
+            <BrowserRouter>
+                <CreateAccountForm affiliateForm={true} />
+                <CreateAccountLinks />
+            </BrowserRouter>
+        );
+
+        await userEvent.type(email, 'correct@input.com');
+        await userEvent.type(password, 'password');
+        await userEvent.type(confirmPassword, 'password');
+        await userEvent.click(submit);
+
+        // loading image shows
+        const loadingImage = await screen.findByAltText(/loading/i);
+        expect(loadingImage).toBeInTheDocument();
+
+        // loading image disappears
+        await waitForElementToBeRemoved(loadingImage);
+        expect(loadingImage).not.toBeInTheDocument();
+
+        // navigates away (to /affiliates/login)
+        expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
+        expect(mockedUseNavigate).toHaveBeenCalledWith('/affiliates/login');
     });
 });
