@@ -10,7 +10,7 @@ require('dotenv').config();
 // does anywhere else here need try catch?
 
 export const createUser = async (req: Request, res: Response) => {
-  const { email, password, referrer } = req.body;
+  const { email, password, referrer, directAffiliateSignup } = req.body;
   const existingUser = await User.findByEmail(email);
 
   if (existingUser) {
@@ -22,7 +22,7 @@ export const createUser = async (req: Request, res: Response) => {
     email,
     hashedPassword,
     plan: PLANS.free,
-    directAffiliateSignup: false,
+    directAffiliateSignup,
   });
   if (referrer) await newUser.addReferrer(referrer);
   const saveToDb = await newUser.saveToDb();

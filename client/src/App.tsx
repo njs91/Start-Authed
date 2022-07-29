@@ -19,6 +19,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { setAffiliateCookies } from './scripts/affiliates';
 import AffiliateProgram from './pages/affiliates/AffiliateProgram';
 import AffiliateDashboard from './pages/account/private/AffiliateDashboard';
+import AffiliateRegistry from './pages/affiliates/AffiliateRegistry';
 
 const App: FC = () => {
     setAffiliateCookies();
@@ -63,6 +64,7 @@ const App: FC = () => {
                         <Route path='/terms' element={<Terms />} />
                         <Route path='/privacy' element={<Privacy />} />
                         <Route path='/affiliates' element={<AffiliateProgram />} />
+                        <Route path='/affiliates/register' element={<AffiliateRegistry />} />
                         <Route path='*' element={<NotFound />} />
                     </Routes>
                 </BrowserRouter>

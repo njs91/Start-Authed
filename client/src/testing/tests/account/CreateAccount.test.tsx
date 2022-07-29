@@ -22,7 +22,7 @@ describe('create account tests', () => {
     beforeEach(() => {
         render(
             <BrowserRouter>
-                <CreateAccountForm />
+                <CreateAccountForm affiliateForm={false} />
                 <CreateAccountLinks />
             </BrowserRouter>
         );

@@ -1,4 +1,4 @@
-import React, { useState, VFC } from 'react';
+import React, { FC, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { BelowFormLinks, InputField } from '../default/Form';
 import styles from '../../css/default.module.scss';
@@ -9,19 +9,23 @@ import { Link, useNavigate } from 'react-router-dom';
 import { getCookie } from '../../utils/HelperFunctions';
 
 type Referrer = string | null;
-export type CreateAccountFormInputs = {
+type CreateAccountFormInputs = {
     email: string;
     password: string;
     passwordConfirmation: string;
-    referrer: Referrer;
 };
+type SubmissionData = CreateAccountFormInputs & {
+    referrer: Referrer;
+    directAffiliateSignup: boolean;
+};
+interface CreateAccountFormProps {
+    affiliateForm: boolean;
+}
 
-export const CreateAccountForm: VFC = () => {
+export const CreateAccountForm: FC<CreateAccountFormProps> = ({ affiliateForm }) => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
-    const referrer: Referrer = getCookie('referrer');
-
     const methods = useForm<CreateAccountFormInputs>({
         resolver: yupResolver(createAccountSchema),
         mode: 'onTouched',
@@ -29,18 +33,21 @@ export const CreateAccountForm: VFC = () => {
             email: '',
             password: '',
             passwordConfirmation: '',
-            referrer,
         },
     });
 
     const onSubmit: SubmitHandler<CreateAccountFormInputs> = async (formData) => {
+        const referrer: Referrer = getCookie('referrer');
+        const redirectUrl: string = `${affiliateForm ? '/affiliates' : ''}/login`;
+        const submissionData: SubmissionData = { ...formData, directAffiliateSignup: affiliateForm, referrer };
+
         try {
             setLoading(true);
 
             const res = await fetch('http://localhost:8000/api/user/create', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData),
+                body: JSON.stringify(submissionData),
             });
 
             if (!res.ok) {
@@ -49,7 +56,7 @@ export const CreateAccountForm: VFC = () => {
                 return;
             }
 
-            navigate('/login');
+            navigate(redirectUrl);
         } catch (err: any) {
             setError(err.message);
         } finally {
@@ -89,5 +96,11 @@ export const CreateAccountForm: VFC = () => {
 export const CreateAccountLinks = () => (
     <BelowFormLinks>
         Already have an account? <Link to='/login'>Log in</Link>.
+    </BelowFormLinks>
+);
+
+export const CreateAffiliateAccountLinks = () => (
+    <BelowFormLinks>
+        Already have an affiliate or normal account? You can still <Link to='/login'>log in</Link> as an affiliate.
     </BelowFormLinks>
 );
