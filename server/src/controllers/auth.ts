@@ -14,7 +14,10 @@ export const createUser = async (req: Request, res: Response) => {
   const existingUser = await User.findByEmail(email);
 
   if (existingUser) {
-    return res.status(409).send('User already exists. Please log in.');
+    const msg = directAffiliateSignup
+      ? 'User already exists. Existing ordinary user accounts - even those who have not registered as an affiliate - will automatically be an affiliate. You can log in as an affiliate with your existing user account.'
+      : `User already exists. Please log in.`;
+    return res.status(409).send(msg);
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);

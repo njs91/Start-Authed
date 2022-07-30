@@ -99,8 +99,8 @@ export const AffiliateLoginFormLinks = () => (
             <Link to='/forgot-password'>Forgot password</Link>.
         </BelowFormLinks>
         <BelowFormLinks>
-            Haven't registered as an affiliate? If you have an ordinary account then you will automatically be an
-            affiliate and can log in with that account, otherwise you'll need to{' '}
+            Haven't registered as an affiliate? If you have a user account then you will automatically be an affiliate
+            and can log in with that account, otherwise you'll need to{' '}
             <Link to='/affiliates/register'>create an account</Link>.
         </BelowFormLinks>
     </>

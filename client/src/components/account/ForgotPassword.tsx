@@ -72,6 +72,6 @@ export const ForgotPasswordForm = () => {
 
 export const ForgotPasswordLinks = () => (
     <BelowFormLinks>
-        Back to <Link to='/login'>login</Link>.
+        Go to <Link to='/login'>login</Link>.
     </BelowFormLinks>
 );

@@ -83,7 +83,7 @@ export const CreateAccountForm: FC<CreateAccountFormProps> = ({ affiliateForm })
                         <Loading />
                     ) : (
                         <button type='submit' className={styles.btnPrimary}>
-                            Create Account
+                            {affiliateForm ? 'Register' : 'Create Account'}
                         </button>
                     )}
                 </form>
@@ -101,6 +101,6 @@ export const CreateAccountLinks = () => (
 
 export const CreateAffiliateAccountLinks = () => (
     <BelowFormLinks>
-        Already have an affiliate or normal account? You can still <Link to='/login'>log in</Link> as an affiliate.
+        Already have an affiliate or user account? You can <Link to='/affiliates/login'>log in</Link> as an affiliate.
     </BelowFormLinks>
 );
