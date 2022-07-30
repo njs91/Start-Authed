@@ -3,6 +3,8 @@ import { render, screen, waitForElementToBeRemoved } from '@testing-library/reac
 import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import { HelmetProvider } from 'react-helmet-async';
+import AffiliateLogin from '../../../pages/affiliates/AffiliateLogin';
+import { AffiliateLoginFormLinks, LoginForm } from '../../../components/account/Login';
 
 const mockedUseNavigate = jest.fn();
 
@@ -11,7 +13,7 @@ jest.mock('react-router-dom', () => ({
     useNavigate: () => mockedUseNavigate,
 }));
 
-describe('login tests', () => {
+describe('login page tests', () => {
     let inputs: HTMLElement[],
         labels: HTMLElement[],
         links: HTMLElement[],
@@ -113,5 +115,47 @@ describe('login tests', () => {
 
         const notFoundError = await screen.findByText(/user not found/i);
         expect(notFoundError).toBeInTheDocument();
+    });
+});
+
+describe('affiliate login form and link tests', () => {
+    it('should navigate correctly upon submission', async () => {
+        render(<LoginForm affiliateLogin={true} />);
+
+        const [email, password, submit] = [
+            screen.getByLabelText(/email/i),
+            screen.getByLabelText(/password/i),
+            screen.getByRole('button', { name: /log in/i }),
+        ];
+
+        await userEvent.type(email, 'correct@email.input');
+        await userEvent.type(password, 'password');
+        await userEvent.click(submit);
+
+        // loading image shows
+        const loadingImage = await screen.findByAltText(/loading/i);
+        expect(loadingImage).toBeInTheDocument();
+
+        // loading image disappears
+        await waitForElementToBeRemoved(loadingImage);
+        expect(loadingImage).not.toBeInTheDocument();
+
+        // navigates away
+        expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
+        expect(mockedUseNavigate).toHaveBeenCalledWith('/user/profile/affiliate');
+    });
+
+    it('should render all links with correct hrefs', () => {
+        render(
+            <BrowserRouter>
+                <AffiliateLoginFormLinks />
+            </BrowserRouter>
+        );
+
+        const forgotPassword = screen.getByRole('link', { name: /forgot password/i });
+        const createAccount = screen.getByRole('link', { name: /create an account/i });
+
+        expect(forgotPassword).toHaveAttribute('href', '/forgot-password');
+        expect(createAccount).toHaveAttribute('href', '/affiliates/register');
     });
 });
