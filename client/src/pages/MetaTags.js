@@ -63,3 +63,7 @@ export const createAffiliateAccountMeta = {
     title: 'Create Affiliate Account',
     description: 'Create affiliate account page description.',
 };
+export const affiliateLoginMeta = {
+    title: 'Affiliate Login',
+    description: 'Affiliate login page description.',
+};

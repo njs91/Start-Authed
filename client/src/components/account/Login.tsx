@@ -1,4 +1,4 @@
-import React, { useContext, useState, VFC } from 'react';
+import React, { FC, useContext, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { BelowFormLinks, InputField } from '../default/Form';
 import styles from '../../css/default.module.scss';
@@ -12,8 +12,10 @@ export type LoginFormInputs = {
     email: string;
     password: string;
 };
-
-export const LoginForm: VFC = () => {
+interface LoginFormProps {
+    affiliateLogin: boolean;
+}
+export const LoginForm: FC<LoginFormProps> = ({ affiliateLogin }) => {
     const navigate = useNavigate();
     const { setAccount } = useContext<UserContextType>(UserContext);
     const [loading, setLoading] = useState<boolean>(false);
@@ -29,6 +31,8 @@ export const LoginForm: VFC = () => {
     });
 
     const onSubmit: SubmitHandler<LoginFormInputs> = async (formData) => {
+        const redirectUrl: string = `/user/profile${affiliateLogin ? '/affiliate' : ''}`;
+
         try {
             setLoading(true);
 
@@ -47,7 +51,7 @@ export const LoginForm: VFC = () => {
             const loginData = await res.json();
             const accountData = { ...loginData, email: formData.email };
             setAccount(accountData);
-            navigate('/user/profile');
+            navigate(redirectUrl);
         } catch (err: any) {
             setError(err.message);
         } finally {
@@ -85,6 +89,19 @@ export const LoginFormLinks = () => (
         </BelowFormLinks>
         <BelowFormLinks>
             Don't have an account? <Link to='/create-account'>Create an account</Link>.
+        </BelowFormLinks>
+    </>
+);
+
+export const AffiliateLoginFormLinks = () => (
+    <>
+        <BelowFormLinks>
+            <Link to='/forgot-password'>Forgot password</Link>.
+        </BelowFormLinks>
+        <BelowFormLinks>
+            Haven't registered as an affiliate? If you have an ordinary account then you will automatically be an
+            affiliate and can log in with that account, otherwise you'll need to{' '}
+            <Link to='/affiliates/register'>create an account</Link>.
         </BelowFormLinks>
     </>
 );

@@ -20,6 +20,7 @@ import { setAffiliateCookies } from './scripts/affiliates';
 import AffiliateProgram from './pages/affiliates/AffiliateProgram';
 import AffiliateDashboard from './pages/account/private/AffiliateDashboard';
 import AffiliateRegistry from './pages/affiliates/AffiliateRegistry';
+import AffiliateLogin from './pages/affiliates/AffiliateLogin';
 
 const App: FC = () => {
     setAffiliateCookies();
@@ -65,6 +66,7 @@ const App: FC = () => {
                         <Route path='/privacy' element={<Privacy />} />
                         <Route path='/affiliates' element={<AffiliateProgram />} />
                         <Route path='/affiliates/register' element={<AffiliateRegistry />} />
+                        <Route path='/affiliates/login' element={<AffiliateLogin />} />
                         <Route path='*' element={<NotFound />} />
                     </Routes>
                 </BrowserRouter>
