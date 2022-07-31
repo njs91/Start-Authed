@@ -4,7 +4,7 @@ import { BelowFormLinks, InputField } from '../default/Form';
 import styles from '../../css/default.module.scss';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Loading, Error } from '../default/States';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { UserContextType, UserContext } from '../../contexts/UserContext';
 import { loginSchema } from '../../schemas/AccountSchemas';
 
@@ -82,26 +82,40 @@ export const LoginForm: FC<LoginFormProps> = ({ affiliateLogin }) => {
     );
 };
 
-export const LoginFormLinks = () => (
-    <>
-        <BelowFormLinks>
-            <Link to='/forgot-password'>Forgot password</Link>.
-        </BelowFormLinks>
-        <BelowFormLinks>
-            Don't have an account? <Link to='/create-account'>Create an account</Link>.
-        </BelowFormLinks>
-    </>
-);
+export const LoginFormLinks = () => {
+    const { pathname } = useLocation();
 
-export const AffiliateLoginFormLinks = () => (
-    <>
-        <BelowFormLinks>
-            <Link to='/forgot-password'>Forgot password</Link>.
-        </BelowFormLinks>
-        <BelowFormLinks>
-            Haven't registered as an affiliate? If you have a user account then you will automatically be an affiliate
-            and can log in with that account, otherwise you'll need to{' '}
-            <Link to='/affiliates/register'>create an account</Link>.
-        </BelowFormLinks>
-    </>
-);
+    return (
+        <>
+            <BelowFormLinks>
+                <Link to='/forgot-password' state={{ previousPath: pathname }}>
+                    Forgot password
+                </Link>
+                .
+            </BelowFormLinks>
+            <BelowFormLinks>
+                Don't have an account? <Link to='/create-account'>Create an account</Link>.
+            </BelowFormLinks>
+        </>
+    );
+};
+
+export const AffiliateLoginFormLinks = () => {
+    const { pathname } = useLocation();
+
+    return (
+        <>
+            <BelowFormLinks>
+                <Link to='/forgot-password' state={{ previousPath: pathname }}>
+                    Forgot password
+                </Link>
+                .
+            </BelowFormLinks>
+            <BelowFormLinks>
+                Haven't registered as an affiliate? If you have a user account then you will automatically be an
+                affiliate and can log in with that account, otherwise you'll need to{' '}
+                <Link to='/affiliates/register'>create an account</Link>.
+            </BelowFormLinks>
+        </>
+    );
+};
