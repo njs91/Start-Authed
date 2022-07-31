@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { User } from '../models/auth';
+import { PLANS, User } from '../models/auth';
 import bcrypt from 'bcrypt';
 import { USERS_COLLECTION_NAME } from '../utils/db';
 import { getCollection } from '../utils/helpers';
@@ -10,15 +10,24 @@ require('dotenv').config();
 // does anywhere else here need try catch?
 
 export const createUser = async (req: Request, res: Response) => {
-  const { email, password } = req.body;
+  const { email, password, referrer, directAffiliateSignup } = req.body;
   const existingUser = await User.findByEmail(email);
 
   if (existingUser) {
-    return res.status(409).send('User already exists. Please log in.');
+    const msg = directAffiliateSignup
+      ? 'User already exists. Existing ordinary user accounts - even those who have not registered as an affiliate - will automatically be an affiliate. You can log in as an affiliate with your existing user account.'
+      : `User already exists. Please log in.`;
+    return res.status(409).send(msg);
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
-  const newUser = new User(email, hashedPassword);
+  const newUser = new User({
+    email,
+    hashedPassword,
+    plan: PLANS.free,
+    directAffiliateSignup,
+  });
+  if (referrer) await newUser.addReferrer(referrer);
   const saveToDb = await newUser.saveToDb();
 
   if (!saveToDb) {

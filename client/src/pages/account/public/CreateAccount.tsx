@@ -5,7 +5,7 @@ import { createAccountMeta } from '../../MetaTags';
 import { useNavigate } from 'react-router-dom';
 import { UserContextType, UserContext } from '../../../contexts/UserContext';
 
-const CreateAccount: React.VFC = () => {
+const CreateAccount = () => {
     const { user } = useContext<UserContextType>(UserContext);
     const navigate = useNavigate();
 
@@ -16,7 +16,7 @@ const CreateAccount: React.VFC = () => {
     return (
         <Page meta={createAccountMeta}>
             <h1>Create Account</h1>
-            <CreateAccountForm />
+            <CreateAccountForm affiliateForm={false} />
             <CreateAccountLinks />
         </Page>
     );

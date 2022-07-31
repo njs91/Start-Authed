@@ -5,7 +5,7 @@ import styles from '../../css/default.module.scss';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Error, Loading } from '../default/States';
 import { forgotPasswordSchema } from '../../schemas/AccountSchemas';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 export type ForgotPasswordFormInputs = {
     email: string;
@@ -70,8 +70,14 @@ export const ForgotPasswordForm = () => {
     );
 };
 
-export const ForgotPasswordLinks = () => (
-    <BelowFormLinks>
-        Back to <Link to='/login'>login</Link>.
-    </BelowFormLinks>
-);
+export const ForgotPasswordLinks = () => {
+    const { state }: any = useLocation();
+    const url = state?.previousPath || '/login';
+    const preposition: string = state?.previousPath ? 'Back' : 'Go';
+
+    return (
+        <BelowFormLinks>
+            {preposition} to <Link to={url}>login</Link>.
+        </BelowFormLinks>
+    );
+};

@@ -16,7 +16,7 @@ const Login: React.VFC = () => {
     return (
         <Page meta={loginMeta}>
             <h1>Login</h1>
-            <LoginForm />
+            <LoginForm affiliateLogin={false} />
             <LoginFormLinks />
         </Page>
     );

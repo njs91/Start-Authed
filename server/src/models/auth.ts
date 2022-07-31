@@ -1,18 +1,51 @@
 import { USERS_COLLECTION_NAME } from '../utils/db';
 import { getCollection } from '../utils/helpers';
 import jwt from 'jsonwebtoken';
+import { DeleteResult } from 'mongodb';
+import { v4 as uuidv4 } from 'uuid';
 const mongodb = require('mongodb'); // do not convert to import (otherwise undefined)
 require('dotenv').config();
 
+type Plans = {
+  free: string;
+  lite: string;
+  pro: string;
+};
+export const PLANS: Plans = {
+  free: 'free',
+  lite: 'lite',
+  pro: 'pro',
+};
+
+type Referrer = null | string;
+type UserConstructor = {
+  email: string;
+  hashedPassword: string;
+  plan: string;
+  directAffiliateSignup: boolean;
+};
 export class User {
   email: string;
   hashedPassword: string;
   dateCreated: Date;
+  plan: string;
+  directAffiliateSignup: boolean;
+  referralPromoCode: string;
+  referredBy: Referrer;
 
-  constructor(email: string, hashedPassword: string) {
+  constructor({
+    email,
+    hashedPassword,
+    plan,
+    directAffiliateSignup,
+  }: UserConstructor) {
     this.email = email.toLowerCase();
     this.hashedPassword = hashedPassword;
     this.dateCreated = new Date();
+    this.plan = plan;
+    this.directAffiliateSignup = directAffiliateSignup;
+    this.referralPromoCode = uuidv4();
+    this.referredBy = null;
   }
 
   signToken(expiry: number | string = 60 * 24): string {
@@ -30,16 +63,18 @@ export class User {
     return saveResult;
   }
 
-  static async delete(id: string): Promise<any> {
+  async addReferrer(referralPromoCode: string): Promise<void> {
+    const validReferrer = await User.findReferrer(referralPromoCode);
+    if (!validReferrer) return;
+    this.referredBy = referralPromoCode;
+  }
+
+  static async delete(id: string): Promise<DeleteResult> {
     const collection = getCollection(USERS_COLLECTION_NAME);
     const user = await User.findById(id);
-
     if (!user) throw new Error('404 - User not found');
-
     const deleteResult = await collection.deleteOne(user);
-
     if (!deleteResult) throw new Error('500 - Could not delete user');
-
     return deleteResult;
   }
 
@@ -58,6 +93,12 @@ export class User {
   static async findById(id: string): Promise<any> {
     const collection = getCollection(USERS_COLLECTION_NAME);
     const user = await collection.findOne({ _id: new mongodb.ObjectId(id) });
+    return user;
+  }
+
+  static async findReferrer(referralCode: string): Promise<any> {
+    const collection = getCollection(USERS_COLLECTION_NAME);
+    const user = await collection.findOne({ referralPromoCode: referralCode });
     return user;
   }
 }

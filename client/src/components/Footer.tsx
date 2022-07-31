@@ -29,6 +29,10 @@ export const Footer: FC<FooterProps> = ({ cls = '' }) => {
 
 export const footerLinks: Links = [
     {
+        title: 'Affiliates',
+        url: '/affiliates',
+    },
+    {
         title: 'Terms',
         url: '/terms',
     },
