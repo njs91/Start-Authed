@@ -1,4 +1,8 @@
-import { CreateAccountForm, CreateAccountLinks } from '../../../components/account/CreateAccount';
+import {
+    CreateAccountForm,
+    CreateAccountLinks,
+    CreateAffiliateAccountLinks,
+} from '../../../components/account/CreateAccount';
 import { render, screen, waitForElementToBeRemoved } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
@@ -10,34 +14,32 @@ jest.mock('react-router-dom', () => ({
     useNavigate: () => mockedUseNavigate,
 }));
 
-describe('create account tests', () => {
+const [createAccountBtn, registerAffiliateBtn]: string[] = ['Create Account', 'Register'];
+const [loginLink, affiliateLoginLink]: string[] = ['/login', '/affiliates/login'];
+
+describe('create account', () => {
     let inputs: HTMLElement[],
         labels: HTMLElement[],
         email: HTMLElement,
         password: HTMLElement,
         confirmPassword: HTMLElement,
-        submit: HTMLElement,
-        back: HTMLElement,
-        rerender: any;
+        submit: HTMLElement;
 
     beforeEach(() => {
-        const rendered = render(
+        render(
             <BrowserRouter>
                 <CreateAccountForm affiliateForm={false} />
-                <CreateAccountLinks />
             </BrowserRouter>
         );
 
-        rerender = rendered.rerender;
         inputs = [
             screen.getByRole('textbox', { name: /email/i }),
             screen.getByLabelText('Password:'),
             screen.getByLabelText(/re-enter password/i),
-            screen.getByRole('button', { name: /create account/i }),
+            screen.getByRole('button', { name: createAccountBtn }),
         ];
         labels = [screen.getByText(/email/i), screen.getByText('Password:'), screen.getByText(/re-enter password/i)];
         [email, password, confirmPassword, submit] = inputs;
-        back = screen.getByText(/log in/i);
     });
 
     it('should render all inputs', () => {
@@ -52,9 +54,8 @@ describe('create account tests', () => {
         });
     });
 
-    it('should render back button with correct href', () => {
-        expect(back).toBeInTheDocument();
-        expect(back).toHaveAttribute('href', '/login');
+    it('should render correct create account button text', () => {
+        expect(submit.textContent).toBe(createAccountBtn);
     });
 
     it('should show errors with invalid inputs and disappear when corrected', async () => {
@@ -111,19 +112,45 @@ describe('create account tests', () => {
         const accountExistsError = await screen.findByText(/user already exists/i);
         expect(accountExistsError).toBeInTheDocument();
     });
+});
 
-    it('should redirect to correct path with affiliate form', async () => {
-        rerender(
+describe('create account links', () => {
+    it('should render login button with correct href', () => {
+        render(
             <BrowserRouter>
-                <CreateAccountForm affiliateForm={true} />
                 <CreateAccountLinks />
             </BrowserRouter>
         );
+        const back: HTMLElement = screen.getByText(/log in/i);
+
+        expect(back).toBeInTheDocument();
+        expect(back).toHaveAttribute('href', loginLink);
+    });
+});
+
+describe('create affiliate account', () => {
+    it('should redirect to correct path with affiliate form', async () => {
+        render(
+            <BrowserRouter>
+                <CreateAccountForm affiliateForm={true} />
+            </BrowserRouter>
+        );
+
+        const inputs = [
+            screen.getByRole('textbox', { name: /email/i }),
+            screen.getByLabelText('Password:'),
+            screen.getByLabelText(/re-enter password/i),
+            screen.getByRole('button', { name: registerAffiliateBtn }),
+        ];
+        const [email, password, confirmPassword, submit] = inputs;
 
         await userEvent.type(email, 'correct@input.com');
         await userEvent.type(password, 'password');
         await userEvent.type(confirmPassword, 'password');
         await userEvent.click(submit);
+
+        // expect correct submit button text
+        expect(submit.textContent).toBe(registerAffiliateBtn);
 
         // loading image shows
         const loadingImage = await screen.findByAltText(/loading/i);
@@ -136,5 +163,19 @@ describe('create account tests', () => {
         // navigates away (to /affiliates/login)
         expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
         expect(mockedUseNavigate).toHaveBeenCalledWith('/affiliates/login');
+    });
+});
+
+describe('create affiliate account links', () => {
+    it('should render affiliate login button with correct href', () => {
+        render(
+            <BrowserRouter>
+                <CreateAffiliateAccountLinks />
+            </BrowserRouter>
+        );
+        const back: HTMLElement = screen.getByText(/log in/i);
+
+        expect(back).toBeInTheDocument();
+        expect(back).toHaveAttribute('href', affiliateLoginLink);
     });
 });
