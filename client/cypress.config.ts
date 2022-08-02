@@ -16,5 +16,6 @@ export default defineConfig({
         },
         baseUrl: 'http://localhost:3000',
         // experimentalInteractiveRunEvents: true,
+        video: false,
     },
 });
